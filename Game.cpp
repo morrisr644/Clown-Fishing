@@ -16,6 +16,7 @@
 #include "HUD.h"
 #include "MeshComponent.h"
 #include "FPSActor.h"
+#include "BasicFish.h"
 #include "PlaneActor.h"
 #include "TargetActor.h"
 #include "BallActor.h"
@@ -358,6 +359,8 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
+	mBasicFish = new BasicFish(this);
+	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -100.0f));
 
 	// Create target actors
 	a = new TargetActor(this);
@@ -374,6 +377,8 @@ void Game::LoadData()
 	a = new TargetActor(this);
 	a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
 	a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
+	
+
 }
 
 void Game::UnloadData()
