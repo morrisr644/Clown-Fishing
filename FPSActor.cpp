@@ -5,6 +5,7 @@
 // Released under the BSD License
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
+// This is a comment for the test merge - Adam Caligiuri
 
 #include "FPSActor.h"
 #include "MoveComponent.h"
