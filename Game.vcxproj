@@ -14,9 +14,9 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
-    <ClCompile Include="BallActor.cpp" />
-    <ClCompile Include="BallMove.cpp" />
     <ClCompile Include="BasicFish.cpp" />
+    <ClCompile Include="BobberActor.cpp" />
+    <ClCompile Include="BobberMove.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -49,9 +49,9 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="AudioSystem.h" />
-    <ClInclude Include="BallActor.h" />
-    <ClInclude Include="BallMove.h" />
     <ClInclude Include="BasicFish.h" />
+    <ClInclude Include="BobberActor.h" />
+    <ClInclude Include="BobberMove.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Collision.h" />

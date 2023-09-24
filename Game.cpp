@@ -19,7 +19,7 @@
 #include "BasicFish.h"
 #include "PlaneActor.h"
 #include "TargetActor.h"
-#include "BallActor.h"
+#include "BobberActor.h"
 #include "PauseMenu.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
