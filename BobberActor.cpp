@@ -6,28 +6,31 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#include "BallActor.h"
+// Previously BallActor.cpp
+// Edits made by Rebecca Morris
+
+#include "BobberActor.h"
 #include "Game.h"
 #include "Renderer.h"
 #include "MeshComponent.h"
 #include "Mesh.h"
-#include "BallMove.h"
+#include "BobberMove.h"
 #include "AudioComponent.h"
 
-BallActor::BallActor(Game* game)
+BobberActor::BobberActor(Game* game)
 	:Actor(game)
 	,mLifeSpan(2.0f)
 {
 	//SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh");
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh"); // Sphere has been recolored to look more like a bobber (RCM)
 	mc->SetMesh(mesh);
-	mMyMove = new BallMove(this);
+	mMyMove = new BobberMove(this);
 	mMyMove->SetForwardSpeed(1500.0f);
 	mAudioComp = new AudioComponent(this);
 }
 
-void BallActor::UpdateActor(float deltaTime)
+void BobberActor::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	
@@ -38,12 +41,12 @@ void BallActor::UpdateActor(float deltaTime)
 	}
 }
 
-void BallActor::SetPlayer(Actor* player)
+void BobberActor::SetPlayer(Actor* player)
 {
 	mMyMove->SetPlayer(player);
 }
 
-void BallActor::HitTarget()
+void BobberActor::HitTarget()
 {
 	mAudioComp->PlayEvent("event:/Ding");
 }

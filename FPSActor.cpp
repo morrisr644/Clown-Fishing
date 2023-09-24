@@ -15,7 +15,7 @@
 #include "AudioComponent.h"
 #include "FPSCamera.h"
 #include "MeshComponent.h"
-#include "BallActor.h"
+#include "BobberActor.h"
 #include "BoxComponent.h"
 #include "PlaneActor.h"
 
@@ -135,7 +135,7 @@ void FPSActor::Shoot()
 	Vector3 start, dir;
 	GetGame()->GetRenderer()->GetScreenDirection(start, dir);
 	// Spawn a ball
-	BallActor* ball = new BallActor(GetGame());
+	BobberActor* ball = new BobberActor(GetGame());
 	ball->SetPlayer(this);
 	ball->SetPosition(start + dir*20.0f);
 	// Rotate the ball to face new direction

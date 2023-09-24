@@ -6,19 +6,21 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#include "BallMove.h"
+// Previously BallMove.cpp
+
+#include "BobberMove.h"
 #include "Actor.h"
 #include "Game.h"
 #include "PhysWorld.h"
 #include "TargetActor.h"
-#include "BallActor.h"
+#include "BobberActor.h"
 
-BallMove::BallMove(Actor* owner)
+BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
 {
 }
 
-void BallMove::Update(float deltaTime)
+void BobberMove::Update(float deltaTime)
 {
 	// Construct segment in direction of travel
 	const float segmentLength = 30.0f;
@@ -42,7 +44,7 @@ void BallMove::Update(float deltaTime)
 		TargetActor* target = dynamic_cast<TargetActor*>(info.mActor);
 		if (target)
 		{
-			static_cast<BallActor*>(mOwner)->HitTarget();
+			static_cast<BobberActor*>(mOwner)->HitTarget();
 		}
 	}
 

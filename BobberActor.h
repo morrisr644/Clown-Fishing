@@ -6,16 +6,22 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#pragma once
-#include "MoveComponent.h"
+// Previously BallActor.h
 
-class BallMove : public MoveComponent
+#pragma once
+#include "Actor.h"
+
+class BobberActor : public Actor
 {
 public:
-	BallMove(class Actor* owner);
+	BobberActor(class Game* game);
 
-	void SetPlayer(Actor* player) { mPlayer = player; }
-	void Update(float deltaTime) override;
-protected:
-	class Actor* mPlayer;
+	void UpdateActor(float deltaTime) override;
+	void SetPlayer(Actor* player);
+
+	void HitTarget();
+private:
+	class AudioComponent* mAudioComp;
+	class BobberMove* mMyMove;
+	float mLifeSpan;
 };
