@@ -10,7 +10,14 @@ public:
 
 	void UpdateActor(float deltaTime) override;
 	void SetPlayer(Actor* player);
+	void FixCollisions();
+	void SetAngularSpeed(float newSpeed);
+	void SetMovementSpeed(float newMovementSpeed);
 
 private:
+	class BoxComponent* mBoxComp;
+	float angularMovement;
+	float forwardMovement;
+	class MoveComponent* mMoveComp;
 	// here is where I will have to put the movement parts
 };

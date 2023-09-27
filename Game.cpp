@@ -369,7 +369,7 @@ void Game::LoadData()
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
 	mBasicFish = new BasicFish(this);
-	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -100.0f));
+	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -50.0f));
 
 	// Create target actors
 	a = new TargetActor(this);
