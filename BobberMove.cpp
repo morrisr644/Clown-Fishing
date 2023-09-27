@@ -31,6 +31,11 @@ void BobberMove::Update(float deltaTime)
 	// Create line segment
 	LineSegment l(start, end);
 
+	//Attempt at making a curve
+	/*Vector3 angle = start;
+	angle.z = start.z * 0.9;
+	mOwner->RotateToNewForward(angle);*/
+
 	// Test segment vs world
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
@@ -44,9 +49,11 @@ void BobberMove::Update(float deltaTime)
 		TargetActor* target = dynamic_cast<TargetActor*>(info.mActor);
 		if (target)
 		{
-			static_cast<BobberActor*>(mOwner)->HitTarget();
+			//static_cast<BobberActor*>(mOwner)->HitTarget();
 		}
 	}
+
+
 
 	// Base class update moves based on forward speed
 	MoveComponent::Update(deltaTime);
