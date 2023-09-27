@@ -7,6 +7,7 @@
 // ----------------------------------------------------------------
 
 // Previously BallMove.cpp
+// Edits by Rebecca Morris
 
 #include "BobberMove.h"
 #include "Actor.h"
@@ -39,18 +40,20 @@ void BobberMove::Update(float deltaTime)
 	// Test segment vs world
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
+
 	// (Don't collide vs player)
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
 		// If we collided, reflect the ball about the normal
-		dir = Vector3::Reflect(dir, info.mNormal);
-		mOwner->RotateToNewForward(dir);
-		// Did we hit a target?
-		TargetActor* target = dynamic_cast<TargetActor*>(info.mActor);
-		if (target)
-		{
-			//static_cast<BobberActor*>(mOwner)->HitTarget();
-		}
+		//dir = Vector3::Reflect(dir, info.mNormal);
+		//mOwner->RotateToNewForward(dir);
+
+		//// If we collided, stop.
+		//dir = Vector3(0, 0, 0);
+
+
+		static_cast<BobberActor*>(mOwner)->HitGround();
+
 	}
 
 

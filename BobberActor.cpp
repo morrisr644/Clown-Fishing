@@ -35,10 +35,6 @@ void BobberActor::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	
 	mLifeSpan -= deltaTime;
-	if (mLifeSpan < 0.0f)
-	{
-		SetState(EDead);
-	}
 }
 
 void BobberActor::SetPlayer(Actor* player)
@@ -46,7 +42,7 @@ void BobberActor::SetPlayer(Actor* player)
 	mMyMove->SetPlayer(player);
 }
 
-void BobberActor::HitTarget()
+void BobberActor::HitGround()
 {
-	mAudioComp->PlayEvent("event:/Ding");
+	mMyMove->SetForwardSpeed(0.0f);
 }

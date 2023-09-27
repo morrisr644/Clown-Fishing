@@ -202,6 +202,15 @@ void Game::HandleKeyPress(int key)
 	case SDL_BUTTON_LEFT:
 	{
 		// Fire weapon
+
+		if (mBobbers.size() > 0) // If there is already a bobber, remove it - Rebecca Morris
+		{
+			for (BobberActor* bobbers : mBobbers)
+			{
+				bobbers->SetState(Actor::EDead);
+			}
+		}
+
 		mFPSActor->Shoot();
 		break;
 	}
@@ -451,6 +460,11 @@ void Game::RemoveActor(Actor* actor)
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
+}
+
+void Game::AddBobber(BobberActor* bobber) // Rebecca Morris
+{
+	mBobbers.emplace_back(bobber);
 }
 
 void Game::PushUI(UIScreen* screen)
