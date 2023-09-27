@@ -25,6 +25,8 @@ public:
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
+	void AddBobber(class BobberActor* bobber); // Rebecca Morris
+
 	class Renderer* GetRenderer() { return mRenderer; }
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
 	class PhysWorld* GetPhysWorld() { return mPhysWorld; }
@@ -65,6 +67,7 @@ private:
 	
 	// All the actors in the game
 	std::vector<class Actor*> mActors;
+	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
 	std::unordered_map<std::string, class Font*> mFonts;
 

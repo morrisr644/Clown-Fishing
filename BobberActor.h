@@ -19,7 +19,7 @@ public:
 	void UpdateActor(float deltaTime) override;
 	void SetPlayer(Actor* player);
 
-	void HitTarget();
+	void HitGround();
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
