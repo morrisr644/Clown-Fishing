@@ -68,12 +68,12 @@ void BobberActor::UpdateActor(float deltaTime)
 	appliedMath.z = currentPosition.z + 10 * sin(mLaunchAngle) * deltaTime - (0.5 * 9.81 * deltaTime * deltaTime);
 	this->SetPosition(appliedMath);*/
 	
-	//if (GetGame()->GetBobberCount().size() > 0)
-	//{
+	if (mMyMove->GetForwardSpeed() != 0)
+	{
 		Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
 		currPosition.z = currPosition.z * .981;
 		GetGame()->GetBobber()->SetPosition(currPosition);
-	//}
+	}
 	
 	
 
@@ -93,5 +93,10 @@ void BobberActor::HitGround()
 void BobberActor::SetLaunchAngle(float newAngle)
 {
 	mLaunchAngle = newAngle;
+}
+
+void BobberActor::SetMyMoveSpeed()
+{
+	mMyMove->SetForwardSpeed(1500.0f);
 }
 

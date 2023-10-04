@@ -369,6 +369,8 @@ void Game::LoadData()
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
 	mBasicFish = new BasicFish(this);
+	mSingleBobber = new BobberActor(this);
+	mSingleBobber->SetPosition(Vector3(-1000, -1000, -1000));
 	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -50.0f));
 
 	// Create target actors

@@ -39,10 +39,11 @@ public:
 	
 	class FPSActor* GetPlayer() { return mFPSActor; }
 	class BobberActor* GetBobber() {
-		if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
+		return mSingleBobber;
+		/*if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
 		{
 			return mBobbers[0];
-		}
+		}*/
 	}
 	
 	std::vector<class BobberActor*> GetBobberCount()
@@ -103,6 +104,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
+	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
 };

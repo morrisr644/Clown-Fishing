@@ -21,6 +21,7 @@ public:
 
 	void HitGround();
 	void SetLaunchAngle(float newAngle);
+	void SetMyMoveSpeed();
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
