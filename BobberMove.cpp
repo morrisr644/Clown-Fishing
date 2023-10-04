@@ -15,6 +15,7 @@
 #include "PhysWorld.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
+#include "BasicFish.h"
 
 BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
@@ -32,27 +33,24 @@ void BobberMove::Update(float deltaTime)
 	// Create line segment
 	LineSegment l(start, end);
 
-	//Attempt at making a curve
-	/*Vector3 angle = start;
-	angle.z = start.z * 0.9;
-	mOwner->RotateToNewForward(angle);*/
-
 	// Test segment vs world
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
 
-	// (Don't collide vs player)
+	// If the bobber hits something
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
-		// If we collided, reflect the ball about the normal
-		//dir = Vector3::Reflect(dir, info.mNormal);
-		//mOwner->RotateToNewForward(dir);
 
-		//// If we collided, stop.
-		//dir = Vector3(0, 0, 0);
-
-
+		// Make the bobber stop when hitting Ground
 		static_cast<BobberActor*>(mOwner)->HitGround();
+
+		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
+
+		// If the bobber hits the fish
+		if (fish)
+		{
+			fish->GetOnLine();
+		}
 
 	}
 
