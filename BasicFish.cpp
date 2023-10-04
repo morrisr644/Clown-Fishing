@@ -3,17 +3,21 @@
 
 #include "BasicFish.h"
 #include "Game.h"
+//#include "Actor.h"
 #include "Renderer.h"
 #include "MeshComponent.h"
 #include "BoxComponent.h"
 #include "Mesh.h"
 #include "PlaneActor.h"
 #include "MoveComponent.h"
+#include "BobberActor.h"
+#include "PhysWorld.h"
+
 
 BasicFish::BasicFish(Game* game)
 	:Actor(game)
-	, angularMovement(0.02)
-	, forwardMovement(300)
+	, angularMovement(0.2)
+	, forwardMovement(200)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
@@ -39,11 +43,18 @@ BasicFish::BasicFish(Game* game)
 void BasicFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
-	FixCollisions(); 
+	FixCollisions();
 }
 
-void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
+//void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
+//{
+//}
+
+void BasicFish::GetOnLine() // Rebecca Morris
 {
+	// When the fish is hit then stop moving (Caught)
+	SetMovementSpeed(0.0f);
+	SetAngularSpeed(0.0f);
 }
 
 void BasicFish::FixCollisions() // pulled from Madhav FPSActor
@@ -102,10 +113,12 @@ void BasicFish::FixCollisions() // pulled from Madhav FPSActor
 
 void BasicFish::SetAngularSpeed(float newSpeed)
 {
-	angularMovement = newSpeed;
+	//angularMovement = newSpeed;
+	mMoveComp->SetAngularSpeed(newSpeed);
 }
 
 void BasicFish::SetMovementSpeed(float newMovementSpeed)
 {
-	forwardMovement = newMovementSpeed;
+	//forwardMovement = newMovementSpeed;
+	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }
