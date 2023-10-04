@@ -54,6 +54,9 @@ void BasicFish::FixCollisions() // pulled from Madhav FPSActor
 	const AABB& playerBox = mBoxComp->GetWorldBox();
 	Vector3 pos = GetPosition();
 
+	BobberActor* bobber = GetGame()->GetBobber();
+
+
 	auto& planes = GetGame()->GetPlanes();
 	for (auto pa : planes)
 	{

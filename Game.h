@@ -37,6 +37,12 @@ public:
 	void PushUI(class UIScreen* screen);
 	
 	class FPSActor* GetPlayer() { return mFPSActor; }
+	class BobberActor* GetBobber() {
+		if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
+		{
+			return mBobbers[0];
+		}
+	}
 	
 	enum GameState
 	{
