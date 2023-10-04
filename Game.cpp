@@ -467,6 +467,27 @@ void Game::AddBobber(BobberActor* bobber) // Rebecca Morris
 	mBobbers.emplace_back(bobber);
 }
 
+void Game::RemoveBobber(BobberActor* bobber) // Rebecca Morris
+{
+	// Is it in pending actors?
+	auto iter = std::find(mPendingBobbers.begin(), mPendingBobbers.end(), bobber);
+	if (iter != mPendingBobbers.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mPendingBobbers.end() - 1);
+		mPendingBobbers.pop_back();
+	}
+
+	// Is it in actors?
+	iter = std::find(mBobbers.begin(), mBobbers.end(), bobber);
+	if (iter != mBobbers.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mBobbers.end() - 1);
+		mBobbers.pop_back();
+	}
+}
+
 void Game::PushUI(UIScreen* screen)
 {
 	mUIStack.emplace_back(screen);

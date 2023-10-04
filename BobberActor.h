@@ -20,8 +20,10 @@ public:
 	void SetPlayer(Actor* player);
 
 	void HitGround();
+	void SetLaunchAngle(float newAngle);
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
 	float mLifeSpan;
+	double mLaunchAngle;
 };

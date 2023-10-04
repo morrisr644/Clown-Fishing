@@ -26,6 +26,7 @@ public:
 	void RemoveActor(class Actor* actor);
 
 	void AddBobber(class BobberActor* bobber); // Rebecca Morris
+	void RemoveBobber(class BobberActor* bobber); // Rebecca Morris
 
 	class Renderer* GetRenderer() { return mRenderer; }
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
@@ -42,6 +43,11 @@ public:
 		{
 			return mBobbers[0];
 		}
+	}
+	
+	std::vector<class BobberActor*> GetBobberCount()
+	{
+		return mBobbers;
 	}
 	
 	enum GameState
@@ -81,6 +87,7 @@ private:
 	std::unordered_map<std::string, std::string> mText;
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
+	std::vector<class BobberActor*> mPendingBobbers; //Rebecca Morris
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;

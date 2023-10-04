@@ -136,7 +136,7 @@ void FPSActor::Shoot()
 	Vector3 start, dir;
 	GetGame()->GetRenderer()->GetScreenDirection(start, dir);
 	// Spawn a ball
-	BobberActor* ball = new BobberActor(GetGame());
+	BobberActor* ball = new BobberActor(GetGame()); // This line
 	this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
 	ball->SetPlayer(this);
 	ball->SetPosition(start + dir*20.0f);
