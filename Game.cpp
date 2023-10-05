@@ -369,6 +369,8 @@ void Game::LoadData()
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
 	mBasicFish = new BasicFish(this);
+	mSingleBobber = new BobberActor(this);
+	mSingleBobber->SetPosition(Vector3(-1000, -1000, -1000));
 	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -50.0f));
 
 	// Create target actors
@@ -465,6 +467,27 @@ void Game::RemoveActor(Actor* actor)
 void Game::AddBobber(BobberActor* bobber) // Rebecca Morris
 {
 	mBobbers.emplace_back(bobber);
+}
+
+void Game::RemoveBobber(BobberActor* bobber) // Rebecca Morris
+{
+	// Is it in pending actors?
+	auto iter = std::find(mPendingBobbers.begin(), mPendingBobbers.end(), bobber);
+	if (iter != mPendingBobbers.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mPendingBobbers.end() - 1);
+		mPendingBobbers.pop_back();
+	}
+
+	// Is it in actors?
+	iter = std::find(mBobbers.begin(), mBobbers.end(), bobber);
+	if (iter != mBobbers.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mBobbers.end() - 1);
+		mBobbers.pop_back();
+	}
 }
 
 void Game::PushUI(UIScreen* screen)

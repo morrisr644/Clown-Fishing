@@ -26,6 +26,7 @@ public:
 	void RemoveActor(class Actor* actor);
 
 	void AddBobber(class BobberActor* bobber); // Rebecca Morris
+	void RemoveBobber(class BobberActor* bobber); // Rebecca Morris
 
 	class Renderer* GetRenderer() { return mRenderer; }
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
@@ -38,10 +39,16 @@ public:
 	
 	class FPSActor* GetPlayer() { return mFPSActor; }
 	class BobberActor* GetBobber() {
-		if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
+		return mSingleBobber;
+		/*if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
 		{
 			return mBobbers[0];
-		}
+		}*/
+	}
+	
+	std::vector<class BobberActor*> GetBobberCount()
+	{
+		return mBobbers;
 	}
 	
 	enum GameState
@@ -81,6 +88,7 @@ private:
 	std::unordered_map<std::string, std::string> mText;
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
+	std::vector<class BobberActor*> mPendingBobbers; //Rebecca Morris
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;
@@ -96,6 +104,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
+	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
 };

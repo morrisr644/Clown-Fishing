@@ -136,13 +136,15 @@ void FPSActor::Shoot()
 	Vector3 start, dir;
 	GetGame()->GetRenderer()->GetScreenDirection(start, dir);
 	// Spawn a ball
-	BobberActor* ball = new BobberActor(GetGame());
-	this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
+	BobberActor* ball = GetGame()->GetBobber(); // This line
+	//this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
+	
 	ball->SetPlayer(this);
 	ball->SetPosition(start + dir*20.0f);
 	// Rotate the ball to face new direction
 	ball->RotateToNewForward(dir);
 	// Play shooting sound
+	ball->SetMyMoveSpeed();
 	mAudioComp->PlayEvent("event:/Shot");
 }
 
