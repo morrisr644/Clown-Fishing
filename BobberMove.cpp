@@ -33,6 +33,7 @@ void BobberMove::Update(float deltaTime)
 	// Create line segment
 	LineSegment l(start, end);
 
+
 	// Test segment vs world
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
@@ -51,6 +52,7 @@ void BobberMove::Update(float deltaTime)
 		{
 			fish->GetOnLine();
 		}
+
 
 	}
 
