@@ -75,7 +75,7 @@ void BobberActor::UpdateActor(float deltaTime)
 		//GetGame()->GetBobber()->SetPosition(currPosition);
 		Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); // This is the complicated math for the wonky curve ends at line 87
 		currPosition.Normalize();
-		float launchAngleInRadians = sin(currPosition.z);
+		float launchAngleInRadians = sin(currPosition.z - (M_PI / 4));
 		SetLaunchAngle(launchAngleInRadians);
 
 		Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
@@ -83,7 +83,7 @@ void BobberActor::UpdateActor(float deltaTime)
 		Vector3 appliedMath = currentPosition;
 		appliedMath.x = currentPosition.x;//+1000 * cos(mLaunchAngle) * deltaTime;
 		appliedMath.y = currentPosition.y;// +1000 * sin(mLaunchAngle) * deltaTime;
-		appliedMath.z = currentPosition.z + 1000 * sin(mLaunchAngle) * deltaTime - (0.5 * 9.81 * deltaTime * deltaTime);
+		appliedMath.z = currentPosition.z + 750 * sin(mLaunchAngle) * deltaTime - (0.5 * gravity * deltaTime * deltaTime);
 		GetGame()->GetBobber()->SetPosition(appliedMath);
 	}
 	
