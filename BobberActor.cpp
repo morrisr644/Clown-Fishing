@@ -70,10 +70,10 @@ void BobberActor::UpdateActor(float deltaTime)
 	
 	if (mMyMove->GetForwardSpeed() != 0)
 	{
-		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
+		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); // This is the simple curve that kind of works, ends at line 75
 		//currPosition.z = currPosition.z * .981;
 		//GetGame()->GetBobber()->SetPosition(currPosition);
-		Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
+		Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); // This is the complicated math for the wonky curve ends at line 87
 		currPosition.Normalize();
 		float launchAngleInRadians = sin(currPosition.z);
 		SetLaunchAngle(launchAngleInRadians);
