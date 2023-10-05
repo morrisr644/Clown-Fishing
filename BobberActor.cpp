@@ -70,9 +70,21 @@ void BobberActor::UpdateActor(float deltaTime)
 	
 	if (mMyMove->GetForwardSpeed() != 0)
 	{
+		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
+		//currPosition.z = currPosition.z * .981;
+		//GetGame()->GetBobber()->SetPosition(currPosition);
 		Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
-		currPosition.z = currPosition.z * .981;
-		GetGame()->GetBobber()->SetPosition(currPosition);
+		currPosition.Normalize();
+		float launchAngleInRadians = sin(currPosition.z);
+		SetLaunchAngle(launchAngleInRadians);
+
+		Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
+		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); 
+		Vector3 appliedMath = currentPosition;
+		appliedMath.x = currentPosition.x;//+1000 * cos(mLaunchAngle) * deltaTime;
+		appliedMath.y = currentPosition.y;// +1000 * sin(mLaunchAngle) * deltaTime;
+		appliedMath.z = currentPosition.z + 1000 * sin(mLaunchAngle) * deltaTime - (0.5 * 9.81 * deltaTime * deltaTime);
+		GetGame()->GetBobber()->SetPosition(appliedMath);
 	}
 	
 	
