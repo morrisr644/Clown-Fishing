@@ -18,6 +18,7 @@
 #include "FPSActor.h"
 #include "BasicFish.h"
 #include "PlaneActor.h"
+#include "WaterPlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
@@ -103,6 +104,17 @@ void Game::RemovePlane(PlaneActor* plane)
 {
 	auto iter = std::find(mPlanes.begin(), mPlanes.end(), plane);
 	mPlanes.erase(iter);
+}
+
+void Game::AddWaterPlane(WaterPlaneActor* water) // Rebecca Morris
+{
+	mWaterPlanes.emplace_back(water);
+}
+
+void Game::RemoveWaterPlane(WaterPlaneActor* water) // Rebecca Morris
+{
+	auto iter = std::find(mWaterPlanes.begin(), mWaterPlanes.end(), water);
+	mWaterPlanes.erase(iter);
 }
 
 void Game::ProcessInput()
@@ -315,9 +327,14 @@ void Game::LoadData()
 	const float size = 250.0f;
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			a = new PlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 5; j < 10; j++) // Rebecca Morris
+		{
+			a = new WaterPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 	}

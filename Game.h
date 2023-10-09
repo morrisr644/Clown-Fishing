@@ -69,6 +69,10 @@ public:
 	void AddPlane(class PlaneActor* plane);
 	void RemovePlane(class PlaneActor* plane);
 	std::vector<class PlaneActor*>& GetPlanes() { return mPlanes; }
+
+	void AddWaterPlane(class WaterPlaneActor* water);
+	void RemoveWaterPlane(class WaterPlaneActor* water);
+	std::vector<class WaterPlaneActor*>& GetWaterPlanes() { return mWaterPlanes; }
 	
 private:
 	void ProcessInput();
@@ -102,6 +106,7 @@ private:
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
+	std::vector<class WaterPlaneActor*> mWaterPlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
 	class BobberActor* mSingleBobber;
