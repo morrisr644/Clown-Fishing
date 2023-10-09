@@ -45,6 +45,13 @@ public:
 			return mBobbers[0];
 		}*/
 	}
+	class BasicFish* GetBasicFish() {
+		return mBasicFish;
+	}
+	std::vector<class BasicFish*> GetBasicFishes()
+	{
+		return mBasicFishes;
+	}
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
@@ -79,6 +86,7 @@ private:
 	void UnloadData();
 	
 	// All the actors in the game
+	std::vector<class BasicFish*> mBasicFishes;
 	std::vector<class Actor*> mActors;
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
