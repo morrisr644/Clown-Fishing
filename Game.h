@@ -45,6 +45,13 @@ public:
 			return mBobbers[0];
 		}*/
 	}
+	class BasicFish* GetBasicFish() {
+		return mBasicFish;
+	}
+	std::vector<class BasicFish*> GetBasicFishes()
+	{
+		return mBasicFishes;
+	}
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
@@ -69,6 +76,10 @@ public:
 	void AddPlane(class PlaneActor* plane);
 	void RemovePlane(class PlaneActor* plane);
 	std::vector<class PlaneActor*>& GetPlanes() { return mPlanes; }
+
+	void AddWaterPlane(class WaterPlaneActor* water);
+	void RemoveWaterPlane(class WaterPlaneActor* water);
+	std::vector<class WaterPlaneActor*>& GetWaterPlanes() { return mWaterPlanes; }
 	
 private:
 	void ProcessInput();
@@ -79,6 +90,7 @@ private:
 	void UnloadData();
 	
 	// All the actors in the game
+	std::vector<class BasicFish*> mBasicFishes;
 	std::vector<class Actor*> mActors;
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
@@ -102,6 +114,7 @@ private:
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
+	std::vector<class WaterPlaneActor*> mWaterPlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
 	class BobberActor* mSingleBobber;

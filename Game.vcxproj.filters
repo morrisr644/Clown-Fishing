@@ -109,6 +109,9 @@
     <ClCompile Include="BasicFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WaterPlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -205,6 +208,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="BasicFish.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterPlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
