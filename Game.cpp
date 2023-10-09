@@ -335,7 +335,7 @@ void Game::LoadData()
 		for (int j = 5; j < 10; j++) // Rebecca Morris
 		{
 			a = new WaterPlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+			a->SetPosition(Vector3(start + i * size, start + j * size, -150.0f));
 		}
 	}
 
@@ -388,7 +388,7 @@ void Game::LoadData()
 	mBasicFish = new BasicFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -90.0f)); // why does the fish float?
+	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -150.0f)); // why does the fish float?
 
 	// Create target actors
 	a = new TargetActor(this);

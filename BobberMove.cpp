@@ -16,6 +16,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "BasicFish.h"
+#include "WaterPlaneActor.h"
 
 BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
@@ -42,6 +43,8 @@ void BobberMove::Update(float deltaTime)
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
 
+		BobberActor* bobber = mOwner->GetGame()->GetBobber();
+
 		// Make the bobber stop when hitting Ground
 		static_cast<BobberActor*>(mOwner)->HitGround();
 
@@ -53,6 +56,12 @@ void BobberMove::Update(float deltaTime)
 			fish->GetOnLine();
 		}
 
+		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
+
+		if (water)
+		{
+			bobber->PutInWater();
+		}
 
 	}
 

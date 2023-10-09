@@ -20,6 +20,8 @@ public:
 	void SetPlayer(Actor* player);
 
 	void HitGround();
+	void PutInWater();
+	void OutOfWater();
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
 private:
@@ -27,4 +29,5 @@ private:
 	class BobberMove* mMyMove;
 	float mLifeSpan;
 	double mLaunchAngle;
+	bool isInWater;
 };
