@@ -145,6 +145,7 @@ void FPSActor::Shoot()
 	ball->RotateToNewForward(dir);
 	// Play shooting sound
 	ball->SetMyMoveSpeed();
+	ball->OutOfWater();
 	mAudioComp->PlayEvent("event:/Shot");
 }
 

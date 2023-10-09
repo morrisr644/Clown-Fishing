@@ -31,6 +31,7 @@ BobberActor::BobberActor(Game* game)
 	mMyMove = new BobberMove(this);
 	mMyMove->SetForwardSpeed(1500.0f);
 	mAudioComp = new AudioComponent(this);
+	isInWater = false;
 }
 
 void BobberActor::UpdateActor(float deltaTime)
@@ -89,7 +90,7 @@ void BobberActor::UpdateActor(float deltaTime)
 	}
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
-	if (mMyMove->GetForwardSpeed() == 0)
+	if (mMyMove->GetForwardSpeed() == 0 && isInWater)
 	{
 		Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 		BasicFish* singleFish = GetGame()->GetBasicFish();
@@ -103,6 +104,7 @@ void BobberActor::UpdateActor(float deltaTime)
 			fishFacingBobber.Normalize();
 			GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
 			GetGame()->GetBasicFish()->SetAngularSpeed(0);
+
 		}
 		
 	}
@@ -117,6 +119,16 @@ void BobberActor::SetPlayer(Actor* player)
 void BobberActor::HitGround()
 {
 	mMyMove->SetForwardSpeed(0.0f);
+}
+
+void BobberActor::PutInWater()
+{
+	isInWater = true;
+}
+
+void BobberActor::OutOfWater()
+{
+	isInWater = false;
 }
 
 void BobberActor::SetLaunchAngle(float newAngle)
