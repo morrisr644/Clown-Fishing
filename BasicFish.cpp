@@ -3,7 +3,7 @@
 
 #include "BasicFish.h"
 #include "Game.h"
-//#include "Actor.h"
+#include "Actor.h"
 #include "Renderer.h"
 #include "MeshComponent.h"
 #include "BoxComponent.h"

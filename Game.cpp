@@ -387,8 +387,8 @@ void Game::LoadData()
 	mFPSActor = new FPSActor(this);
 	mBasicFish = new BasicFish(this);
 	mSingleBobber = new BobberActor(this);
-	mSingleBobber->SetPosition(Vector3(-1000, -1000, -1000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -50.0f));
+	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
+	mBasicFish->SetPosition(Vector3(1000.0f, 0.0f, -90.0f)); // why does the fish float?
 
 	// Create target actors
 	a = new TargetActor(this);
