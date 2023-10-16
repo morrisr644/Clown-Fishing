@@ -321,23 +321,9 @@ void Game::LoadData()
 	Actor* a = nullptr;
 	Quaternion q;
 	//MeshComponent* mc = nullptr;
-
-	// Setup floor
 	const float start = -1250.0f;
 	const float size = 250.0f;
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			a = new PlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
-		}
-		for (int j = 5; j < 10; j++) // Rebecca Morris
-		{
-			a = new WaterPlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -150.0f));
-		}
-	}
+	
 
 	// Left/right walls
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
@@ -406,7 +392,25 @@ void Game::LoadData()
 	a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
 	a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
 	
-
+	// Setup floor
+	for (int i = 0; i < 10; i++)
+	{
+		/*for (int j = 0; j < 10; j++)
+		{
+			a = new PlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -200.0f));
+		}*/
+		for (int j = 0; j < 5; j++)
+		{
+			a = new PlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 5; j < 10; j++) // Rebecca Morris
+		{
+			a = new WaterPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+	}
 }
 
 void Game::UnloadData()

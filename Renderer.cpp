@@ -127,7 +127,8 @@ void Renderer::Draw()
 	// Draw mesh components
 	// Enable depth buffering/disable alpha blend
 	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Set the mesh shader active
 	mMeshShader->SetActive();
 	// Update view-projection matrix
