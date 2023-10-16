@@ -3,7 +3,7 @@
 	"vertexformat":"PosNormTex",
 	"shader":"BasicMesh",
 	"textures":[
-		"Assets/ClearWater.png"
+		"Assets/PerfectWater.png"
 	],
 	"specularPower":100.0,
 	"vertices":[
