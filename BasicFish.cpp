@@ -9,6 +9,7 @@
 #include "BoxComponent.h"
 #include "Mesh.h"
 #include "PlaneActor.h"
+#include "UnderPlaneActor.h"
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
@@ -65,7 +66,7 @@ void BasicFish::FixCollisions() // pulled from Madhav FPSActor
 	const AABB& playerBox = mBoxComp->GetWorldBox();
 	Vector3 pos = GetPosition();
 
-	auto& planes = GetGame()->GetPlanes();
+	auto& planes = GetGame()->GetUnderPlanes();
 	for (auto pa : planes)
 	{
 		// Do we collide with this PlaneActor?

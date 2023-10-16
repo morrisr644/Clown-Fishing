@@ -19,6 +19,7 @@
 #include "BasicFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
+#include "UnderPlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
@@ -115,6 +116,17 @@ void Game::RemoveWaterPlane(WaterPlaneActor* water) // Rebecca Morris
 {
 	auto iter = std::find(mWaterPlanes.begin(), mWaterPlanes.end(), water);
 	mWaterPlanes.erase(iter);
+}
+
+void Game::AddUnderPlane(UnderPlaneActor* under) // Rebecca Morris
+{
+	mUnderPlanes.emplace_back(under);
+}
+
+void Game::RemoveUnderPlane(UnderPlaneActor* under) // Rebecca Morris
+{
+	auto iter = std::find(mUnderPlanes.begin(), mUnderPlanes.end(), under);
+	mUnderPlanes.erase(iter);
 }
 
 void Game::ProcessInput()
@@ -330,11 +342,11 @@ void Game::LoadData()
 	for (int i = 0; i < 10; i++)
 	{
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, start - size, 0.0f));
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
 		a->SetRotation(q);
 		
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, -start + size, 0.0f));
+		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
 		a->SetRotation(q);
 	}
 
@@ -343,11 +355,37 @@ void Game::LoadData()
 	for (int i = 0; i < 10; i++)
 	{
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start - size, start + i * size, 0.0f));
+		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
 		a->SetRotation(q);
 
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
+		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
+		a->SetRotation(q);
+	}
+
+	// Left/right walls under pond
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
+		a->SetRotation(q);
+
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, -start + size, -600.0f));
+		a->SetRotation(q);
+	}
+
+	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
+	// Forward/back walls under pond
+	for (int i = 0; i < 10; i++)
+	{
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start - size, start + i * size, -600.0f));
+		a->SetRotation(q);
+
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
 
@@ -395,11 +433,11 @@ void Game::LoadData()
 	// Setup floor
 	for (int i = 0; i < 10; i++)
 	{
-		/*for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 10; j++)
 		{
-			a = new PlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -200.0f));
-		}*/
+			a = new UnderPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f));
+		}
 		for (int j = 0; j < 5; j++)
 		{
 			a = new PlaneActor(this);
