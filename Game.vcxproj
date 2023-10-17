@@ -45,6 +45,7 @@
     <ClCompile Include="UIScreen.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="WaterPlaneActor.cpp" />
+    <ClCompile Include="YellowFish.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="UIScreen.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="WaterPlaneActor.h" />
+    <ClInclude Include="YellowFish.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BasicMesh.frag" />
