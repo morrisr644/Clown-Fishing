@@ -16,6 +16,7 @@
 #include "HUD.h"
 #include "MeshComponent.h"
 #include "FPSActor.h"
+#include "RodActor.h"
 #include "BasicFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
@@ -344,6 +345,10 @@ void Game::LoadData()
 		a = new PlaneActor(this);
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
 		a->SetRotation(q);
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f));
+		a->SetRotation(q);
 		
 		a = new PlaneActor(this);
 		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
@@ -409,10 +414,13 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
+	Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
+	mFPSActor->SetPosition(lowerPosition);
+	//mRodActor = new RodActor(this);
 	mBasicFish = new BasicFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -150.0f)); // why does the fish float?
+	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
 	// Create target actors
 	a = new TargetActor(this);

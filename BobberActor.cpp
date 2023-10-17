@@ -100,7 +100,7 @@ void BobberActor::UpdateActor(float deltaTime)
 			Vector3 fishFacingBobber;
 			fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
 			fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
-			fishFacingBobber.z = 0;
+			fishFacingBobber.z = currentPosition.z - fishCurrentPosition.z;
 			fishFacingBobber.Normalize();
 			GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
 			GetGame()->GetBasicFish()->SetAngularSpeed(0);

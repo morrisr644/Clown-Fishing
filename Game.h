@@ -122,6 +122,7 @@ private:
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
+	class RodActor* mRodActor;
 	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
