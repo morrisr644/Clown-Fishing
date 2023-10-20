@@ -1,7 +1,7 @@
 //Start of the basic fish for the game.
 //We are starting by making the basic fish a car model for the time being.
 
-#include "BasicFish.h"
+#include "YellowFish.h"
 #include "Game.h"
 #include "Actor.h"
 #include "Renderer.h"
@@ -14,15 +14,15 @@
 #include "PhysWorld.h"
 
 
-BasicFish::BasicFish(Game* game)
+YellowFish::YellowFish(Game* game)
 	:Actor(game)
-	, angularMovement(0.2)
-	, forwardMovement(200)
-	, basicFishTimer(1.0)
+	, angularMovement(0.3)
+	, forwardMovement(100)
+	, yellowFishTimer(3.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/RacingCar.gpmesh");
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/YellowRacingCar.gpmesh");
 	mc->SetMesh(mesh);
 
 	//Adding a collision box for the fish
@@ -41,7 +41,7 @@ BasicFish::BasicFish(Game* game)
 
 }
 
-void BasicFish::UpdateActor(float deltaTime)
+void YellowFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
@@ -51,14 +51,14 @@ void BasicFish::UpdateActor(float deltaTime)
 //{
 //}
 
-void BasicFish::GetOnLine() // Rebecca Morris
+void YellowFish::GetOnLine() // Rebecca Morris
 {
 	// When the fish is hit then stop moving (Caught)
 	SetMovementSpeed(0.0f);
 	SetAngularSpeed(0.0f);
 }
 
-void BasicFish::FixCollisions() // pulled from Madhav FPSActor
+void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 {
 	// Need to recompute my world transform to update world box
 	ComputeWorldTransform();
@@ -112,20 +112,20 @@ void BasicFish::FixCollisions() // pulled from Madhav FPSActor
 	}
 }
 
-void BasicFish::SetAngularSpeed(float newSpeed)
+void YellowFish::SetAngularSpeed(float newSpeed)
 {
 	//angularMovement = newSpeed;
 	mMoveComp->SetAngularSpeed(newSpeed);
 }
 
-void BasicFish::SetMovementSpeed(float newMovementSpeed)
+void YellowFish::SetMovementSpeed(float newMovementSpeed)
 {
 	//forwardMovement = newMovementSpeed;
 	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }
 
 
-void BasicFish::SetBasicFishTimer(float newTimer)
+void YellowFish::SetYellowFishTimer(float newTimer)
 {
-	basicFishTimer = newTimer;
+	yellowFishTimer = newTimer;
 }

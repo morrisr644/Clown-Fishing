@@ -48,6 +48,9 @@ public:
 	class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}
+	class YellowFish* GetYellowFish() {
+		return mYellowFish;
+	}
 	std::vector<class BasicFish*> GetBasicFishes()
 	{
 		return mBasicFishes;
@@ -120,4 +123,5 @@ private:
 	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
+	class YellowFish* mYellowFish;
 };

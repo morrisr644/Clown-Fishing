@@ -18,6 +18,7 @@
 #include "AudioComponent.h"
 #include "Math.h"
 #include "BasicFish.h"
+#include "YellowFish.h"
 
 BobberActor::BobberActor(Game* game)
 	:Actor(game)
@@ -39,36 +40,8 @@ void BobberActor::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	float gravity = 9.81;
 
-	mLifeSpan -= deltaTime;
+	//mLifeSpan -= deltaTime;
 
-	//Forward Speed = Forward/Backward = X Axis
-	//Angular Speed = Up/Down = Z Axis
-	//Strafe Speed = Left/Right = Y Axis
-
-	//newSpeed = 1/2(gravity)(deltaTime)(deltaTime) + (Velocity)(deltaTime) + currentSpeed
-
-	// dx = endPosition.x - startPosition.x
-	// dy = endPosition.y - startPosition.y
-	// dz = endPosition.z - startPosition.z
-
-	// d = sqrt(dx*dx + dy*dy + dz*dz)
-
-	// This is the velocity vector
-	// vx = dx/d * currentSpeed
-	// vy = dy/d * currentSpeed
-	// vz = dz/d * currentSpeed
-	/*Vector3 currPosition = GetGame()->GetBobber()->GetPosition();
-	currPosition.Normalize();
-	float launchAngleInRadians = asin(currPosition.z);
-	SetLaunchAngle(launchAngleInRadians);
-
-	Vector3 currentPosition = this->GetPosition(); // this doesnt work
-	//Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); 
-	Vector3 appliedMath = currentPosition;
-	appliedMath.x = currentPosition.x + 10 * cos(mLaunchAngle) * deltaTime;
-	appliedMath.y = currentPosition.y + 10 * sin(mLaunchAngle) * deltaTime;
-	appliedMath.z = currentPosition.z + 10 * sin(mLaunchAngle) * deltaTime - (0.5 * 9.81 * deltaTime * deltaTime);
-	this->SetPosition(appliedMath);*/
 	
 	if (mMyMove->GetForwardSpeed() != 0)
 	{
@@ -90,21 +63,51 @@ void BobberActor::UpdateActor(float deltaTime)
 	}
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
+	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
 	if (mMyMove->GetForwardSpeed() == 0 && isInWater)
 	{
-		Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 		BasicFish* singleFish = GetGame()->GetBasicFish();
-		Vector3 fishCurrentPosition = singleFish->GetPosition();
-		if ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0))
+		float basicFishTimer = singleFish->GetBasicFishTimer();
+		basicFishTimer -= deltaTime;
+		singleFish->SetBasicFishTimer(basicFishTimer);
+		if (basicFishTimer <= 0)
 		{
-			Vector3 fishFacingBobber;
-			fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
-			fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
-			fishFacingBobber.z = 0;
-			fishFacingBobber.Normalize();
-			GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
-			GetGame()->GetBasicFish()->SetAngularSpeed(0);
+			Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 
+			Vector3 fishCurrentPosition = singleFish->GetPosition();
+			if ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0))
+			{
+				Vector3 fishFacingBobber;
+				fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
+				fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
+				fishFacingBobber.z = 0;
+				fishFacingBobber.Normalize();
+				GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
+				GetGame()->GetBasicFish()->SetAngularSpeed(0);
+
+			}
+		}
+
+		YellowFish* yellowFish = GetGame()->GetYellowFish();
+		float yelloFishTimer = yellowFish->GetYellowFishTimer();
+		yelloFishTimer -= deltaTime;
+		yellowFish->SetYellowFishTimer(yelloFishTimer);
+		if (yelloFishTimer <= 0)
+		{
+			Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
+
+			Vector3 fishCurrentPosition = yellowFish->GetPosition();
+			if ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0))
+			{
+				Vector3 fishFacingBobber;
+				fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
+				fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
+				fishFacingBobber.z = 0;
+				fishFacingBobber.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
+				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+
+			}
 		}
 		
 	}
