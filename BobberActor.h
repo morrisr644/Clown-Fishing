@@ -24,10 +24,12 @@ public:
 	void OutOfWater();
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
+	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
 	float mLifeSpan;
 	double mLaunchAngle;
 	bool isInWater;
+	Vector3 mForwardVelocity;
 };

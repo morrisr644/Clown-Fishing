@@ -24,13 +24,14 @@ BobberActor::BobberActor(Game* game)
 	:Actor(game)
 	,mLifeSpan(2.0f)
 	,mLaunchAngle(0.0)
+	, mForwardVelocity()
 {
 	//SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh"); // Sphere has been recolored to look more like a bobber (RCM)
 	mc->SetMesh(mesh);
 	mMyMove = new BobberMove(this);
-	mMyMove->SetForwardSpeed(1500.0f);
+	mMyMove->SetForwardSpeed(1000.0f);
 	mAudioComp = new AudioComponent(this);
 	isInWater = false;
 }
@@ -38,34 +39,31 @@ BobberActor::BobberActor(Game* game)
 void BobberActor::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
-	float gravity = 9.81;
+	float gravity = 98.1;
 
 	//mLifeSpan -= deltaTime;
 
 	
 	if (mMyMove->GetForwardSpeed() != 0)
 	{
-		Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); // This is the simple curve that kind of works, ends at line 75
-		currPosition.z = currPosition.z * .981;
-		GetGame()->GetBobber()->SetPosition(currPosition);
-		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); // This is the complicated math for the wonky curve ends at line 87
-		//currPosition.Normalize();
-		//float launchAngleInRadians = sin(currPosition.z - (M_PI / 4)); // Subtracting pi/4 should theoretically negatively affect the curve
-		//SetLaunchAngle(launchAngleInRadians);
 
-		//Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
-		//Vector3 currPosition = GetGame()->GetBobber()->GetPosition(); 
-		//Vector3 appliedMath = currentPosition;
-		//appliedMath.x = currentPosition.x;//+1000 * cos(mLaunchAngle) * deltaTime;
-		//appliedMath.y = currentPosition.y;// +1000 * sin(mLaunchAngle) * deltaTime;
-		//appliedMath.z = currentPosition.z + 750 * sin(mLaunchAngle) * deltaTime - (0.5 * gravity * deltaTime * deltaTime);
-		//GetGame()->GetBobber()->SetPosition(appliedMath);
+		Vector3 pos = GetPosition();
+		Vector3 velocity = mForwardVelocity;
+		Vector3 acceleration(0, 0, -gravity);
+
+		pos = 0.5 * acceleration * deltaTime * deltaTime + velocity * deltaTime + pos;
+		velocity = velocity + acceleration * deltaTime;
+
+		SetForwardVelocity(velocity);
+		SetPosition(pos);
 	}
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
 	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
 	if (mMyMove->GetForwardSpeed() == 0 && isInWater)
 	{
+		Vector3 stopVelocity(0.0, 0.0, 0.0);
+		SetForwardVelocity(stopVelocity);
 		BasicFish* singleFish = GetGame()->GetBasicFish();
 		float basicFishTimer = singleFish->GetBasicFishTimer();
 		basicFishTimer -= deltaTime;
@@ -141,6 +139,6 @@ void BobberActor::SetLaunchAngle(float newAngle)
 
 void BobberActor::SetMyMoveSpeed()
 {
-	mMyMove->SetForwardSpeed(1500.0f);
+	mMyMove->SetForwardSpeed(1000.0f);
 }
 
