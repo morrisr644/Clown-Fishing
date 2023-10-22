@@ -16,6 +16,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "BasicFish.h"
+#include "YellowFish.h"
 #include "WaterPlaneActor.h"
 
 BobberMove::BobberMove(Actor* owner)
@@ -54,6 +55,12 @@ void BobberMove::Update(float deltaTime)
 		if (fish)
 		{
 			fish->GetOnLine();
+		}
+
+		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
+		if (yellowFish)
+		{
+			yellowFish->GetOnLine();
 		}
 
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
