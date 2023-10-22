@@ -115,6 +115,12 @@
     <ClCompile Include="YellowFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnderPlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RodActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -214,6 +220,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="WaterPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnderPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RodActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="YellowFish.h">

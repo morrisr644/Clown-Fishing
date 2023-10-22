@@ -36,6 +36,7 @@
     <ClCompile Include="PhysWorld.cpp" />
     <ClCompile Include="PlaneActor.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="TargetComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UIScreen.cpp" />
+    <ClCompile Include="UnderPlaneActor.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="WaterPlaneActor.cpp" />
     <ClCompile Include="YellowFish.cpp" />
@@ -72,6 +74,7 @@
     <ClInclude Include="PhysWorld.h" />
     <ClInclude Include="PlaneActor.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RodActor.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />
@@ -79,6 +82,7 @@
     <ClInclude Include="TargetComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UIScreen.h" />
+    <ClInclude Include="UnderPlaneActor.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="WaterPlaneActor.h" />
     <ClInclude Include="YellowFish.h" />

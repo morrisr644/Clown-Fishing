@@ -16,10 +16,12 @@
 #include "HUD.h"
 #include "MeshComponent.h"
 #include "FPSActor.h"
+#include "RodActor.h"
 #include "BasicFish.h"
 #include "YellowFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
+#include "UnderPlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
@@ -116,6 +118,17 @@ void Game::RemoveWaterPlane(WaterPlaneActor* water) // Rebecca Morris
 {
 	auto iter = std::find(mWaterPlanes.begin(), mWaterPlanes.end(), water);
 	mWaterPlanes.erase(iter);
+}
+
+void Game::AddUnderPlane(UnderPlaneActor* under) // Rebecca Morris
+{
+	mUnderPlanes.emplace_back(under);
+}
+
+void Game::RemoveUnderPlane(UnderPlaneActor* under) // Rebecca Morris
+{
+	auto iter = std::find(mUnderPlanes.begin(), mUnderPlanes.end(), under);
+	mUnderPlanes.erase(iter);
 }
 
 void Game::ProcessInput()
@@ -322,34 +335,24 @@ void Game::LoadData()
 	Actor* a = nullptr;
 	Quaternion q;
 	//MeshComponent* mc = nullptr;
-
-	// Setup floor
 	const float start = -1250.0f;
 	const float size = 250.0f;
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			a = new PlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
-		}
-		for (int j = 5; j < 10; j++) // Rebecca Morris
-		{
-			a = new WaterPlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -150.0f));
-		}
-	}
+	
 
 	// Left/right walls
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, start - size, 0.0f));
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
+		a->SetRotation(q);
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f));
 		a->SetRotation(q);
 		
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, -start + size, 0.0f));
+		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
 		a->SetRotation(q);
 	}
 
@@ -358,11 +361,37 @@ void Game::LoadData()
 	for (int i = 0; i < 10; i++)
 	{
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start - size, start + i * size, 0.0f));
+		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
 		a->SetRotation(q);
 
 		a = new PlaneActor(this);
-		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
+		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
+		a->SetRotation(q);
+	}
+
+	// Left/right walls under pond
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
+		a->SetRotation(q);
+
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, -start + size, -600.0f));
+		a->SetRotation(q);
+	}
+
+	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
+	// Forward/back walls under pond
+	for (int i = 0; i < 10; i++)
+	{
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(start - size, start + i * size, -600.0f));
+		a->SetRotation(q);
+
+		a = new UnderPlaneActor(this);
+		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
 
@@ -386,12 +415,16 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
+	Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
+	mFPSActor->SetPosition(lowerPosition);
+	//mRodActor = new RodActor(this);
 	mBasicFish = new BasicFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -150.0f)); // why does the fish float?
-	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -150.0f));
+	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -250.0f));
+	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
 	// Create target actors
 	a = new TargetActor(this);
@@ -409,7 +442,25 @@ void Game::LoadData()
 	a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
 	a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
 	
-
+	// Setup floor
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			a = new UnderPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f));
+		}
+		for (int j = 0; j < 5; j++)
+		{
+			a = new PlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 5; j < 10; j++) // Rebecca Morris
+		{
+			a = new WaterPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+	}
 }
 
 void Game::UnloadData()
