@@ -50,18 +50,20 @@ void BobberMove::Update(float deltaTime)
 		static_cast<BobberActor*>(mOwner)->HitGround();
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
+		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
 
 		// If the bobber hits the fish
 		if (fish)
 		{
 			fish->GetOnLine();
+			bobber->FishOn();
 		}
-
-		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
 		if (yellowFish)
 		{
 			yellowFish->GetOnLine();
+			bobber->FishOn();
 		}
+		
 
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
 
@@ -71,6 +73,7 @@ void BobberMove::Update(float deltaTime)
 		}
 
 	}
+		
 
 
 
