@@ -23,7 +23,7 @@ void FPSCamera::Update(float deltaTime)
 	CameraComponent::Update(deltaTime);
 	// Camera position is owner position
 	Vector3 cameraPos = mOwner->GetPosition();
-	cameraPos.Set(cameraPos.x, cameraPos.y, cameraPos.z + 200.0f);
+	cameraPos.Set(cameraPos.x, cameraPos.y, cameraPos.z);
 
 	// Update pitch based on pitch speed
 	mPitch += mPitchSpeed * deltaTime;

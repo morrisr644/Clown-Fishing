@@ -87,6 +87,10 @@ public:
 	void AddUnderPlane(class UnderPlaneActor* under);
 	void RemoveUnderPlane(class UnderPlaneActor* under);
 	std::vector<class UnderPlaneActor*>& GetUnderPlanes() { return mUnderPlanes; }
+
+	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
+	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
+	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
 	
 private:
 	void ProcessInput();
@@ -123,6 +127,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	std::vector<class WaterPlaneActor*> mWaterPlanes;
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
+	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	class BasicFish* mBasicFish;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;

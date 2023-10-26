@@ -18,6 +18,7 @@
 #include "BasicFish.h"
 #include "YellowFish.h"
 #include "WaterPlaneActor.h"
+#include "InvisiblePlaneActor.h"
 
 BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
@@ -46,8 +47,13 @@ void BobberMove::Update(float deltaTime)
 
 		BobberActor* bobber = mOwner->GetGame()->GetBobber();
 
-		// Make the bobber stop when hitting Ground
-		static_cast<BobberActor*>(mOwner)->HitGround();
+		InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
+
+		if (!invisWall)
+		{
+			// Make the bobber stop when hitting Ground
+			static_cast<BobberActor*>(mOwner)->HitGround();
+		}
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
 
