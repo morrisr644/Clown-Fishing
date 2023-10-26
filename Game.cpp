@@ -22,6 +22,7 @@
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "UnderPlaneActor.h"
+#include "InvisiblePlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
@@ -129,6 +130,17 @@ void Game::RemoveUnderPlane(UnderPlaneActor* under) // Rebecca Morris
 {
 	auto iter = std::find(mUnderPlanes.begin(), mUnderPlanes.end(), under);
 	mUnderPlanes.erase(iter);
+}
+
+void Game::AddInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
+{
+	mInvisiblePlanes.emplace_back(invis);
+}
+
+void Game::RemoveInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
+{
+	auto iter = std::find(mInvisiblePlanes.begin(), mInvisiblePlanes.end(), invis);
+	mInvisiblePlanes.erase(iter);
 }
 
 void Game::ProcessInput()
@@ -347,9 +359,9 @@ void Game::LoadData()
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
 		a->SetRotation(q);
 
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f));
-		a->SetRotation(q);
+		/*a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
+		a->SetRotation(q);*/
 		
 		a = new PlaneActor(this);
 		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
@@ -415,9 +427,8 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
-	Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
-	mFPSActor->SetPosition(lowerPosition);
-	//mRodActor = new RodActor(this);
+	/*Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
+	mFPSActor->SetPosition(Vector3(0.0f, 0.0f, -100.0f));*/
 	mBasicFish = new BasicFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
@@ -460,6 +471,15 @@ void Game::LoadData()
 			a = new WaterPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
+	} 
+
+	// Draw the invisible wall
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new InvisiblePlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), 400.0f));
+		a->SetRotation(q);
 	}
 }
 

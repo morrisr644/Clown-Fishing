@@ -21,6 +21,7 @@
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "UnderPlaneActor.h"
+#include "InvisiblePlaneActor.h"
 #include "PhysWorld.h"
 
 FPSActor::FPSActor(Game* game)
@@ -219,8 +220,8 @@ void FPSActor::FixCollisions()
 	}
 	
 
-	auto& waterPlanes = GetGame()->GetUnderPlanes();
-	for (auto pa : waterPlanes)
+	auto& invisPlanes = GetGame()->GetInvisiblePlanes();
+	for (auto pa : invisPlanes)
 	{
 		// Do we collide with this PlaneActor?
 
