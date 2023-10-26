@@ -22,6 +22,8 @@ public:
 	void HitGround();
 	void PutInWater();
 	void OutOfWater();
+	void FishOn();
+	void FishOff();
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
 	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
@@ -31,5 +33,6 @@ private:
 	float mLifeSpan;
 	double mLaunchAngle;
 	bool isInWater;
+	bool isFishOn;
 	Vector3 mForwardVelocity;
 };
