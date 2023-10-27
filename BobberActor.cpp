@@ -34,6 +34,7 @@ BobberActor::BobberActor(Game* game)
 	mMyMove->SetForwardSpeed(1000.0f);
 	mAudioComp = new AudioComponent(this);
 	isInWater = false;
+	moveAwayTimer = 1.0;
 }
 
 void BobberActor::UpdateActor(float deltaTime)
@@ -85,9 +86,15 @@ void BobberActor::UpdateActor(float deltaTime)
 				GetGame()->GetBasicFish()->SetAngularSpeed(0);
 			}
 		}
-		else if (((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0) && isFishOn == true))
+		else if (((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y)) < 100.0) && isFishOn == true)
 		{
-
+			Vector3 turnFishAround;
+			turnFishAround.x = -fishCurrentPosition.x;
+			turnFishAround.y = -fishCurrentPosition.y;
+			turnFishAround.z = -fishCurrentPosition.z;
+			turnFishAround.Normalize();
+			GetGame()->GetBasicFish()->RotateToNewForward(turnFishAround);
+			GetGame()->GetBasicFish()->SetAngularSpeed(0);
 		}
 
 
@@ -108,6 +115,16 @@ void BobberActor::UpdateActor(float deltaTime)
 				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
 			}
+		}
+		else if (isFishOn == true && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		{
+			Vector3 turnFishAround;
+			turnFishAround.x = -yellowFishCurrentPosition.x;
+			turnFishAround.y = -yellowFishCurrentPosition.y;
+			turnFishAround.z = yellowFishCurrentPosition.z;
+			turnFishAround.Normalize();
+			GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+			GetGame()->GetYellowFish()->SetAngularSpeed(0);
 		}
 
 	}
