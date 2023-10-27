@@ -57,6 +57,19 @@ void BobberMove::Update(float deltaTime)
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
 		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
+		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
+
+		Vector3 bobberPosition = bobber->GetPosition();
+
+		if (bobberPosition.z > -100)
+		{
+			bobber->PutInWater();
+		}
+
+		if (water)
+		{
+			bobber->PutInWater();
+		}
 
 		// If the bobber hits the fish
 		if (fish)
@@ -71,12 +84,7 @@ void BobberMove::Update(float deltaTime)
 		}
 		
 
-		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
-
-		if (water)
-		{
-			bobber->PutInWater();
-		}
+		
 
 	}
 		
