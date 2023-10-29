@@ -36,8 +36,8 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="PhysWorld.cpp" />
     <ClCompile Include="PlaneActor.cpp" />
+    <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -75,8 +75,8 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PhysWorld.h" />
     <ClInclude Include="PlaneActor.h" />
+    <ClInclude Include="RedFish.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RodActor.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />

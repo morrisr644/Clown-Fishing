@@ -17,6 +17,7 @@
 #include "BobberActor.h"
 #include "BasicFish.h"
 #include "YellowFish.h"
+#include "RedFish.h"
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 
@@ -57,6 +58,7 @@ void BobberMove::Update(float deltaTime)
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
 		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
+		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
 
 		Vector3 bobberPosition = bobber->GetPosition();
@@ -72,14 +74,19 @@ void BobberMove::Update(float deltaTime)
 		}
 
 		// If the bobber hits the fish
-		if (fish)
+		/*if (fish)
 		{
 			fish->GetOnLine();
 			bobber->FishOn();
-		}
+		}*/
 		if (yellowFish)
 		{
 			yellowFish->GetOnLine();
+			bobber->FishOn();
+		}
+		if (redFish)
+		{
+			redFish->GetOnLine();
 			bobber->FishOn();
 		}
 		

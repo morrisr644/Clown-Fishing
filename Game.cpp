@@ -16,9 +16,9 @@
 #include "HUD.h"
 #include "MeshComponent.h"
 #include "FPSActor.h"
-#include "RodActor.h"
 #include "BasicFish.h"
 #include "YellowFish.h"
+#include "RedFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "UnderPlaneActor.h"
@@ -83,6 +83,8 @@ bool Game::Initialize()
 	}
 
 	LoadData();
+
+	isReelingIn = false;
 
 	mTicksCount = SDL_GetTicks();
 	
@@ -251,6 +253,56 @@ void Game::HandleKeyPress(int key)
 
 		mFPSActor->Shoot();
 		break;
+	}
+	case SDLK_SPACE:
+	{
+		if (isReelingIn)
+		{
+			Vector3 bobberPos = mSingleBobber->GetPosition();
+
+			Vector3 playerPos = mFPSActor->GetPosition();
+
+			auto hookedFish = mBasicFish;
+
+			Vector3 fishPos;
+			// Find out which fish was hooked
+			//for (auto fish : mBasicFishes)
+			//{
+			//	if (fish->GetLineStatus())
+			//	{
+			//		fishPos = fish->GetPosition();
+			//		fish->SetPosition(playerPos);
+
+			//		hookedFish = fish;
+			//		//mSingleBobber->SetPosition(playerPos);
+			//	}
+			//}
+
+			YellowFish* yfish = mYellowFish; 
+			if (yfish->GetLineStatus())
+			{
+				fishPos = yfish->GetPosition();
+				//yfish->SetPosition(playerPos);
+
+				hookedFish = yfish;
+				//mSingleBobber->SetPosition(playerPos);
+			}
+			RedFish* rfish = mRedFish;
+			if (rfish->GetLineStatus())
+			{
+				fishPos = rfish->GetPosition();
+				//rfish->SetPosition(playerPos);
+
+				hookedFish = rfish;
+				//mSingleBobber->SetPosition(playerPos);
+			}
+			Vector3 newBobberPos = Vector3(bobberPos.x, bobberPos.y - 25.0f, bobberPos.z);
+
+			Vector3 newFishPos = Vector3(fishPos.x, fishPos.y - 25.0f, fishPos.z);
+
+			hookedFish->SetPosition(newFishPos);
+			mSingleBobber->SetPosition(newBobberPos);
+		}
 	}
 	default:
 		break;
@@ -430,10 +482,11 @@ void Game::LoadData()
 	/*Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
 	mFPSActor->SetPosition(Vector3(0.0f, 0.0f, -100.0f));*/
 	mBasicFish = new BasicFish(this);
+	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+	mRedFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -250.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
@@ -578,6 +631,32 @@ void Game::RemoveBobber(BobberActor* bobber) // Rebecca Morris
 		// Swap to end of vector and pop off (avoid erase copies)
 		std::iter_swap(iter, mBobbers.end() - 1);
 		mBobbers.pop_back();
+	}
+}
+
+void Game::AddBasicFish(BasicFish* fish)
+{
+	mBasicFishes.emplace_back(fish);
+}
+
+void Game::RemoveBasicFish(BasicFish* fish)
+{
+	// Is it in pending actors?
+	auto iter = std::find(mPendingBasicFish.begin(), mPendingBasicFish.end(), fish);
+	if (iter != mPendingBasicFish.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mPendingBasicFish.end() - 1);
+		mPendingBasicFish.pop_back();
+	}
+
+	// Is it in actors?
+	iter = std::find(mBasicFishes.begin(), mBasicFishes.end(), fish);
+	if (iter != mBasicFishes.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mBasicFishes.end() - 1);
+		mBasicFishes.pop_back();
 	}
 }
 

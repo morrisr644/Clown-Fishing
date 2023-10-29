@@ -19,6 +19,7 @@
 #include "Math.h"
 #include "BasicFish.h"
 #include "YellowFish.h"
+#include "RedFish.h"
 
 BobberActor::BobberActor(Game* game)
 	:Actor(game)
@@ -67,44 +68,47 @@ void BobberActor::UpdateActor(float deltaTime)
 		SetForwardVelocity(stopVelocity);
 		Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 
-		BasicFish* singleFish = GetGame()->GetBasicFish();
-		float basicFishTimer = singleFish->GetBasicFishTimer();
+		//for (auto singleFish : GetGame()->GetBasicFishes())
+		//{
+		//	//BasicFish* singleFish = GetGame()->GetBasicFish();
+		//	float basicFishTimer = singleFish->GetFishTimer();
 
-		Vector3 fishCurrentPosition = singleFish->GetPosition();
-		if (isFishOn == false && ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0)))
-		{
-			basicFishTimer -= deltaTime;
-			singleFish->SetBasicFishTimer(basicFishTimer);
-			if (basicFishTimer <= 0)
-			{
-				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
-				fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
-				fishFacingBobber.z = currentPosition.z - fishCurrentPosition.z;
-				fishFacingBobber.Normalize();
-				GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
-				GetGame()->GetBasicFish()->SetAngularSpeed(0);
-			}
-		}
-		else if (((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y)) < 100.0) && isFishOn == true)
-		{
-			Vector3 turnFishAround;
-			turnFishAround.x = -fishCurrentPosition.x;
-			turnFishAround.y = -fishCurrentPosition.y;
-			turnFishAround.z = -fishCurrentPosition.z;
-			turnFishAround.Normalize();
-			GetGame()->GetBasicFish()->RotateToNewForward(turnFishAround);
-			GetGame()->GetBasicFish()->SetAngularSpeed(0);
-		}
+		//	Vector3 fishCurrentPosition = singleFish->GetPosition();
+		//	if (isFishOn == false && ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0)))
+		//	{
+		//		basicFishTimer -= deltaTime;
+		//		singleFish->SetFishTimer(basicFishTimer);
+		//		if (basicFishTimer <= 0)
+		//		{
+		//			Vector3 fishFacingBobber;
+		//			fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
+		//			fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
+		//			fishFacingBobber.z = currentPosition.z - fishCurrentPosition.z;
+		//			fishFacingBobber.Normalize();
+		//			GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
+		//			GetGame()->GetBasicFish()->SetAngularSpeed(0);
+		//		}
+		//	}
+		//	else if (((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y)) < 100.0) && isFishOn == true)
+		//	{
+		//		Vector3 turnFishAround;
+		//		turnFishAround.x = -fishCurrentPosition.x;
+		//		turnFishAround.y = -fishCurrentPosition.y;
+		//		turnFishAround.z = -fishCurrentPosition.z;
+		//		turnFishAround.Normalize();
+		//		GetGame()->GetBasicFish()->RotateToNewForward(turnFishAround);
+		//		GetGame()->GetBasicFish()->SetAngularSpeed(0);
+		//	}
+		//}
 
 
 		YellowFish* yellowFish = GetGame()->GetYellowFish();
-		float yelloFishTimer = yellowFish->GetYellowFishTimer();
+		float yelloFishTimer = yellowFish->GetFishTimer();
 		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
 		if (isFishOn == false && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
 		{
 			yelloFishTimer -= deltaTime;
-			yellowFish->SetYellowFishTimer(yelloFishTimer);
+			yellowFish->SetFishTimer(yelloFishTimer);
 			if (yelloFishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
@@ -125,6 +129,35 @@ void BobberActor::UpdateActor(float deltaTime)
 			turnFishAround.Normalize();
 			GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
 			GetGame()->GetYellowFish()->SetAngularSpeed(0);
+		}
+
+		RedFish* redFish = GetGame()->GetRedFish();
+		float redFishTimer = redFish->GetFishTimer();
+		Vector3 redFishCurrentPosition = redFish->GetPosition();
+		if (isFishOn == false && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
+		{
+			redFishTimer -= deltaTime;
+			redFish->SetFishTimer(redFishTimer);
+			if (redFishTimer <= 0)
+			{
+				Vector3 fishFacingBobber;
+				fishFacingBobber.x = currentPosition.x - redFishCurrentPosition.x;
+				fishFacingBobber.y = currentPosition.y - redFishCurrentPosition.y;
+				fishFacingBobber.z = currentPosition.z - redFishCurrentPosition.z;
+				fishFacingBobber.Normalize();
+				GetGame()->GetRedFish()->RotateToNewForward(fishFacingBobber);
+				GetGame()->GetRedFish()->SetAngularSpeed(0);
+			}
+		}
+		else if (isFishOn == true && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
+		{
+			Vector3 turnFishAround;
+			turnFishAround.x = -redFishCurrentPosition.x;
+			turnFishAround.y = -redFishCurrentPosition.y;
+			turnFishAround.z = redFishCurrentPosition.z;
+			turnFishAround.Normalize();
+			GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
+			GetGame()->GetRedFish()->SetAngularSpeed(0);
 		}
 
 	}

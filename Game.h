@@ -28,6 +28,9 @@ public:
 	void AddBobber(class BobberActor* bobber); // Rebecca Morris
 	void RemoveBobber(class BobberActor* bobber); // Rebecca Morris
 
+	void AddBasicFish(class BasicFish* fish); // Rebecca Morris
+	void RemoveBasicFish(class BasicFish* fish); // Rebecca Morris
+
 	class Renderer* GetRenderer() { return mRenderer; }
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
 	class PhysWorld* GetPhysWorld() { return mPhysWorld; }
@@ -51,10 +54,17 @@ public:
 	class YellowFish* GetYellowFish() {
 		return mYellowFish;
 	}
+	class RedFish* GetRedFish() {
+		return mRedFish;
+	}
 	std::vector<class BasicFish*> GetBasicFishes()
 	{
 		return mBasicFishes;
 	}
+	/*std::vector<class YellowFish*> GetYellowFishes()
+	{
+		return mYellowFishes;
+	}*/
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
@@ -70,6 +80,10 @@ public:
 	
 	GameState GetState() const { return mGameState; }
 	void SetState(GameState state) { mGameState = state; }
+
+	bool GetReelState() { return isReelingIn; }
+	void StartReeling() { isReelingIn = true; }
+	void StopReeling() { isReelingIn = false; }
 	
 	class Font* GetFont(const std::string& fileName);
 
@@ -102,6 +116,7 @@ private:
 	
 	// All the actors in the game
 	std::vector<class BasicFish*> mBasicFishes;
+	//std::vector<class YellowFish*> mYellowFishes;
 	std::vector<class Actor*> mActors;
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
@@ -112,6 +127,7 @@ private:
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class BobberActor*> mPendingBobbers; //Rebecca Morris
+	std::vector<class BasicFish*> mPendingBasicFish; //Rebecca Morris
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;
@@ -122,6 +138,9 @@ private:
 	GameState mGameState;
 	// Track if we're updating actors right now
 	bool mUpdatingActors;
+
+	// Track if the fish is being reeled in
+	bool isReelingIn;
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
@@ -135,4 +154,5 @@ private:
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
 	class YellowFish* mYellowFish;
+	class RedFish* mRedFish;
 };

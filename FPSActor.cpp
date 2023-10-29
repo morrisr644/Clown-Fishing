@@ -154,6 +154,7 @@ void FPSActor::Shoot()
 	ball->SetMyMoveSpeed();
 	ball->OutOfWater();
 	mAudioComp->PlayEvent("event:/Shot");
+	this->GetGame()->StopReeling();
 }
 
 void FPSActor::SetFootstepSurface(float value)

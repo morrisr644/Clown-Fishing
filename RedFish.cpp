@@ -1,10 +1,10 @@
 //Start of the basic fish for the game.
 //We are starting by making the basic fish a car model for the time being.
 
-#include "YellowFish.h"
+#include "BasicFish.h"
+#include "RedFish.h"
 #include "Game.h"
 #include "Actor.h"
-#include "BasicFish.h"
 #include "Renderer.h"
 #include "MeshComponent.h"
 #include "BoxComponent.h"
@@ -16,15 +16,15 @@
 #include "PhysWorld.h"
 
 
-YellowFish::YellowFish(Game* game)
+RedFish::RedFish(Game* game)
 	:BasicFish(game)
-	, angularMovement(0.3)
-	, forwardMovement(100)
-	, fishTimer(3.0)
+	, angularMovement(0.2)
+	, forwardMovement(200)
+	, fishTimer(1.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/YellowRacingCar.gpmesh");
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/RacingCar.gpmesh");
 	mc->SetMesh(mesh);
 
 	//Adding a collision box for the fish
@@ -40,13 +40,12 @@ YellowFish::YellowFish(Game* game)
 		Vector3(25.0f, 25.0f, 87.5f));
 	mBoxComp->SetObjectBox(myBox);
 	mBoxComp->SetShouldRotate(false);
-
 	isOnLine = false;
 
 	GetGame()->AddBasicFish(this);
 }
 
-void YellowFish::UpdateActor(float deltaTime)
+void RedFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
@@ -56,7 +55,7 @@ void YellowFish::UpdateActor(float deltaTime)
 //{
 //}
 
-void YellowFish::GetOnLine() // Rebecca Morris
+void RedFish::GetOnLine() // Rebecca Morris
 {
 	// When the fish is hit then stop moving (Caught)
 	SetMovementSpeed(0.0f);
@@ -65,7 +64,7 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	isOnLine = true;
 }
 
-void YellowFish::FixCollisions() // pulled from Madhav FPSActor
+void RedFish::FixCollisions() // pulled from Madhav FPSActor
 {
 	// Need to recompute my world transform to update world box
 	ComputeWorldTransform();
@@ -126,20 +125,20 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 	}
 }
 
-void YellowFish::SetAngularSpeed(float newSpeed)
+void RedFish::SetAngularSpeed(float newSpeed)
 {
 	//angularMovement = newSpeed;
 	mMoveComp->SetAngularSpeed(newSpeed);
 }
 
-void YellowFish::SetMovementSpeed(float newMovementSpeed)
+void RedFish::SetMovementSpeed(float newMovementSpeed)
 {
 	//forwardMovement = newMovementSpeed;
 	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }
 
 
-void YellowFish::SetFishTimer(float newTimer)
+void RedFish::SetFishTimer(float newTimer)
 {
 	fishTimer = newTimer;
 }
