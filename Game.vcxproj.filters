@@ -118,10 +118,10 @@
     <ClCompile Include="UnderPlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RodActor.cpp">
+    <ClCompile Include="InvisiblePlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InvisiblePlaneActor.cpp">
+    <ClCompile Include="RedFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -228,13 +228,13 @@
     <ClInclude Include="UnderPlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="RodActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="YellowFish.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="InvisiblePlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedFish.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

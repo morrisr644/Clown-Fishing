@@ -1,10 +1,13 @@
+// Header for the BasicFish
+
 #pragma once
+#include "Actor.h"
 #include "BasicFish.h"
 
-class YellowFish : public BasicFish
+class RedFish : public BasicFish
 {
 public:
-	YellowFish(class Game* game);
+	RedFish(class Game* game);
 
 	void UpdateActor(float deltaTime) override;
 	void GetOnLine(); // Rebecca Morris
