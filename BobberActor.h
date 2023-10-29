@@ -27,6 +27,7 @@ public:
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
 	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
+	void ResetMoveAwayTimer() { moveAwayTimer = 3.0; }
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
@@ -34,5 +35,6 @@ private:
 	double mLaunchAngle;
 	bool isInWater;
 	bool isFishOn;
+	float moveAwayTimer;
 	Vector3 mForwardVelocity;
 };
