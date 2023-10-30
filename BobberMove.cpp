@@ -63,15 +63,16 @@ void BobberMove::Update(float deltaTime)
 
 		Vector3 bobberPosition = bobber->GetPosition();
 
+
 		if (bobberPosition.z > -100)
 		{
 			bobber->PutInWater();
 		}
 
-		if (water)
+		/*if (water)
 		{
 			bobber->PutInWater();
-		}
+		}*/
 
 		// If the bobber hits the fish
 		/*if (fish)
@@ -79,15 +80,20 @@ void BobberMove::Update(float deltaTime)
 			fish->GetOnLine();
 			bobber->FishOn();
 		}*/
-		if (yellowFish)
+
+		if (yellowFish && !bobber->GetFishOnStatus())
 		{
 			yellowFish->GetOnLine();
 			bobber->FishOn();
+			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
+			bobber->SetPosition(newBobberPosition);
 		}
-		if (redFish)
+		if (redFish && !bobber->GetFishOnStatus())
 		{
 			redFish->GetOnLine();
 			bobber->FishOn();
+			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
+			bobber->SetPosition(newBobberPosition);
 		}
 		
 

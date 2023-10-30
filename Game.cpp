@@ -296,12 +296,49 @@ void Game::HandleKeyPress(int key)
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
 			}
-			Vector3 newBobberPos = Vector3(bobberPos.x, bobberPos.y - 25.0f, bobberPos.z);
 
-			Vector3 newFishPos = Vector3(fishPos.x, fishPos.y - 25.0f, fishPos.z);
+			Vector3 newBobberPos = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+
+
+			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			
+			if (!(hookedFish->GetCatchStatus()))
+			{
+				
+				newBobberPos = Vector3(bobberPos.x, bobberPos.y - 25.0f, bobberPos.z);
+
+				newFishPos = Vector3(fishPos.x, fishPos.y - 25.0f, fishPos.z);
+
+
+				//StopReeling();
+			}
 
 			hookedFish->SetPosition(newFishPos);
 			mSingleBobber->SetPosition(newBobberPos);
+		}
+		else
+		{
+			Vector3 playerPos = mFPSActor->GetPosition();
+
+			auto caughtFish = mBasicFish;
+
+			Vector3 fishPos;
+
+			if (mRedFish->GetCatchStatus())
+			{
+				fishPos = mRedFish->GetPosition();
+				caughtFish = mRedFish;
+			}
+
+			if (mYellowFish->GetCatchStatus())
+			{
+				fishPos = mYellowFish->GetPosition();
+				caughtFish = mYellowFish;
+			}
+
+			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 75.0f, playerPos.z - 25.0f);
+			caughtFish->SetPosition(newFishPos);
+
 		}
 	}
 	default:
@@ -526,12 +563,14 @@ void Game::LoadData()
 		}
 	} 
 
+	//const float largerSize = 500.0f;
+
 	// Draw the invisible wall
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		a = new InvisiblePlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), 400.0f));
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
 		a->SetRotation(q);
 	}
 }
