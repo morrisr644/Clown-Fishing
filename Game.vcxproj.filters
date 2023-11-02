@@ -124,6 +124,9 @@
     <ClCompile Include="RedFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CatchScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -235,6 +238,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="RedFish.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CatchScreen.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -51,6 +51,9 @@ public:
 	class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}
+	int GetCaughtFishType() {
+		return mCaughtFishType;
+	}
 	class YellowFish* GetYellowFish() {
 		return mYellowFish;
 	}
@@ -148,6 +151,8 @@ private:
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
 	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	class BasicFish* mBasicFish;
+	int mCaughtFishType;
+	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;
 	class BobberActor* mSingleBobber;
