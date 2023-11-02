@@ -533,9 +533,9 @@ void Game::LoadData()
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mRedFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+	mRedFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); 
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -250.0f));
-	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); 
 
 	// Create target actors
 	a = new TargetActor(this);

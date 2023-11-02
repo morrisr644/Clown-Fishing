@@ -41,12 +41,19 @@ void BobberMove::Update(float deltaTime)
 	// Test segment vs world
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
+	BobberActor* bobber = mOwner->GetGame()->GetBobber();
+	Vector3 bobberPosition = bobber->GetPosition();
+
+
+	if (bobberPosition.z > -100)
+	{
+		bobber->PutInWater();
+		//bobber->SetMyMoveSpeed(); // need to set move speed to 0 here
+	}
 
 	// If the bobber hits something
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
-
-		BobberActor* bobber = mOwner->GetGame()->GetBobber();
 
 		InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
 
@@ -61,25 +68,17 @@ void BobberMove::Update(float deltaTime)
 		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
 
-		Vector3 bobberPosition = bobber->GetPosition();
-
-
-		if (bobberPosition.z > -100)
+		if (water)
 		{
 			bobber->PutInWater();
 		}
 
-		/*if (water)
-		{
-			bobber->PutInWater();
-		}*/
-
 		// If the bobber hits the fish
-		/*if (fish)
+		if (fish)
 		{
 			fish->GetOnLine();
 			bobber->FishOn();
-		}*/
+		}
 
 		if (yellowFish && !bobber->GetFishOnStatus())
 		{
@@ -95,10 +94,6 @@ void BobberMove::Update(float deltaTime)
 			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
 			bobber->SetPosition(newBobberPosition);
 		}
-		
-
-		
-
 	}
 		
 
