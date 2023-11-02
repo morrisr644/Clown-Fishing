@@ -43,6 +43,7 @@ RedFish::RedFish(Game* game)
 	mBoxComp->SetShouldRotate(false);
 	isOnLine = false;
 	isCaught = false;
+	isFleeing = false;
 
 	GetGame()->AddBasicFish(this);
 }
@@ -51,6 +52,31 @@ void RedFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
+
+	
+	Vector3 redCurrPosition = this->GetPosition();
+	if (redCurrPosition.z > -50.0 )
+	{
+		//turn the fish around here
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		this->RotateToNewForward(turnFishAround);
+
+	}
+	else if(redCurrPosition.z < -600.0)
+	{
+		//turn around here as well
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		this->RotateToNewForward(turnFishAround);
+	}
+
 }
 
 //void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for

@@ -66,46 +66,9 @@ void BobberActor::UpdateActor(float deltaTime)
 	{
 		Vector3 stopVelocity(0.0, 0.0, 0.0);
 		SetForwardVelocity(stopVelocity);
-		
-
-		//for (auto singleFish : GetGame()->GetBasicFishes())
-		//{
-		//	//BasicFish* singleFish = GetGame()->GetBasicFish();
-		//	float basicFishTimer = singleFish->GetFishTimer();
-
-		//	Vector3 fishCurrentPosition = singleFish->GetPosition();
-		//	if (isFishOn == false && ((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y) < 100.0)))
-		//	{
-		//		basicFishTimer -= deltaTime;
-		//		singleFish->SetFishTimer(basicFishTimer);
-		//		if (basicFishTimer <= 0)
-		//		{
-		//			Vector3 fishFacingBobber;
-		//			fishFacingBobber.x = currentPosition.x - fishCurrentPosition.x;
-		//			fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
-		//			fishFacingBobber.z = currentPosition.z - fishCurrentPosition.z;
-		//			fishFacingBobber.Normalize();
-		//			GetGame()->GetBasicFish()->RotateToNewForward(fishFacingBobber);
-		//			GetGame()->GetBasicFish()->SetAngularSpeed(0);
-		//		}
-		//	}
-		//	else if (((abs(currentPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - fishCurrentPosition.y)) < 100.0) && isFishOn == true)
-		//	{
-		//		Vector3 turnFishAround;
-		//		turnFishAround.x = -fishCurrentPosition.x;
-		//		turnFishAround.y = -fishCurrentPosition.y;
-		//		turnFishAround.z = -fishCurrentPosition.z;
-		//		turnFishAround.Normalize();
-		//		GetGame()->GetBasicFish()->RotateToNewForward(turnFishAround);
-		//		GetGame()->GetBasicFish()->SetAngularSpeed(0);
-		//	}
-		//}
-
+	
 		CheckYellowFish(deltaTime);
 		CheckRedFish(deltaTime);
-		
-
-		
 
 	}
 }
@@ -135,13 +98,27 @@ void BobberActor::CheckYellowFish(float deltaTime)
 		}
 		else if (isFishOn == true && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
 		{
-			Vector3 turnFishAround;
-			turnFishAround.x = -yellowFishCurrentPosition.x;
-			turnFishAround.y = -yellowFishCurrentPosition.y;
-			turnFishAround.z = yellowFishCurrentPosition.z;
-			turnFishAround.Normalize();
-			GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-			GetGame()->GetYellowFish()->SetAngularSpeed(0);
+			if (yelloFishTimer <= 0)
+			{
+				if (yellowFish->GetFleeingStatus() == false)
+				{
+					Vector3 turnFishAround = yellowFish->GetForward();
+					turnFishAround.x = -turnFishAround.x;
+					turnFishAround.y = -turnFishAround.y;
+					turnFishAround.z = -turnFishAround.z;
+					turnFishAround.Normalize();
+					GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+					GetGame()->GetYellowFish()->SetAngularSpeed(0);
+					yellowFish->SetFleeingStatus(true);
+				}
+			}
+			
+		}
+		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		{
+			yellowFish->SetMovementSpeed(200);
+			yellowFish->SetAngularSpeed(0.2);
+			yellowFish->SetFleeingStatus(false);
 		}
 	}
 }
@@ -171,13 +148,27 @@ void BobberActor::CheckRedFish(float deltaTime)
 		}
 		else if (isFishOn == true && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
 		{
-			Vector3 turnFishAround;
-			turnFishAround.x = -redFishCurrentPosition.x;
-			turnFishAround.y = -redFishCurrentPosition.y;
-			turnFishAround.z = redFishCurrentPosition.z;
-			turnFishAround.Normalize();
-			GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
-			GetGame()->GetRedFish()->SetAngularSpeed(0);
+			if (redFishTimer <= 0)
+			{
+				if (redFish->GetFleeingStatus() == false)
+				{
+					Vector3 turnFishAround = redFish->GetForward();
+					turnFishAround.x = -turnFishAround.x;
+					turnFishAround.y = -turnFishAround.y;
+					turnFishAround.z = -turnFishAround.z;
+					turnFishAround.Normalize();
+					GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
+					GetGame()->GetRedFish()->SetAngularSpeed(0);
+					redFish->SetFleeingStatus(true);
+				}
+			}
+		}
+		else if (((abs(currentPosition.x - redFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - redFishCurrentPosition.y) > 200.0)))
+		{
+			redFish->SetMovementSpeed(200);
+			redFish->SetAngularSpeed(0.2);
+			redFish->SetFleeingStatus(false);
+			
 		}
 	}
 }

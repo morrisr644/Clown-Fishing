@@ -44,6 +44,7 @@ YellowFish::YellowFish(Game* game)
 
 	isOnLine = false;
 	isCaught = false;
+	isFleeing = false;
 
 	GetGame()->AddBasicFish(this);
 }
@@ -52,6 +53,18 @@ void YellowFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
+
+	
+	Vector3 yellowCurrPosition = this->GetPosition();
+	if (yellowCurrPosition.z > -100.0 || yellowCurrPosition.z < -600.0)
+	{
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		this->RotateToNewForward(turnFishAround);
+	}
 }
 
 //void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
