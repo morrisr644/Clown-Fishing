@@ -62,7 +62,7 @@ void YellowFish::GetOnLine() // Rebecca Morris
 {
 	// When the fish is hit then stop moving (Caught)
 	SetMovementSpeed(0.0f);
-	SetAngularSpeed(0.0f);
+	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
 }
@@ -138,6 +138,7 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 				// It either got away or was caught
 				
 				isCaught = true;
+				isOnLine = false;
 				GetGame()->StopReeling();
 
 			}
