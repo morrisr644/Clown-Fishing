@@ -26,6 +26,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "CatchScreen.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "Font.h"
@@ -328,17 +329,25 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mRedFish->GetPosition();
 				caughtFish = mRedFish;
+				mCaughtFishType = 1;
 			}
 
 			if (mYellowFish->GetCatchStatus())
 			{
 				fishPos = mYellowFish->GetPosition();
 				caughtFish = mYellowFish;
+				mCaughtFishType = 2;
 			}
 
-			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 75.0f, playerPos.z - 25.0f);
+			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 			caughtFish->SetPosition(newFishPos);
+			Quaternion tPose = Quaternion(newFishPos, 0.0f);
+			caughtFish->SetRotation(tPose);
+			caughtFish->UpdateActor(mCurrentTime);
 
+			new CatchScreen(this);
+
+			caughtFish->SetState(Actor::EDead);
 		}
 	}
 	default:
@@ -359,6 +368,7 @@ void Game::UpdateGame()
 		deltaTime = 0.05f;
 	}
 	mTicksCount = SDL_GetTicks();
+	mCurrentTime = deltaTime; // Rebecca Morris
 
 	if (mGameState == EGameplay)
 	{

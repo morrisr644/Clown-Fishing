@@ -1,6 +1,9 @@
 {
 	"TextMap":{
 		"PauseTitle": "PAUSED",
+		"DefaultCatchTitle": "You Caught a Fish!",
+		"RedFishTitle": "You Caught a Red Fish!",
+		"YellowFishTitle": "You Caught a Yellow Fish!",
 		"ResumeButton": "Resume",
 		"QuitButton": "Quit",
 		"QuitText": "Do you want to quit?",
