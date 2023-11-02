@@ -280,7 +280,7 @@ void Game::HandleKeyPress(int key)
 			//}
 
 			YellowFish* yfish = mYellowFish; 
-			if (yfish->GetLineStatus())
+			if (yfish->GetLineStatus() && yfish->GetState() == Actor::EActive)
 			{
 				fishPos = yfish->GetPosition();
 				//yfish->SetPosition(playerPos);
@@ -289,7 +289,7 @@ void Game::HandleKeyPress(int key)
 				//mSingleBobber->SetPosition(playerPos);
 			}
 			RedFish* rfish = mRedFish;
-			if (rfish->GetLineStatus())
+			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
 			{
 				fishPos = rfish->GetPosition();
 				//rfish->SetPosition(playerPos);
@@ -325,29 +325,41 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 fishPos;
 
-			if (mRedFish->GetCatchStatus())
+			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
 				fishPos = mRedFish->GetPosition();
 				caughtFish = mRedFish;
 				mCaughtFishType = 1;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new CatchScreen(this);
+
+				caughtFish->SetState(Actor::EDead);
 			}
 
-			if (mYellowFish->GetCatchStatus())
+			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
 				fishPos = mYellowFish->GetPosition();
 				caughtFish = mYellowFish;
 				mCaughtFishType = 2;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new CatchScreen(this);
+
+				caughtFish->SetState(Actor::EDead);
 			}
 
-			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
-			caughtFish->SetPosition(newFishPos);
-			Quaternion tPose = Quaternion(newFishPos, 0.0f);
-			caughtFish->SetRotation(tPose);
-			caughtFish->UpdateActor(mCurrentTime);
-
-			new CatchScreen(this);
-
-			caughtFish->SetState(Actor::EDead);
+			
 		}
 	}
 	default:
