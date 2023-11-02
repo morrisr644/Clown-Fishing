@@ -14,6 +14,7 @@ public:
 	void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
 	float GetFishTimer() { return fishTimer; }
 	bool GetLineStatus() { return isOnLine; }
+	bool GetCatchStatus() { return isCaught; }
 	void SetFishTimer(float newTimer);
 
 private:
@@ -24,5 +25,6 @@ private:
 	class MoveComponent* mMoveComp;
 	class Actor* mPlayer; // Rebecca Morris
 	bool isOnLine;
+	bool isCaught;
 	// here is where I will have to put the movement parts
 };

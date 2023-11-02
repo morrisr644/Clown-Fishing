@@ -28,6 +28,7 @@ public:
 	void SetMyMoveSpeed();
 	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
 	void ResetMoveAwayTimer() { moveAwayTimer = 3.0; }
+	bool GetFishOnStatus() { return isFishOn; }
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;

@@ -139,22 +139,25 @@ void FPSActor::Shoot()
 	// here i should set the bobber to not have a fish on the line.
 	// also make it not possible to shoot if fish is on the line.
 	
-	// Get direction vector
-	Vector3 start, dir;
-	GetGame()->GetRenderer()->GetScreenDirection(start, dir);
-	// Spawn a ball
-	BobberActor* ball = GetGame()->GetBobber(); // This line
-	//this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
-	ball->FishOff(); // this resets the isFishOn variable to false.
-	ball->SetPlayer(this);
-	ball->SetPosition(start + dir*20.0f);
-	// Rotate the ball to face new direction
-	ball->RotateToNewForward(dir);
-	// Play shooting sound
-	ball->SetMyMoveSpeed();
-	ball->OutOfWater();
-	mAudioComp->PlayEvent("event:/Shot");
-	this->GetGame()->StopReeling();
+	if (!(GetGame()->GetReelState()))
+	{
+		// Get direction vector
+		Vector3 start, dir;
+		GetGame()->GetRenderer()->GetScreenDirection(start, dir);
+		// Spawn a ball
+		BobberActor* ball = GetGame()->GetBobber(); // This line
+		//this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
+		ball->FishOff(); // this resets the isFishOn variable to false.
+		ball->SetPlayer(this);
+		ball->SetPosition(start + dir * 20.0f);
+		// Rotate the ball to face new direction
+		ball->RotateToNewForward(dir);
+		// Play shooting sound
+		ball->SetMyMoveSpeed();
+		ball->OutOfWater();
+		mAudioComp->PlayEvent("event:/Shot");
+		//this->GetGame()->StopReeling();
+	}
 }
 
 void FPSActor::SetFootstepSurface(float value)
