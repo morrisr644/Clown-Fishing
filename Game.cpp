@@ -263,6 +263,19 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 playerPos = mFPSActor->GetPosition();
 
+			float offsetFloat = 25.0f;
+
+			Vector3 bobberFacePlayer = playerPos - bobberPos;
+			bobberFacePlayer.Normalize();
+
+			Vector3 offsetFromReel;
+			offsetFromReel.x = bobberFacePlayer.x * offsetFloat;
+			offsetFromReel.y = bobberFacePlayer.y * offsetFloat;
+			offsetFromReel.z = bobberFacePlayer.z * offsetFloat;
+
+
+
+
 			auto hookedFish = mBasicFish;
 
 			Vector3 fishPos;
@@ -298,17 +311,28 @@ void Game::HandleKeyPress(int key)
 				//mSingleBobber->SetPosition(playerPos);
 			}
 
-			Vector3 newBobberPos = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			Vector3 newBobberPos; //Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			newBobberPos.x = bobberPos.x + offsetFromReel.x;
+			newBobberPos.y = bobberPos.y + offsetFromReel.y;
+			newBobberPos.z = bobberPos.z + offsetFromReel.z;
+
+			Vector3 fishFacePlayer = playerPos - fishPos;
+			fishFacePlayer.Normalize();
+
+			Vector3 fishOffsetFromReel;
+			fishOffsetFromReel.x = fishFacePlayer.x * offsetFloat;
+			fishOffsetFromReel.y = fishFacePlayer.y * offsetFloat;
+			fishOffsetFromReel.z = fishFacePlayer.z * offsetFloat;
 
 
-			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			Vector3 newFishPos;  //Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
 			
 			if (!(hookedFish->GetCatchStatus()))
 			{
 				
-				newBobberPos = Vector3(bobberPos.x, bobberPos.y - 25.0f, bobberPos.z);
+				newBobberPos = Vector3(bobberPos.x + newBobberPos.x, bobberPos.y + newBobberPos.y, bobberPos.z );
 
-				newFishPos = Vector3(fishPos.x, fishPos.y - 25.0f, fishPos.z);
+				newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z );
 
 
 				//StopReeling();
