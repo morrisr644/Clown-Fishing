@@ -127,6 +127,12 @@
     <ClCompile Include="CatchScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InventoryMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -241,6 +247,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="CatchScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryMenu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

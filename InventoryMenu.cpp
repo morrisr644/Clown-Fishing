@@ -6,43 +6,51 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#include "PauseMenu.h"
+#include "InventoryMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
-#include "InventoryMenu.h"
+#include "InventoryBox.h"
 #include <SDL/SDL.h>
 
-PauseMenu::PauseMenu(Game* game)
+InventoryMenu::InventoryMenu(Game* game)
 	:UIScreen(game)
 {
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
-	SetTitle("PauseTitle");
+	SetTitle("InventoryTitle");
+
+	//const int FISHTYPES = 2; // This will change as fish are added
+
+	if (game->GetAllCaughtFish(0)) // 0 is Red Fish
+	{
+		AddButton("RedFishItem", [this]() {
+			new InventoryBox(mGame, "RedFishText", 0);
+			});
+	}
+
+	if (game->GetAllCaughtFish(1)) // 1 is Yellow Fish
+	{
+		AddButton("YellowFishItem", [this]() {
+			new InventoryBox(mGame, "YellowFishText", 1);
+			});
+	}
+
 	AddButton("ResumeButton", [this]() {
 		Close();
-	});
-	/*AddButton("InventoryButton", [this]() {
-		new InventoryMenu(mGame);
-		});*/
-	AddButton("QuitButton", [this]() { 
-		new DialogBox(mGame, "QuitText",
-			[this]() {
-				mGame->SetState(Game::EQuit);
 		});
-	});
 }
 
-PauseMenu::~PauseMenu()
+InventoryMenu::~InventoryMenu()
 {
 	SetRelativeMouseMode(true);
 	mGame->SetState(Game::EGameplay);
 }
 
-void PauseMenu::HandleKeyPress(int key)
+void InventoryMenu::HandleKeyPress(int key)
 {
 	UIScreen::HandleKeyPress(key);
 	
-	if (key == SDLK_ESCAPE)
+	if (key == SDLK_ESCAPE || key == SDLK_e)
 	{
 		Close();
 	}

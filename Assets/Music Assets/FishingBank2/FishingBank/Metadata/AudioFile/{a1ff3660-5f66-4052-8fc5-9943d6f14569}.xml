@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.09.00">
-    <object class="AudioFile" id="{493b3654-2c5a-4220-b25f-291a5178fa9e}">
+    <object class="AudioFile" id="{a1ff3660-5f66-4052-8fc5-9943d6f14569}">
         <property name="assetPath">
-            <value>fly-fishing-reel-running_5-40946.mp3</value>
+            <value>footsteps-on-wood-floor-14735.mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
         </property>
         <property name="frequencyInKHz">
             <value>24</value>
@@ -11,7 +14,7 @@
             <value>2</value>
         </property>
         <property name="length">
-            <value>8.952</value>
+            <value>18.047999999999998</value>
         </property>
         <relationship name="masterAssetFolder">
             <destination>{42c69396-62b1-4c58-9e1d-bb7b2e182935}</destination>
