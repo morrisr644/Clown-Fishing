@@ -16,6 +16,8 @@ public:
 	bool GetLineStatus() { return isOnLine; }
 	bool GetCatchStatus() { return isCaught; }
 	void SetFishTimer(float newTimer);
+	bool GetFleeingStatus() { return isFleeing; }
+	void SetFleeingStatus(bool fleeingStatus) { isFleeing = fleeingStatus; }
 
 private:
 	class BoxComponent* mBoxComp;
@@ -26,5 +28,6 @@ private:
 	class Actor* mPlayer; // Rebecca Morris
 	bool isOnLine;
 	bool isCaught;
+	bool isFleeing;
 	// here is where I will have to put the movement parts
 };
