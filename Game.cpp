@@ -26,6 +26,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "InventoryMenu.h"
 #include "CatchScreen.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -144,6 +145,11 @@ void Game::RemoveInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
 {
 	auto iter = std::find(mInvisiblePlanes.begin(), mInvisiblePlanes.end(), invis);
 	mInvisiblePlanes.erase(iter);
+}
+
+bool Game::GetAllCaughtFish(int index)
+{
+	return mAllCaughtFish[index];
 }
 
 void Game::ProcessInput()
@@ -354,6 +360,8 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mRedFish;
 				mCaughtFishType = 1;
 
+				mAllCaughtFish[0] = true;
+
 				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 				caughtFish->SetPosition(newFishPos);
 				Quaternion tPose = Quaternion(newFishPos, 0.0f);
@@ -371,6 +379,8 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mYellowFish;
 				mCaughtFishType = 2;
 
+				mAllCaughtFish[1] = true;
+
 				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 				caughtFish->SetPosition(newFishPos);
 				Quaternion tPose = Quaternion(newFishPos, 0.0f);
@@ -382,8 +392,19 @@ void Game::HandleKeyPress(int key)
 				caughtFish->SetState(Actor::EDead);
 			}
 
-			
 		}
+
+		break;
+	}
+
+	case SDLK_e:
+	{
+		if (!isReelingIn && GetState() == GameState::EGameplay) // Probably shouldn't open the inventory while reeling in a fish
+		{														// or while there is another menu open
+			new InventoryMenu(this);
+		}
+
+		break;
 	}
 	default:
 		break;

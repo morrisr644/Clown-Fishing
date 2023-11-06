@@ -28,6 +28,8 @@
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InventoryBox.cpp" />
+    <ClCompile Include="InventoryMenu.cpp" />
     <ClCompile Include="InvisiblePlaneActor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
@@ -69,6 +71,8 @@
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="InventoryBox.h" />
+    <ClInclude Include="InventoryMenu.h" />
     <ClInclude Include="InvisiblePlaneActor.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mesh.h" />
