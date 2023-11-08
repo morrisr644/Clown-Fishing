@@ -34,7 +34,13 @@ BobberActor::BobberActor(Game* game)
 	mMyMove = new BobberMove(this);
 	mMyMove->SetForwardSpeed(1000.0f);
 	mAudioComp = new AudioComponent(this);
+
+	mSplash = mAudioComp->PlayEvent("event:/Splash");
+	mSplash.SetPaused(true);
+	mBubbles = mAudioComp->PlayEvent("event:/Bubbles");
+	mBubbles.SetPaused(true);
 	isInWater = false;
+	hasAlreadySplashed = false;
 	moveAwayTimer = 1.0;
 }
 
@@ -187,21 +193,42 @@ void BobberActor::HitGround()
 void BobberActor::PutInWater()
 {
 	isInWater = true;
+	if (!hasAlreadySplashed)
+	{
+		mSplash.SetPaused(false);
+		mSplash.Restart();
+		hasAlreadySplashed = true;
+	}
+}
+void BobberActor::Splash()
+{
+	/*isInWater = true;
+	if (!hasAlreadySplashed)
+	{
+		mSplash.SetPaused(false);
+		mSplash.Restart();
+		hasAlreadySplashed = true;
+	}*/
 }
 
 void BobberActor::OutOfWater()
 {
 	isInWater = false;
+	mSplash.SetPaused(true);
+	hasAlreadySplashed = false;
 }
 
 void BobberActor::FishOn()
 {
 	isFishOn = true;
+	mBubbles.SetPaused(false);
+	mBubbles.Restart();
 }
 
 void BobberActor::FishOff()
 {
 	isFishOn = false;
+	mBubbles.SetPaused(true);
 }
 
 void BobberActor::SetLaunchAngle(float newAngle)

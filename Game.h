@@ -138,6 +138,7 @@ private:
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;
+	class AudioComponent* mAudioComp;
 	class PhysWorld* mPhysWorld;
 	class HUD* mHUD;
 
@@ -163,6 +164,7 @@ private:
 	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
+	SoundEvent mReeling;
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
 };
