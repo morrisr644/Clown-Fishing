@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{55bc2876-cde7-4573-87b1-1a3ab0746b5a}">
+        <property name="assetPath">
+            <value>footsteps-on-wood-floor-14735.wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>24</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>18.047999999999998</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{42c69396-62b1-4c58-9e1d-bb7b2e182935}</destination>
+        </relationship>
+    </object>
+</objects>

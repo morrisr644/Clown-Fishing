@@ -26,6 +26,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "InventoryMenu.h"
 #include "CatchScreen.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -88,6 +89,12 @@ bool Game::Initialize()
 	isReelingIn = false;
 
 	mTicksCount = SDL_GetTicks();
+
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(true);
+
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling.SetPaused(true);
 	
 	return true;
 }
@@ -144,6 +151,11 @@ void Game::RemoveInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
 {
 	auto iter = std::find(mInvisiblePlanes.begin(), mInvisiblePlanes.end(), invis);
 	mInvisiblePlanes.erase(iter);
+}
+
+bool Game::GetAllCaughtFish(int index)
+{
+	return mAllCaughtFish[index];
 }
 
 void Game::ProcessInput()
@@ -259,6 +271,9 @@ void Game::HandleKeyPress(int key)
 	{
 		if (isReelingIn)
 		{
+			mReeling.SetPaused(false);
+			//mReeling.Restart();
+
 			Vector3 bobberPos = mSingleBobber->GetPosition();
 
 			Vector3 playerPos = mFPSActor->GetPosition();
@@ -349,6 +364,8 @@ void Game::HandleKeyPress(int key)
 		}
 		else
 		{
+			mReeling.SetPaused(true);
+
 			Vector3 playerPos = mFPSActor->GetPosition();
 
 			auto caughtFish = mBasicFish;
@@ -360,6 +377,8 @@ void Game::HandleKeyPress(int key)
 				fishPos = mRedFish->GetPosition();
 				caughtFish = mRedFish;
 				mCaughtFishType = 1;
+
+				mAllCaughtFish[0] = true;
 
 				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 				caughtFish->SetPosition(newFishPos);
@@ -378,6 +397,8 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mYellowFish;
 				mCaughtFishType = 2;
 
+				mAllCaughtFish[1] = true;
+
 				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 				caughtFish->SetPosition(newFishPos);
 				Quaternion tPose = Quaternion(newFishPos, 0.0f);
@@ -389,8 +410,19 @@ void Game::HandleKeyPress(int key)
 				caughtFish->SetState(Actor::EDead);
 			}
 
-			
 		}
+
+		break;
+	}
+
+	case SDLK_e:
+	{
+		if (!isReelingIn && GetState() == GameState::EGameplay) // Probably shouldn't open the inventory while reeling in a fish
+		{														// or while there is another menu open
+			new InventoryMenu(this);
+		}
+
+		break;
 	}
 	default:
 		break;
@@ -559,7 +591,9 @@ void Game::LoadData()
 	mHUD = new HUD(this);
 	
 	// Start music
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music");
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(false);
+	mMusicEvent.Restart();
 
 	// Enable relative mouse mode for camera look
 	SDL_SetRelativeMouseMode(SDL_TRUE);

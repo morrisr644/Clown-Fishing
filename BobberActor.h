@@ -10,6 +10,7 @@
 
 #pragma once
 #include "Actor.h"
+#include "AudioComponent.h"
 
 class BobberActor : public Actor
 {
@@ -23,6 +24,7 @@ public:
 	void PutInWater();
 	void OutOfWater();
 	void FishOn();
+	void Splash();
 	void FishOff();
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
@@ -41,4 +43,7 @@ private:
 	bool isFishOn;
 	float moveAwayTimer;
 	Vector3 mForwardVelocity;
+	bool hasAlreadySplashed;
+	SoundEvent mSplash;
+	SoundEvent mBubbles;
 };

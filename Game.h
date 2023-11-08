@@ -108,6 +108,10 @@ public:
 	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
 	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
+
+	bool GetAllCaughtFish(int index);
+
+	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
 	void ProcessInput();
@@ -134,6 +138,7 @@ private:
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;
+	class AudioComponent* mAudioComp;
 	class PhysWorld* mPhysWorld;
 	class HUD* mHUD;
 
@@ -152,12 +157,14 @@ private:
 	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	class BasicFish* mBasicFish;
 	int mCaughtFishType;
+	bool mAllCaughtFish[2]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;
 	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
+	SoundEvent mReeling;
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
 
