@@ -14,15 +14,19 @@ public:
 	void SetAngularSpeed(float newSpeed);
 	void SetMovementSpeed(float newMovementSpeed);
 	void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
-	float GetBasicFishTimer() { return basicFishTimer; }
-	void SetBasicFishTimer(float newTimer);
+	float GetFishTimer() { return fishTimer; }
+	bool GetLineStatus() { return isOnLine; }
+	bool GetCatchStatus() { return isCaught; }
+	void SetFishTimer(float newTimer);
 
 private:
 	class BoxComponent* mBoxComp;
 	float angularMovement;
 	float forwardMovement;
-	float basicFishTimer;
+	float fishTimer;
 	class MoveComponent* mMoveComp;
 	class Actor* mPlayer; // Rebecca Morris
+	bool isOnLine;
+	bool isCaught;
 	// here is where I will have to put the movement parts
 };

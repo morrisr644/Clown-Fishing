@@ -1,7 +1,7 @@
 #pragma once
-#include "Actor.h"
+#include "BasicFish.h"
 
-class YellowFish : public Actor
+class YellowFish : public BasicFish
 {
 public:
 	YellowFish(class Game* game);
@@ -12,15 +12,22 @@ public:
 	void SetAngularSpeed(float newSpeed);
 	void SetMovementSpeed(float newMovementSpeed);
 	void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
-	float GetYellowFishTimer() { return yellowFishTimer; }
-	void SetYellowFishTimer(float newTimer);
+	float GetFishTimer() { return fishTimer; }
+	bool GetLineStatus() { return isOnLine; }
+	bool GetCatchStatus() { return isCaught; }
+	void SetFishTimer(float newTimer);
+	bool GetFleeingStatus() { return isFleeing; }
+	void SetFleeingStatus(bool fleeingStatus) { isFleeing = fleeingStatus; }
 
 private:
 	class BoxComponent* mBoxComp;
 	float angularMovement;
 	float forwardMovement;
-	float yellowFishTimer;
+	float fishTimer;
 	class MoveComponent* mMoveComp;
 	class Actor* mPlayer; // Rebecca Morris
+	bool isOnLine;
+	bool isCaught;
+	bool isFleeing;
 	// here is where I will have to put the movement parts
 };

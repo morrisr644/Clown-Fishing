@@ -19,6 +19,7 @@
     <ClCompile Include="BobberMove.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CatchScreen.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DialogBox.cpp" />
@@ -27,6 +28,8 @@
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InventoryBox.cpp" />
+    <ClCompile Include="InventoryMenu.cpp" />
     <ClCompile Include="InvisiblePlaneActor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
@@ -36,8 +39,8 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="PhysWorld.cpp" />
     <ClCompile Include="PlaneActor.cpp" />
+    <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -59,6 +62,7 @@
     <ClInclude Include="BobberMove.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CatchScreen.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DialogBox.h" />
@@ -67,6 +71,8 @@
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="InventoryBox.h" />
+    <ClInclude Include="InventoryMenu.h" />
     <ClInclude Include="InvisiblePlaneActor.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mesh.h" />
@@ -75,8 +81,8 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PhysWorld.h" />
     <ClInclude Include="PlaneActor.h" />
+    <ClInclude Include="RedFish.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RodActor.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />

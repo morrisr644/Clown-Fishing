@@ -16,9 +16,9 @@
 #include "HUD.h"
 #include "MeshComponent.h"
 #include "FPSActor.h"
-#include "RodActor.h"
 #include "BasicFish.h"
 #include "YellowFish.h"
+#include "RedFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "UnderPlaneActor.h"
@@ -26,6 +26,8 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "InventoryMenu.h"
+#include "CatchScreen.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "Font.h"
@@ -84,7 +86,15 @@ bool Game::Initialize()
 
 	LoadData();
 
+	isReelingIn = false;
+
 	mTicksCount = SDL_GetTicks();
+
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(true);
+
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling.SetPaused(true);
 	
 	return true;
 }
@@ -141,6 +151,11 @@ void Game::RemoveInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
 {
 	auto iter = std::find(mInvisiblePlanes.begin(), mInvisiblePlanes.end(), invis);
 	mInvisiblePlanes.erase(iter);
+}
+
+bool Game::GetAllCaughtFish(int index)
+{
+	return mAllCaughtFish[index];
 }
 
 void Game::ProcessInput()
@@ -252,6 +267,163 @@ void Game::HandleKeyPress(int key)
 		mFPSActor->Shoot();
 		break;
 	}
+	case SDLK_SPACE:
+	{
+		if (isReelingIn)
+		{
+			mReeling.SetPaused(false);
+			//mReeling.Restart();
+
+			Vector3 bobberPos = mSingleBobber->GetPosition();
+
+			Vector3 playerPos = mFPSActor->GetPosition();
+
+			float offsetFloat = 25.0f;
+
+			auto hookedFish = mBasicFish;
+
+			Vector3 fishPos;
+			// Find out which fish was hooked
+			//for (auto fish : mBasicFishes)
+			//{
+			//	if (fish->GetLineStatus())
+			//	{
+			//		fishPos = fish->GetPosition();
+			//		fish->SetPosition(playerPos);
+
+			//		hookedFish = fish;
+			//		//mSingleBobber->SetPosition(playerPos);
+			//	}
+			//}
+
+			YellowFish* yfish = mYellowFish; 
+			if (yfish->GetLineStatus() && yfish->GetState() == Actor::EActive)
+			{
+				fishPos = yfish->GetPosition();
+				//yfish->SetPosition(playerPos);
+
+				hookedFish = yfish;
+				//mSingleBobber->SetPosition(playerPos);
+			}
+			RedFish* rfish = mRedFish;
+			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
+			{
+				fishPos = rfish->GetPosition();
+				//rfish->SetPosition(playerPos);
+
+				hookedFish = rfish;
+				//mSingleBobber->SetPosition(playerPos);
+			}
+
+			Vector3 bobberFacePlayer = playerPos - bobberPos;
+			bobberFacePlayer.Normalize();
+
+			Vector3 offsetFromReel;
+			offsetFromReel.x = bobberFacePlayer.x * offsetFloat;
+			offsetFromReel.y = bobberFacePlayer.y * offsetFloat;
+			offsetFromReel.z = bobberFacePlayer.z * offsetFloat;
+
+			Vector3 newBobberPos;// = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			//newBobberPos.x = bobberPos.x + offsetFromReel.x;
+			//newBobberPos.y = bobberPos.y + offsetFromReel.y;
+			//newBobberPos.z = bobberPos.z + offsetFromReel.z;
+
+
+
+			Vector3 fishFacePlayer = playerPos - fishPos;
+			fishFacePlayer.Normalize();
+
+			Vector3 fishOffsetFromReel;
+			fishOffsetFromReel.x = fishFacePlayer.x * offsetFloat;
+			fishOffsetFromReel.y = fishFacePlayer.y * offsetFloat;
+			fishOffsetFromReel.z = fishFacePlayer.z * offsetFloat;
+
+
+			Vector3 newFishPos; //= Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
+			
+			if (!(hookedFish->GetCatchStatus()))
+			{
+				if (bobberPos.z > -100.0)
+				{
+					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
+					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
+				}
+				else
+				{
+					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
+					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z + offsetFromReel.z);
+				}
+
+
+
+				//StopReeling();
+			}
+
+			hookedFish->SetPosition(newFishPos);
+			mSingleBobber->SetPosition(newBobberPos);
+		}
+		else
+		{
+			mReeling.SetPaused(true);
+
+			Vector3 playerPos = mFPSActor->GetPosition();
+
+			auto caughtFish = mBasicFish;
+
+			Vector3 fishPos;
+
+			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
+			{
+				fishPos = mRedFish->GetPosition();
+				caughtFish = mRedFish;
+				mCaughtFishType = 1;
+
+				mAllCaughtFish[0] = true;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new CatchScreen(this);
+
+				caughtFish->SetState(Actor::EDead);
+			}
+
+			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
+			{
+				fishPos = mYellowFish->GetPosition();
+				caughtFish = mYellowFish;
+				mCaughtFishType = 2;
+
+				mAllCaughtFish[1] = true;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new CatchScreen(this);
+
+				caughtFish->SetState(Actor::EDead);
+			}
+
+		}
+
+		break;
+	}
+
+	case SDLK_e:
+	{
+		if (!isReelingIn && GetState() == GameState::EGameplay) // Probably shouldn't open the inventory while reeling in a fish
+		{														// or while there is another menu open
+			new InventoryMenu(this);
+		}
+
+		break;
+	}
 	default:
 		break;
 	}
@@ -270,6 +442,7 @@ void Game::UpdateGame()
 		deltaTime = 0.05f;
 	}
 	mTicksCount = SDL_GetTicks();
+	mCurrentTime = deltaTime; // Rebecca Morris
 
 	if (mGameState == EGameplay)
 	{
@@ -418,7 +591,9 @@ void Game::LoadData()
 	mHUD = new HUD(this);
 	
 	// Start music
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music");
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(false);
+	mMusicEvent.Restart();
 
 	// Enable relative mouse mode for camera look
 	SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -430,10 +605,11 @@ void Game::LoadData()
 	/*Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
 	mFPSActor->SetPosition(Vector3(0.0f, 0.0f, -100.0f));*/
 	mBasicFish = new BasicFish(this);
+	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
-	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
-	mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+	mSingleBobber->SetPosition(Vector3(10000, 10000, 10000));
+	mRedFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -250.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
@@ -473,12 +649,14 @@ void Game::LoadData()
 		}
 	} 
 
+	//const float largerSize = 500.0f;
+
 	// Draw the invisible wall
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		a = new InvisiblePlaneActor(this);
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), 400.0f));
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
 		a->SetRotation(q);
 	}
 }
@@ -578,6 +756,32 @@ void Game::RemoveBobber(BobberActor* bobber) // Rebecca Morris
 		// Swap to end of vector and pop off (avoid erase copies)
 		std::iter_swap(iter, mBobbers.end() - 1);
 		mBobbers.pop_back();
+	}
+}
+
+void Game::AddBasicFish(BasicFish* fish)
+{
+	mBasicFishes.emplace_back(fish);
+}
+
+void Game::RemoveBasicFish(BasicFish* fish)
+{
+	// Is it in pending actors?
+	auto iter = std::find(mPendingBasicFish.begin(), mPendingBasicFish.end(), fish);
+	if (iter != mPendingBasicFish.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mPendingBasicFish.end() - 1);
+		mPendingBasicFish.pop_back();
+	}
+
+	// Is it in actors?
+	iter = std::find(mBasicFishes.begin(), mBasicFishes.end(), fish);
+	if (iter != mBasicFishes.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mBasicFishes.end() - 1);
+		mBasicFishes.pop_back();
 	}
 }
 

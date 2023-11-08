@@ -28,6 +28,9 @@ public:
 	void AddBobber(class BobberActor* bobber); // Rebecca Morris
 	void RemoveBobber(class BobberActor* bobber); // Rebecca Morris
 
+	void AddBasicFish(class BasicFish* fish); // Rebecca Morris
+	void RemoveBasicFish(class BasicFish* fish); // Rebecca Morris
+
 	class Renderer* GetRenderer() { return mRenderer; }
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
 	class PhysWorld* GetPhysWorld() { return mPhysWorld; }
@@ -48,13 +51,23 @@ public:
 	class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}
+	int GetCaughtFishType() {
+		return mCaughtFishType;
+	}
 	class YellowFish* GetYellowFish() {
 		return mYellowFish;
+	}
+	class RedFish* GetRedFish() {
+		return mRedFish;
 	}
 	std::vector<class BasicFish*> GetBasicFishes()
 	{
 		return mBasicFishes;
 	}
+	/*std::vector<class YellowFish*> GetYellowFishes()
+	{
+		return mYellowFishes;
+	}*/
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
@@ -70,6 +83,10 @@ public:
 	
 	GameState GetState() const { return mGameState; }
 	void SetState(GameState state) { mGameState = state; }
+
+	bool GetReelState() { return isReelingIn; }
+	void StartReeling() { isReelingIn = true; }
+	void StopReeling() { isReelingIn = false; }
 	
 	class Font* GetFont(const std::string& fileName);
 
@@ -91,6 +108,10 @@ public:
 	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
 	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
+
+	bool GetAllCaughtFish(int index);
+
+	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
 	void ProcessInput();
@@ -102,6 +123,7 @@ private:
 	
 	// All the actors in the game
 	std::vector<class BasicFish*> mBasicFishes;
+	//std::vector<class YellowFish*> mYellowFishes;
 	std::vector<class Actor*> mActors;
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
@@ -112,9 +134,11 @@ private:
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class BobberActor*> mPendingBobbers; //Rebecca Morris
+	std::vector<class BasicFish*> mPendingBasicFish; //Rebecca Morris
 
 	class Renderer* mRenderer;
 	class AudioSystem* mAudioSystem;
+	class AudioComponent* mAudioComp;
 	class PhysWorld* mPhysWorld;
 	class HUD* mHUD;
 
@@ -123,16 +147,25 @@ private:
 	// Track if we're updating actors right now
 	bool mUpdatingActors;
 
+	// Track if the fish is being reeled in
+	bool isReelingIn;
+
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
 	std::vector<class WaterPlaneActor*> mWaterPlanes;
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
 	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	class BasicFish* mBasicFish;
+	int mCaughtFishType;
+	bool mAllCaughtFish[2]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;
 	class BobberActor* mSingleBobber;
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
+	SoundEvent mReeling;
 	class YellowFish* mYellowFish;
+	class RedFish* mRedFish;
+
 };

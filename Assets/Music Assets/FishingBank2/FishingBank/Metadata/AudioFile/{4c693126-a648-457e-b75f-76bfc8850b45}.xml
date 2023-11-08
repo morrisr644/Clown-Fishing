@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{4c693126-a648-457e-b75f-76bfc8850b45}">
+        <property name="assetPath">
+            <value>x2mate.com - Grass Skirts - Beacon Trees [Music Song] (128 kbps).wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>200.976</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{42c69396-62b1-4c58-9e1d-bb7b2e182935}</destination>
+        </relationship>
+    </object>
+</objects>

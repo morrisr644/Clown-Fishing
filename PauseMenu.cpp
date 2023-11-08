@@ -9,6 +9,7 @@
 #include "PauseMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
+#include "InventoryMenu.h"
 #include <SDL/SDL.h>
 
 PauseMenu::PauseMenu(Game* game)
@@ -20,6 +21,9 @@ PauseMenu::PauseMenu(Game* game)
 	AddButton("ResumeButton", [this]() {
 		Close();
 	});
+	/*AddButton("InventoryButton", [this]() {
+		new InventoryMenu(mGame);
+		});*/
 	AddButton("QuitButton", [this]() { 
 		new DialogBox(mGame, "QuitText",
 			[this]() {

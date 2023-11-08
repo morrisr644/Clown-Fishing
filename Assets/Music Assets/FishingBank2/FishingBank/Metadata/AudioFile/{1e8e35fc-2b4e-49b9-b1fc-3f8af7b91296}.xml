@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{1e8e35fc-2b4e-49b9-b1fc-3f8af7b91296}">
+        <property name="assetPath">
+            <value>revolver-chamber-spin-ratchet-sound-90521.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>1</value>
+        </property>
+        <property name="length">
+            <value>1.2190476190476192</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{42c69396-62b1-4c58-9e1d-bb7b2e182935}</destination>
+        </relationship>
+    </object>
+</objects>
