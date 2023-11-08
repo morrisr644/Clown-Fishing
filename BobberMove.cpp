@@ -46,7 +46,7 @@ void BobberMove::Update(float deltaTime)
 	BobberActor* bobber = mOwner->GetGame()->GetBobber();
 	Vector3 bobberPosition = bobber->GetPosition();
 
-	if (bobberPosition.z < -100.0)
+	if (bobberPosition.z <= -100.0) // need to restrict this to the pond x and y as well.
 	{
 		bobber->PutInWater();
 		bobber->HitGround();
@@ -59,6 +59,7 @@ void BobberMove::Update(float deltaTime)
 		
 		FPSActor* player = mOwner->GetGame()->GetPlayer();
 		YellowFish* yFish = mOwner->GetGame()->GetYellowFish();
+		RedFish* rFish = mOwner->GetGame()->GetRedFish();
 
 		InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
 
@@ -76,7 +77,7 @@ void BobberMove::Update(float deltaTime)
 		
 
 
-		if (bobberPosition.z < -100.0 || water)
+		if (bobberPosition.z <= -100.0 || water)
 		{
 			bobber->PutInWater();
 			bobber->HitGround();
@@ -102,7 +103,7 @@ void BobberMove::Update(float deltaTime)
 			bobber->SetPosition(newBobberPosition);
 		}
 		
-		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive)
+		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive) // this handles the fishes tension
 		{
 			Vector3 playerPos = player->GetPosition();
 			Vector3 bobberPos = bobber->GetPosition();
@@ -114,13 +115,13 @@ void BobberMove::Update(float deltaTime)
 			bobberOppPlayer.x = -bobberOppPlayer.x;
 			bobberOppPlayer.y = -bobberOppPlayer.y;
 			bobberOppPlayer.z = -bobberOppPlayer.z;
-			fishOppPlayer.x = -fishOppPlayer.x;
-			fishOppPlayer.y = -fishOppPlayer.y;
-			fishOppPlayer.z = -fishOppPlayer.z;
+			fishOppPlayer.x = fishOppPlayer.x;
+			fishOppPlayer.y = fishOppPlayer.y;
+			fishOppPlayer.z = fishOppPlayer.z;
 			bobber->RotateToNewForward(bobberOppPlayer);
 			yFish->RotateToNewForward(fishOppPlayer);
-			bobber->SetTensionSpeed(20.0);
-			yFish->SetMovementSpeed(20.0);
+			bobber->SetTensionSpeed(30.0);
+			yFish->SetMovementSpeed(-30.0);
 		}
 
 		if (redFish && !bobber->GetFishOnStatus())
@@ -129,6 +130,27 @@ void BobberMove::Update(float deltaTime)
 			bobber->FishOn();
 			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
 			bobber->SetPosition(newBobberPosition);
+		}
+
+		if (rFish->GetLineStatus() && rFish->GetState() == Actor::EActive) // this handles the fishes tension
+		{
+			Vector3 playerPos = player->GetPosition();
+			Vector3 bobberPos = bobber->GetPosition();
+			Vector3 fishPos = rFish->GetPosition();
+			Vector3 bobberOppPlayer = playerPos - bobberPos;
+			Vector3 fishOppPlayer = playerPos - fishPos;
+			bobberOppPlayer.Normalize();
+			fishOppPlayer.Normalize();
+			bobberOppPlayer.x = -bobberOppPlayer.x;
+			bobberOppPlayer.y = -bobberOppPlayer.y;
+			bobberOppPlayer.z = -bobberOppPlayer.z;
+			fishOppPlayer.x = fishOppPlayer.x;
+			fishOppPlayer.y = fishOppPlayer.y;
+			fishOppPlayer.z = fishOppPlayer.z;
+			bobber->RotateToNewForward(bobberOppPlayer);
+			rFish->RotateToNewForward(fishOppPlayer);
+			bobber->SetTensionSpeed(20.0);
+			rFish->SetMovementSpeed(-20.0);
 		}
 	}
 		

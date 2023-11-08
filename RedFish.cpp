@@ -55,7 +55,7 @@ void RedFish::UpdateActor(float deltaTime)
 
 	
 	Vector3 redCurrPosition = this->GetPosition();
-	if (redCurrPosition.z > -99.0 )
+	if (redCurrPosition.z > -100.0 )
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();

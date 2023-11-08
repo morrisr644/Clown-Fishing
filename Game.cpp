@@ -328,7 +328,7 @@ void Game::HandleKeyPress(int key)
 			
 			if (!(hookedFish->GetCatchStatus()))
 			{
-				if (bobberPos.z > -90.0)
+				if (bobberPos.z > -100.0)
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
@@ -574,7 +574,7 @@ void Game::LoadData()
 	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
-	mSingleBobber->SetPosition(Vector3(-10000, -10000, -10000));
+	mSingleBobber->SetPosition(Vector3(10000, 10000, 10000));
 	mRedFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -250.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
