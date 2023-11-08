@@ -89,6 +89,12 @@ bool Game::Initialize()
 	isReelingIn = false;
 
 	mTicksCount = SDL_GetTicks();
+
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(true);
+
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling.SetPaused(true);
 	
 	return true;
 }
@@ -265,6 +271,9 @@ void Game::HandleKeyPress(int key)
 	{
 		if (isReelingIn)
 		{
+			mReeling.SetPaused(false);
+			//mReeling.Restart();
+
 			Vector3 bobberPos = mSingleBobber->GetPosition();
 
 			Vector3 playerPos = mFPSActor->GetPosition();
@@ -348,6 +357,8 @@ void Game::HandleKeyPress(int key)
 		}
 		else
 		{
+			mReeling.SetPaused(true);
+
 			Vector3 playerPos = mFPSActor->GetPosition();
 
 			auto caughtFish = mBasicFish;
@@ -573,7 +584,9 @@ void Game::LoadData()
 	mHUD = new HUD(this);
 	
 	// Start music
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music");
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(false);
+	mMusicEvent.Restart();
 
 	// Enable relative mouse mode for camera look
 	SDL_SetRelativeMouseMode(SDL_TRUE);

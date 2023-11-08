@@ -155,7 +155,7 @@ void FPSActor::Shoot()
 		// Play shooting sound
 		ball->SetMyMoveSpeed();
 		ball->OutOfWater();
-		mAudioComp->PlayEvent("event:/Shot");
+		mAudioComp->PlayEvent("event:/CastLine");
 		//this->GetGame()->StopReeling();
 	}
 }
