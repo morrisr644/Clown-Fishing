@@ -40,6 +40,7 @@ BobberActor::BobberActor(Game* game)
 	mBubbles = mAudioComp->PlayEvent("event:/Bubbles");
 	mBubbles.SetPaused(true);
 	isInWater = false;
+	isFishOn = false;
 	hasAlreadySplashed = false;
 	moveAwayTimer = 1.0;
 }
@@ -52,7 +53,7 @@ void BobberActor::UpdateActor(float deltaTime)
 	//mLifeSpan -= deltaTime;
 
 	
-	if (mMyMove->GetForwardSpeed() != 0)
+	if (mMyMove->GetForwardSpeed() != 0 && !isFishOn)
 	{
 
 		Vector3 pos = GetPosition();
@@ -68,7 +69,7 @@ void BobberActor::UpdateActor(float deltaTime)
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
 	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
-	if (mMyMove->GetForwardSpeed() == 0 && isInWater)
+	if (mMyMove->GetForwardSpeed() == 0 && !isFishOn)
 	{
 		Vector3 stopVelocity(0.0, 0.0, 0.0);
 		SetForwardVelocity(stopVelocity);
@@ -101,29 +102,26 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
 			}
-		}
-		else if (isFishOn == true && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		} //&& ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0))
+		if (isFishOn == true)
 		{
-			if (yelloFishTimer <= 0)
+			if (yellowFish->GetFleeingStatus() == false)
 			{
-				if (yellowFish->GetFleeingStatus() == false)
-				{
-					Vector3 turnFishAround = yellowFish->GetForward();
-					turnFishAround.x = -turnFishAround.x;
-					turnFishAround.y = -turnFishAround.y;
-					turnFishAround.z = -turnFishAround.z;
-					turnFishAround.Normalize();
-					GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-					GetGame()->GetYellowFish()->SetAngularSpeed(0);
-					yellowFish->SetFleeingStatus(true);
-				}
+				Vector3 turnFishAround = yellowFish->GetForward();
+				turnFishAround.x = -turnFishAround.x;
+				turnFishAround.y = -turnFishAround.y;
+				turnFishAround.z = -turnFishAround.z;
+				turnFishAround.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				yellowFish->SetFleeingStatus(true);
 			}
-			
 		}
-		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0)))
 		{
-			yellowFish->SetMovementSpeed(200);
-			yellowFish->SetAngularSpeed(0.2);
+			yellowFish->SetFishTimer(2.0);
+			yellowFish->SetMovementSpeed(100);
+			yellowFish->SetAngularSpeed(0.3);
 			yellowFish->SetFleeingStatus(false);
 		}
 	}
@@ -151,26 +149,25 @@ void BobberActor::CheckRedFish(float deltaTime)
 				GetGame()->GetRedFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetRedFish()->SetAngularSpeed(0);
 			}
-		}
-		else if (isFishOn == true && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
+		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
+		if (isFishOn == true)
 		{
-			if (redFishTimer <= 0)
+			if (redFish->GetFleeingStatus() == false)
 			{
-				if (redFish->GetFleeingStatus() == false)
-				{
-					Vector3 turnFishAround = redFish->GetForward();
-					turnFishAround.x = -turnFishAround.x;
-					turnFishAround.y = -turnFishAround.y;
-					turnFishAround.z = -turnFishAround.z;
-					turnFishAround.Normalize();
-					GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
-					GetGame()->GetRedFish()->SetAngularSpeed(0);
-					redFish->SetFleeingStatus(true);
-				}
+				Vector3 turnFishAround = redFish->GetForward();
+				turnFishAround.x = -turnFishAround.x;
+				turnFishAround.y = -turnFishAround.y;
+				turnFishAround.z = -turnFishAround.z;
+				turnFishAround.Normalize();
+				GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
+				GetGame()->GetRedFish()->SetAngularSpeed(0);
+				redFish->SetFleeingStatus(true);
 			}
+
 		}
 		else if (((abs(currentPosition.x - redFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - redFishCurrentPosition.y) > 200.0)))
 		{
+			redFish->SetFishTimer(1.0);
 			redFish->SetMovementSpeed(200);
 			redFish->SetAngularSpeed(0.2);
 			redFish->SetFleeingStatus(false);
@@ -238,6 +235,11 @@ void BobberActor::SetLaunchAngle(float newAngle)
 
 void BobberActor::SetMyMoveSpeed()
 {
-	mMyMove->SetForwardSpeed(1000.0f);
+	mMyMove->SetForwardSpeed(1000.0);
+}
+
+void BobberActor::SetTensionSpeed(float tensionSpeed)
+{
+	mMyMove->SetForwardSpeed(tensionSpeed);
 }
 

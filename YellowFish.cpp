@@ -21,7 +21,7 @@ YellowFish::YellowFish(Game* game)
 	:BasicFish(game)
 	, angularMovement(0.3)
 	, forwardMovement(100)
-	, fishTimer(3.0)
+	, fishTimer(2.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
