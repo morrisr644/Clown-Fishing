@@ -20,6 +20,7 @@
 #include "RedFish.h"
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
+#include "FPSActor.h"
 
 BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
@@ -39,14 +40,25 @@ void BobberMove::Update(float deltaTime)
 
 
 	// Test segment vs world
+
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
+	BobberActor* bobber = mOwner->GetGame()->GetBobber();
+	Vector3 bobberPosition = bobber->GetPosition();
+
+	if (bobberPosition.z < -100.0)
+	{
+		bobber->PutInWater();
+		bobber->HitGround();
+	}
 
 	// If the bobber hits something
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
 
-		BobberActor* bobber = mOwner->GetGame()->GetBobber();
+		
+		FPSActor* player = mOwner->GetGame()->GetPlayer();
+		YellowFish* yFish = mOwner->GetGame()->GetYellowFish();
 
 		InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
 
@@ -61,18 +73,19 @@ void BobberMove::Update(float deltaTime)
 		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
 
-		Vector3 bobberPosition = bobber->GetPosition();
+		
 
 
-		if (bobberPosition.z > -100)
+		if (bobberPosition.z < -100.0 || water)
 		{
 			bobber->PutInWater();
+			bobber->HitGround();
+		}
+		else
+		{
+			bobber->OutOfWater();
 		}
 
-		/*if (water)
-		{
-			bobber->PutInWater();
-		}*/
 
 		// If the bobber hits the fish
 		/*if (fish)
@@ -88,6 +101,28 @@ void BobberMove::Update(float deltaTime)
 			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
 			bobber->SetPosition(newBobberPosition);
 		}
+		
+		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive)
+		{
+			Vector3 playerPos = player->GetPosition();
+			Vector3 bobberPos = bobber->GetPosition();
+			Vector3 fishPos = yFish->GetPosition();
+			Vector3 bobberOppPlayer = playerPos - bobberPos;
+			Vector3 fishOppPlayer = playerPos - fishPos;
+			bobberOppPlayer.Normalize();
+			fishOppPlayer.Normalize();
+			bobberOppPlayer.x = -bobberOppPlayer.x;
+			bobberOppPlayer.y = -bobberOppPlayer.y;
+			bobberOppPlayer.z = -bobberOppPlayer.z;
+			fishOppPlayer.x = -fishOppPlayer.x;
+			fishOppPlayer.y = -fishOppPlayer.y;
+			fishOppPlayer.z = -fishOppPlayer.z;
+			bobber->RotateToNewForward(bobberOppPlayer);
+			yFish->RotateToNewForward(fishOppPlayer);
+			bobber->SetTensionSpeed(20.0);
+			yFish->SetMovementSpeed(20.0);
+		}
+
 		if (redFish && !bobber->GetFishOnStatus())
 		{
 			redFish->GetOnLine();
@@ -95,10 +130,6 @@ void BobberMove::Update(float deltaTime)
 			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
 			bobber->SetPosition(newBobberPosition);
 		}
-		
-
-		
-
 	}
 		
 

@@ -46,7 +46,7 @@ void BobberActor::UpdateActor(float deltaTime)
 	//mLifeSpan -= deltaTime;
 
 	
-	if (mMyMove->GetForwardSpeed() != 0)
+	if (mMyMove->GetForwardSpeed() != 0 && !isFishOn)
 	{
 
 		Vector3 pos = GetPosition();
@@ -62,7 +62,7 @@ void BobberActor::UpdateActor(float deltaTime)
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
 	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
-	if (mMyMove->GetForwardSpeed() == 0 && isInWater)
+	if (mMyMove->GetForwardSpeed() == 0 && !isFishOn)
 	{
 		Vector3 stopVelocity(0.0, 0.0, 0.0);
 		SetForwardVelocity(stopVelocity);
@@ -211,6 +211,11 @@ void BobberActor::SetLaunchAngle(float newAngle)
 
 void BobberActor::SetMyMoveSpeed()
 {
-	mMyMove->SetForwardSpeed(1000.0f);
+	mMyMove->SetForwardSpeed(1000.0);
+}
+
+void BobberActor::SetTensionSpeed(float tensionSpeed)
+{
+	mMyMove->SetForwardSpeed(tensionSpeed);
 }
 

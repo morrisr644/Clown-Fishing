@@ -160,4 +160,5 @@ private:
 	SoundEvent mMusicEvent;
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
+
 };

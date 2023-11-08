@@ -31,6 +31,7 @@ public:
 	bool GetFishOnStatus() { return isFishOn; }
 	void CheckYellowFish(float deltaTime);
 	void CheckRedFish(float deltaTime);
+	void SetTensionSpeed(float tensionSpeed);
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
