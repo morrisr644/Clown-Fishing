@@ -73,10 +73,11 @@ void BobberActor::UpdateActor(float deltaTime)
 	{
 		Vector3 stopVelocity(0.0, 0.0, 0.0);
 		SetForwardVelocity(stopVelocity);
-	
-		CheckYellowFish(deltaTime);
-		CheckRedFish(deltaTime);
-
+		if (GetGame()->GetBobber()->GetInWaterStatus())
+		{
+			CheckYellowFish(deltaTime);
+			CheckRedFish(deltaTime);
+		}
 	}
 }
 
@@ -84,11 +85,12 @@ void BobberActor::CheckYellowFish(float deltaTime)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 	YellowFish* yellowFish = GetGame()->GetYellowFish();
+	BobberActor* currentBobber = GetGame()->GetBobber();
 	if (yellowFish->GetState() == Actor::EActive)
 	{
 		float yelloFishTimer = yellowFish->GetFishTimer();
 		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
-		if (isFishOn == false && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
 		{
 			yelloFishTimer -= deltaTime;
 			yellowFish->SetFishTimer(yelloFishTimer);
@@ -103,7 +105,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
 			}
 		} //&& ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0))
-		if (isFishOn == true)
+		else if ((currentBobber->GetFishOnStatus() == true) && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
 		{
 			if (yellowFish->GetFleeingStatus() == false)
 			{
@@ -131,11 +133,12 @@ void BobberActor::CheckRedFish(float deltaTime)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 	RedFish* redFish = GetGame()->GetRedFish();
+	BobberActor* currentBobber = GetGame()->GetBobber();
 	if (redFish->GetState() == Actor::EActive)
 	{
 		float redFishTimer = redFish->GetFishTimer();
 		Vector3 redFishCurrentPosition = redFish->GetPosition();
-		if (isFishOn == false && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
 		{
 			redFishTimer -= deltaTime;
 			redFish->SetFishTimer(redFishTimer);
@@ -150,7 +153,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 				GetGame()->GetRedFish()->SetAngularSpeed(0);
 			}
 		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
-		if (isFishOn == true)
+		else if ((currentBobber->GetFishOnStatus() == true) && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
 		{
 			if (redFish->GetFleeingStatus() == false)
 			{
@@ -171,7 +174,6 @@ void BobberActor::CheckRedFish(float deltaTime)
 			redFish->SetMovementSpeed(200);
 			redFish->SetAngularSpeed(0.2);
 			redFish->SetFleeingStatus(false);
-			
 		}
 	}
 }
@@ -242,4 +244,6 @@ void BobberActor::SetTensionSpeed(float tensionSpeed)
 {
 	mMyMove->SetForwardSpeed(tensionSpeed);
 }
+
+
 
