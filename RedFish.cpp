@@ -76,7 +76,7 @@ void RedFish::UpdateActor(float deltaTime)
 		turnFishAround.Normalize();
 		this->RotateToNewForward(turnFishAround);
 	}
-	/*
+	/* // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
 	// Test segment vs world
 	const float segmentLength = 30.0f;
 	Vector3 start = GetGame()->GetRedFish()->GetPosition();
