@@ -528,7 +528,7 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new PlaneActor(this);
+		a = new PlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
 		a->SetRotation(q);
 
@@ -558,11 +558,11 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new UnderPlaneActor(this);
+		a = new UnderPlaneActor(this); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
 		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
 		a->SetRotation(q);
 
-		a = new UnderPlaneActor(this);
+		a = new UnderPlaneActor(this); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600
 		a->SetPosition(Vector3(start + i * size, -start + size, -600.0f));
 		a->SetRotation(q);
 	}
@@ -571,11 +571,11 @@ void Game::LoadData()
 	// Forward/back walls under pond
 	for (int i = 0; i < 10; i++)
 	{
-		a = new UnderPlaneActor(this);
+		a = new UnderPlaneActor(this); //Underplane forward starts at -1500, -1250, -600 and ends at -1500, 1250, -600
 		a->SetPosition(Vector3(start - size, start + i * size, -600.0f));
 		a->SetRotation(q);
 
-		a = new UnderPlaneActor(this);
+		a = new UnderPlaneActor(this); //Underplane backward starts at 1500, -1250, -600 and ends at 1500, 1250, -600
 		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
@@ -602,8 +602,6 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
-	/*Vector3 lowerPosition = Vector3(0.0f, 0.0f, -100.0f);
-	mFPSActor->SetPosition(Vector3(0.0f, 0.0f, -100.0f));*/
 	mBasicFish = new BasicFish(this);
 	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
@@ -635,7 +633,7 @@ void Game::LoadData()
 		for (int j = 0; j < 10; j++)
 		{
 			a = new UnderPlaneActor(this);
-			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f));
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
 		}
 		for (int j = 0; j < 5; j++)
 		{
@@ -655,7 +653,7 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new InvisiblePlaneActor(this);
+		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
 		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
 		a->SetRotation(q);
 	}

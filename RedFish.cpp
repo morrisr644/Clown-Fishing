@@ -53,9 +53,10 @@ void RedFish::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
 
+	PhysWorld::CollisionInfo info;
 	
-	Vector3 redCurrPosition = this->GetPosition();
-	if (redCurrPosition.z > -100.0 )
+	Vector3 redCurrPosition = this->GetPosition(); //This works but it stalls at the beginning
+	if (redCurrPosition.z >= -100.0 )
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -63,10 +64,13 @@ void RedFish::UpdateActor(float deltaTime)
 		turnFishAround.y = -turnFishAround.y;
 		turnFishAround.z = -turnFishAround.z;
 		turnFishAround.Normalize();
+		Vector3 dir = this->GetForward();
+		dir = Vector3::Reflect(dir, info.mNormal);
 		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
 
 	}
-	else if(redCurrPosition.z < -600.0)
+	if(redCurrPosition.z <= -600.0)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -74,24 +78,79 @@ void RedFish::UpdateActor(float deltaTime)
 		turnFishAround.y = -turnFishAround.y;
 		turnFishAround.z = -turnFishAround.z;
 		turnFishAround.Normalize();
-		this->RotateToNewForward(turnFishAround);
-	}
-	/* // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
-	// Test segment vs world
-	const float segmentLength = 30.0f;
-	Vector3 start = GetGame()->GetRedFish()->GetPosition();
-	Vector3 dir = GetGame()->GetRedFish()->GetForward();
-	Vector3 end = start + dir * segmentLength;
-	LineSegment l(start, end);
-	PhysWorld* phys = GetGame()->GetPhysWorld();
-	PhysWorld::CollisionInfo info;
-	if (phys->SegmentCast(l, info))
-	{
-		// If we collided, reflect the ball about the normal
+		Vector3 dir = this->GetForward();
 		dir = Vector3::Reflect(dir, info.mNormal);
-		GetGame()->GetRedFish()->RotateToNewForward(dir);
+		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
 	}
-	*/
+	if (redCurrPosition.x >= 1250.0f)
+	{
+		//turn around here as well
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		Vector3 dir = this->GetForward();
+		dir = Vector3::Reflect(dir, info.mNormal);
+		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
+	}
+	if (redCurrPosition.x <= -1250.0f)
+	{
+		//turn around here as well
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		Vector3 dir = this->GetForward();
+		dir = Vector3::Reflect(dir, info.mNormal);
+		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
+	}
+	if (redCurrPosition.y >= 1000.0f)
+	{
+		//turn around here as well
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		Vector3 dir = this->GetForward();
+		dir = Vector3::Reflect(dir, info.mNormal);
+		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
+	}
+	if (redCurrPosition.y <= 300.0f) //This one wont work for some reason
+	{
+		//turn around here as well
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		Vector3 dir = this->GetForward();
+		dir = Vector3::Reflect(dir, info.mNormal);
+		this->RotateToNewForward(turnFishAround);
+		//this->RotateToNewForward(dir);
+	}
+	 // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
+	// Test segment vs world
+	//const float segmentLength = 30.0f;
+	//Vector3 start = GetGame()->GetRedFish()->GetPosition();
+	//Vector3 dir = GetGame()->GetRedFish()->GetForward();
+	//Vector3 end = start + dir * segmentLength;
+	//LineSegment l(start, end);
+	//PhysWorld* phys = GetGame()->GetPhysWorld();
+	//PhysWorld::CollisionInfo info;
+	//if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
+	//{
+	//	// If we collided, reflect the ball about the normal
+	//	dir = Vector3::Reflect(dir, info.mNormal);
+	//	GetGame()->GetRedFish()->RotateToNewForward(dir);
+	//}
+	
 	
 
 }
