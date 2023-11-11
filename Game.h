@@ -167,4 +167,5 @@ private:
 	SoundEvent mReeling;
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
+
 };
