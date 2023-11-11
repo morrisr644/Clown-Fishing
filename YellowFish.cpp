@@ -56,8 +56,20 @@ void YellowFish::UpdateActor(float deltaTime)
 
 	
 	Vector3 yellowCurrPosition = this->GetPosition();
-	if (yellowCurrPosition.z > -100.0 || yellowCurrPosition.z < -600.0)
+	if (yellowCurrPosition.z > -100.0)
 	{
+		//turn the fish around here
+		Vector3 turnFishAround = this->GetForward();
+		turnFishAround.x = -turnFishAround.x;
+		turnFishAround.y = -turnFishAround.y;
+		turnFishAround.z = -turnFishAround.z;
+		turnFishAround.Normalize();
+		this->RotateToNewForward(turnFishAround);
+
+	}
+	else if (yellowCurrPosition.z < -600.0)
+	{
+		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
 		turnFishAround.x = -turnFishAround.x;
 		turnFishAround.y = -turnFishAround.y;

@@ -76,6 +76,23 @@ void RedFish::UpdateActor(float deltaTime)
 		turnFishAround.Normalize();
 		this->RotateToNewForward(turnFishAround);
 	}
+	/* // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
+	// Test segment vs world
+	const float segmentLength = 30.0f;
+	Vector3 start = GetGame()->GetRedFish()->GetPosition();
+	Vector3 dir = GetGame()->GetRedFish()->GetForward();
+	Vector3 end = start + dir * segmentLength;
+	LineSegment l(start, end);
+	PhysWorld* phys = GetGame()->GetPhysWorld();
+	PhysWorld::CollisionInfo info;
+	if (phys->SegmentCast(l, info))
+	{
+		// If we collided, reflect the ball about the normal
+		dir = Vector3::Reflect(dir, info.mNormal);
+		GetGame()->GetRedFish()->RotateToNewForward(dir);
+	}
+	*/
+	
 
 }
 
@@ -107,6 +124,8 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 		const AABB& planeBox = pa->GetBox()->GetWorldBox();
 		if (Intersect(playerBox, planeBox))
 		{
+			
+
 			if (this->GetLineStatus())
 			{
 				// If the fish collides with any of the walls, the player is no longer reeling it in
@@ -149,6 +168,7 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 			// Need to set position and update box component
 			SetPosition(pos);
 			mBoxComp->OnUpdateWorldTransform();
+			
 		}
 	}
 
@@ -161,6 +181,7 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 
 		if (Intersect(playerBox, planeBox))
 		{
+			
 
 			if (this->GetLineStatus())
 			{
@@ -223,7 +244,6 @@ void RedFish::SetMovementSpeed(float newMovementSpeed)
 	//forwardMovement = newMovementSpeed;
 	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }
-
 
 void RedFish::SetFishTimer(float newTimer)
 {

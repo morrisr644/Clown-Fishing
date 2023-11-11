@@ -31,6 +31,7 @@ public:
 	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
 	void ResetMoveAwayTimer() { moveAwayTimer = 3.0; }
 	bool GetFishOnStatus() { return isFishOn; }
+	bool BobberActor::GetInWaterStatus() { return isInWater; }
 	void CheckYellowFish(float deltaTime);
 	void CheckRedFish(float deltaTime);
 	void SetTensionSpeed(float tensionSpeed);
