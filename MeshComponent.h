@@ -24,8 +24,11 @@ public:
 
 	void SetVisible(bool visible) { mVisible = visible; }
 	bool GetVisible() const { return mVisible; }
+
+	void SetUsesLighting(bool value) { usesLighting_ = value; }
 protected:
 	class Mesh* mMesh;
 	size_t mTextureIndex;
 	bool mVisible;
+	bool usesLighting_;
 };
