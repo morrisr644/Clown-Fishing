@@ -28,6 +28,7 @@
 #include "PauseMenu.h"
 #include "InventoryMenu.h"
 #include "CatchScreen.h"
+#include "SkyBox.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "Font.h"
@@ -657,6 +658,8 @@ void Game::LoadData()
 		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
 		a->SetRotation(q);
 	}
+
+	mSkybox = new SkyBox(this);
 }
 
 void Game::UnloadData()
