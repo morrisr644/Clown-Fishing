@@ -528,7 +528,7 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new PlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
+		a = new InvisiblePlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
 		a->SetRotation(q);
 
@@ -536,7 +536,7 @@ void Game::LoadData()
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
 		a->SetRotation(q);*/
 		
-		a = new PlaneActor(this);
+		a = new InvisiblePlaneActor(this);
 		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
 		a->SetRotation(q);
 	}
@@ -545,11 +545,11 @@ void Game::LoadData()
 	// Forward/back walls
 	for (int i = 0; i < 10; i++)
 	{
-		a = new PlaneActor(this);
+		a = new InvisiblePlaneActor(this);
 		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
 		a->SetRotation(q);
 
-		a = new PlaneActor(this);
+		a = new InvisiblePlaneActor(this);
 		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
 		a->SetRotation(q);
 	}
