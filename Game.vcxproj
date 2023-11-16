@@ -42,6 +42,7 @@
     <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TargetActor.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="RedFish.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TargetActor.h" />
