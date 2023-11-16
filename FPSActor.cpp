@@ -154,6 +154,8 @@ void FPSActor::Shoot()
 		ball->RotateToNewForward(dir);
 		// Play shooting sound
 		ball->SetMyMoveSpeed();
+		Vector3 stopVelocity(0.0, 0.0, 0.0); // sets the beginning 
+		ball->SetForwardVelocity(stopVelocity);
 		ball->OutOfWater();
 		mAudioComp->PlayEvent("event:/CastLine");
 		//this->GetGame()->StopReeling();
