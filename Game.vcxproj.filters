@@ -258,7 +258,9 @@
     <ClInclude Include="InventoryBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SkyBox.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">
