@@ -133,6 +133,9 @@
     <ClCompile Include="InventoryBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -255,6 +258,7 @@
     <ClInclude Include="InventoryBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">
