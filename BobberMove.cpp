@@ -46,7 +46,8 @@ void BobberMove::Update(float deltaTime)
 	BobberActor* bobber = mOwner->GetGame()->GetBobber();
 	Vector3 bobberPosition = bobber->GetPosition();
 
-	if (bobberPosition.z <= -100.0 && bobberPosition.y < 1450.0 && bobberPosition.y > -1450.0 && bobberPosition.x < 1450.0 && bobberPosition.x > -1450.0) 
+	if (bobberPosition.z <= -100.0 && bobberPosition.y < 1450.0 
+		&& bobberPosition.y > -1450.0 && bobberPosition.x < 1450.0 && bobberPosition.x > -1450.0) 
 	{
 		bobber->PutInWater();
 		bobber->HitGround();

@@ -54,6 +54,49 @@ void FPSActor::UpdateActor(float deltaTime)
 
 	FixCollisions();
 
+	//Vector3 CurrPosition = this->GetPosition();
+
+	//if (CurrPosition.x >= 1450.0f)
+	//{
+	//	//turn around here as well
+	//	Vector3 turnAround = this->GetForward();
+	//	turnAround.x = -turnAround.x;
+	//	turnAround.y = -turnAround.y;
+	//	turnAround.z = -turnAround.z;
+	//	turnAround.Normalize();
+	//	//this->RotateToNewForward(dir);
+	//}
+	//if (CurrPosition.x <= -1450.0f)
+	//{
+	//	//turn around here as well
+	//	Vector3 turnAround = this->GetForward();
+	//	turnAround.x = -turnAround.x;
+	//	turnAround.y = -turnAround.y;
+	//	turnAround.z = -turnAround.z;
+	//	turnAround.Normalize();
+	//	//this->RotateToNewForward(dir);
+	//}
+	//if (CurrPosition.y >= 1450.0f)
+	//{
+	//	//turn around here as well
+	//	Vector3 turnAround = this->GetForward();
+	//	turnAround.x = -turnAround.x;
+	//	turnAround.y = -turnAround.y;
+	//	turnAround.z = -turnAround.z;
+	//	turnAround.Normalize();
+	//	//this->RotateToNewForward(dir);
+	//}
+	//if (CurrPosition.y <= -1450.0f) //This one wont work for some reason
+	//{
+	//	//turn around here as well
+	//	Vector3 turnAround = this->GetForward();
+	//	turnAround.x = -turnAround.x;
+	//	turnAround.y = -turnAround.y;
+	//	turnAround.z = -turnAround.z;
+	//	turnAround.Normalize();
+	//	//this->RotateToNewForward(dir);
+	//}
+
 	// Play the footstep if we're moving and haven't recently
 	mLastFootstep -= deltaTime;
 	if ((!Math::NearZero(mMoveComp->GetForwardSpeed()) ||
