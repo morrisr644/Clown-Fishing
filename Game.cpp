@@ -285,7 +285,7 @@ void Game::HandleKeyPress(int key)
 		if (isReelingIn)
 		{
 			mReeling.SetPaused(false);
-			//mReeling.Restart();
+			mReeling.Restart();
 
 			Vector3 bobberPos = mSingleBobber->GetPosition();
 
@@ -354,7 +354,7 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 newFishPos; //= Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
 			
-			if (!(hookedFish->GetCatchStatus()))
+			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
 				if (bobberPos.z > -100.0)
 				{
