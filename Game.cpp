@@ -21,6 +21,7 @@
 #include "RedFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
+#include "WoodPlaneActor.h"
 #include "UnderPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "TargetActor.h"
@@ -119,6 +120,17 @@ void Game::RemovePlane(PlaneActor* plane)
 {
 	auto iter = std::find(mPlanes.begin(), mPlanes.end(), plane);
 	mPlanes.erase(iter);
+}
+
+void Game::AddWoodPlane(WoodPlaneActor* plane)
+{
+	mWoodPlanes.emplace_back(plane);
+}
+
+void Game::RemoveWoodPlane(WoodPlaneActor* plane)
+{
+	auto iter = std::find(mWoodPlanes.begin(), mWoodPlanes.end(), plane);
+	mWoodPlanes.erase(iter);
 }
 
 void Game::AddWaterPlane(WaterPlaneActor* water) // Rebecca Morris
@@ -273,7 +285,7 @@ void Game::HandleKeyPress(int key)
 		if (isReelingIn)
 		{
 			mReeling.SetPaused(false);
-			//mReeling.Restart();
+			mReeling.Restart();
 
 			Vector3 bobberPos = mSingleBobber->GetPosition();
 
@@ -342,7 +354,7 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 newFishPos; //= Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
 			
-			if (!(hookedFish->GetCatchStatus()))
+			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
 				if (bobberPos.z > -100.0)
 				{
@@ -523,37 +535,6 @@ void Game::LoadData()
 	//MeshComponent* mc = nullptr;
 	const float start = -1250.0f;
 	const float size = 250.0f;
-	
-
-	// Left/right walls
-	q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	for (int i = 0; i < 10; i++)
-	{
-		a = new PlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
-		a->SetRotation(q);
-
-		/*a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
-		a->SetRotation(q);*/
-		
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
-		a->SetRotation(q);
-	}
-
-	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
-	// Forward/back walls
-	for (int i = 0; i < 10; i++)
-	{
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
-		a->SetRotation(q);
-
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
-		a->SetRotation(q);
-	}
 
 	// Left/right walls under pond
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
@@ -582,11 +563,11 @@ void Game::LoadData()
 	}
 
 	// Setup lights
-	mRenderer->SetAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
+	mRenderer->SetAmbientLight(Vector3(0.8f, 0.8f, 0.8f));
 	DirectionalLight& dir = mRenderer->GetDirectionalLight();
 	dir.mDirection = Vector3(0.0f, -0.707f, -0.707f);
-	dir.mDiffuseColor = Vector3(0.78f, 0.88f, 1.0f);
-	dir.mSpecColor = Vector3(0.8f, 0.8f, 0.8f);
+	//dir.mDiffuseColor = Vector3(0.78f, 0.88f, 1.0f);
+	//dir.mSpecColor = Vector3(0.8f, 0.8f, 0.8f);
 
 	// UI elements
 	mHUD = new HUD(this);
@@ -607,26 +588,26 @@ void Game::LoadData()
 	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
-	mSingleBobber->SetPosition(Vector3(10000, 10000, 10000));
+	mSingleBobber->SetPosition(Vector3(2000, 2000, 0));
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -350.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -350.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
-	// Create target actors
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(1450.0f, 0.0f, 100.0f));
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(1450.0f, 0.0f, 400.0f));
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(1450.0f, -500.0f, 200.0f));
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(1450.0f, 500.0f, 200.0f));
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(0.0f, -1450.0f, 200.0f));
-	a->SetRotation(Quaternion(Vector3::UnitZ, Math::PiOver2));
-	a = new TargetActor(this);
-	a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
-	a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
+	//// Create target actors
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(1450.0f, 0.0f, 100.0f));
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(1450.0f, 0.0f, 400.0f));
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(1450.0f, -500.0f, 200.0f));
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(1450.0f, 500.0f, 200.0f));
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(0.0f, -1450.0f, 200.0f));
+	//a->SetRotation(Quaternion(Vector3::UnitZ, Math::PiOver2));
+	//a = new TargetActor(this);
+	//a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
+	//a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
 	
 	// Setup floor
 	for (int i = 0; i < 10; i++)
@@ -638,7 +619,7 @@ void Game::LoadData()
 		}
 		for (int j = 0; j < 5; j++)
 		{
-			a = new PlaneActor(this);
+			a = new WoodPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 5; j < 10; j++) // Rebecca Morris
@@ -650,6 +631,10 @@ void Game::LoadData()
 
 	//const float largerSize = 500.0f;
 
+	mSkybox = new SkyBox(this);
+
+	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - RCM
+
 	// Draw the invisible wall
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
@@ -659,7 +644,34 @@ void Game::LoadData()
 		a->SetRotation(q);
 	}
 
-	mSkybox = new SkyBox(this);
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new PlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
+		a->SetRotation(q);
+
+		/*a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
+		a->SetRotation(q);*/
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
+		a->SetRotation(q);
+	}
+
+	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
+	// Forward/back walls
+	for (int i = 0; i < 10; i++)
+	{
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
+		a->SetRotation(q);
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
+		a->SetRotation(q);
+	}
 }
 
 void Game::UnloadData()

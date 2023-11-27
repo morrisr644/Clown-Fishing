@@ -136,6 +136,9 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WoodPlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -259,6 +262,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="WoodPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">
