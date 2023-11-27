@@ -18,7 +18,7 @@ PlaneActor::PlaneActor(Game* game)
 {
 	SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Plane.gpmesh");
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/InvisiblePlane.gpmesh");
 	mc->SetMesh(mesh);
 	// Add collision box
 	mBox = new BoxComponent(this);

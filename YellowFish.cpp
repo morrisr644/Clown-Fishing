@@ -264,6 +264,19 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 			mBoxComp->OnUpdateWorldTransform();
 		}
 	}
+
+	Vector3 currentPos = this->GetPosition();
+
+	if (isOnLine && currentPos.y <= 300.0)
+	{
+		// If the fish collides with any of the walls, the player is no longer reeling it in
+		// It either got away or was caught
+
+		isCaught = true;
+		isOnLine = false;
+		GetGame()->StopReeling();
+
+	}
 }
 
 void YellowFish::SetAngularSpeed(float newSpeed)
