@@ -326,6 +326,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
+				rfish->SetFishDistance(30);
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
@@ -371,7 +372,6 @@ void Game::HandleKeyPress(int key)
 
 				//StopReeling();
 			}
-
 			hookedFish->SetPosition(newFishPos);
 			mSingleBobber->SetPosition(newBobberPos);
 		}

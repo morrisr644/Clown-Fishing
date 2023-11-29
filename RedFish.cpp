@@ -22,7 +22,7 @@ RedFish::RedFish(Game* game)
 	, angularMovement(0.2)
 	, forwardMovement(200)
 	, fishTimer(1.0)
-	, fishDistance(10.0)
+	, fishDistance(50.0)
 	, fishOnLineStartPosition(0.0,0.0,0.0)
 {
 	SetScale(0.5f);

@@ -25,6 +25,7 @@ public:
 	void SetOnLinePosition();
 	Vector3 GetOnLinePosition() { return fishOnLineStartPosition; }
 	float GetFishDistance() { return fishDistance; }
+	void SetFishDistance(float newDistance) { fishDistance = newDistance + fishDistance; }
 
 private:
 	class BoxComponent* mBoxComp;
