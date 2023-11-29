@@ -114,6 +114,8 @@ public:
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
 
 	bool GetAllCaughtFish(int index);
+	// Track if the fish is being reeled in
+	bool isReelingIn;
 
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
@@ -151,8 +153,7 @@ private:
 	// Track if we're updating actors right now
 	bool mUpdatingActors;
 
-	// Track if the fish is being reeled in
-	bool isReelingIn;
+	
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;

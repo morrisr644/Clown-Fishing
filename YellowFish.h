@@ -29,5 +29,6 @@ private:
 	bool isOnLine;
 	bool isCaught;
 	bool isFleeing;
+	float fishDistance;
 	// here is where I will have to put the movement parts
 };
