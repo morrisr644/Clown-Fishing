@@ -131,6 +131,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 	}
 }
 
+// Clean this function up, break it up a bit
 void BobberActor::CheckRedFish(float deltaTime)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
