@@ -28,6 +28,7 @@
 #include "BobberActor.h"
 #include "PauseMenu.h"
 #include "InventoryMenu.h"
+#include "FishOnScreen.h"
 #include "CatchScreen.h"
 #include "SkyBox.h"
 #include <SDL/SDL.h>
@@ -97,6 +98,8 @@ bool Game::Initialize()
 
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
+
+	isFishOnScreenOn = false;
 	
 	return true;
 }
@@ -446,6 +449,7 @@ void Game::UpdateGame()
 {
 	// Compute delta time
 	// Wait until 16ms has elapsed since last frame
+
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
 		;
 

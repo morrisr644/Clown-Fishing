@@ -15,6 +15,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 RedFish::RedFish(Game* game)
@@ -166,6 +167,8 @@ void RedFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishScreenOn();
 }
 
 void RedFish::FixCollisions() // pulled from Madhav FPSActor

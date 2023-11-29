@@ -15,6 +15,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 YellowFish::YellowFish(Game* game)
@@ -148,7 +149,9 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	SetMovementSpeed(0.0f);
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
-	isOnLine = true;
+	isOnLine = true; 
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishScreenOn();
 }
 
 void YellowFish::FixCollisions() // pulled from Madhav FPSActor

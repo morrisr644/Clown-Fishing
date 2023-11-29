@@ -14,6 +14,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 BasicFish::BasicFish(Game* game)
@@ -61,6 +62,8 @@ void BasicFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishScreenOn();
 }
 
 void BasicFish::FixCollisions() // pulled from Madhav FPSActor

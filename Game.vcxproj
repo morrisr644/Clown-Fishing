@@ -23,6 +23,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="FishOnScreen.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="FishOnScreen.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCamera.h" />

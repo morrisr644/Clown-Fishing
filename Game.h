@@ -87,6 +87,8 @@ public:
 	bool GetReelState() { return isReelingIn; }
 	void StartReeling() { isReelingIn = true; }
 	void StopReeling() { isReelingIn = false; }
+
+	float GetTime() { return mCurrentTime; }
 	
 	class Font* GetFont(const std::string& fileName);
 
@@ -112,6 +114,8 @@ public:
 	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
 	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
+
+	void TurnFishScreenOn(){ isFishOnScreenOn = true; }
 
 	bool GetAllCaughtFish(int index);
 
@@ -173,4 +177,5 @@ private:
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
 	class SkyBox* mSkybox;
+	bool isFishOnScreenOn;
 };
