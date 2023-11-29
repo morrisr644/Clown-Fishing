@@ -22,6 +22,8 @@
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "WoodPlaneActor.h"
+#include "ShorePlaneActor.h"
+#include "GrassPlaneActor.h"
 #include "UnderPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "TargetActor.h"
@@ -125,6 +127,17 @@ void Game::RemovePlane(PlaneActor* plane)
 	mPlanes.erase(iter);
 }
 
+void Game::AddGrassPlane(GrassPlaneActor* grass)
+{
+	mGrassPlanes.emplace_back(grass);
+}
+
+void Game::RemoveGrassPlane(GrassPlaneActor* grass)
+{
+	auto iter = std::find(mGrassPlanes.begin(), mGrassPlanes.end(), grass);
+	mGrassPlanes.erase(iter);
+}
+
 void Game::AddWoodPlane(WoodPlaneActor* plane)
 {
 	mWoodPlanes.emplace_back(plane);
@@ -134,6 +147,17 @@ void Game::RemoveWoodPlane(WoodPlaneActor* plane)
 {
 	auto iter = std::find(mWoodPlanes.begin(), mWoodPlanes.end(), plane);
 	mWoodPlanes.erase(iter);
+}
+
+void Game::AddShorePlane(ShorePlaneActor* plane)
+{
+	mShorePlanes.emplace_back(plane);
+}
+
+void Game::RemoveShorePlane(ShorePlaneActor* plane)
+{
+	auto iter = std::find(mShorePlanes.begin(), mShorePlanes.end(), plane);
+	mShorePlanes.erase(iter);
 }
 
 void Game::AddWaterPlane(WaterPlaneActor* water) // Rebecca Morris
@@ -621,9 +645,14 @@ void Game::LoadData()
 			a = new UnderPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
 		}
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 4; j++)
 		{
-			a = new WoodPlaneActor(this);
+			a = new GrassPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 4; j < 5; j++)
+		{
+			a = new ShorePlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 5; j < 10; j++) // Rebecca Morris

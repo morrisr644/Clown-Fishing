@@ -142,6 +142,12 @@
     <ClCompile Include="FishOnScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GrassPlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShorePlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -269,6 +275,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="FishOnScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShorePlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
