@@ -22,6 +22,8 @@ YellowFish::YellowFish(Game* game)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
+	, fishDistance(50.0)
+	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
@@ -149,6 +151,7 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	SetOnLinePosition();
 }
 
 void YellowFish::FixCollisions() // pulled from Madhav FPSActor
@@ -295,4 +298,9 @@ void YellowFish::SetMovementSpeed(float newMovementSpeed)
 void YellowFish::SetFishTimer(float newTimer)
 {
 	fishTimer = newTimer;
+}
+
+void YellowFish::SetOnLinePosition()
+{
+	fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
 }

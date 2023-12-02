@@ -17,10 +17,15 @@ public:
 	void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
 	float GetFishTimer() { return fishTimer; }
 	bool GetLineStatus() { return isOnLine; }
+	void SetLineStatus(bool status) { isOnLine = status; }
 	bool GetCatchStatus() { return isCaught; }
 	void SetFishTimer(float newTimer);
 	bool GetFleeingStatus() { return isFleeing; }
 	void SetFleeingStatus(bool fleeingStatus) { isFleeing = fleeingStatus; }
+	void SetOnLinePosition();
+	Vector3 GetOnLinePosition() { return fishOnLineStartPosition; }
+	float GetFishDistance() { return fishDistance; }
+	void SetFishDistance(float newDistance) { fishDistance = newDistance + fishDistance; }
 
 private:
 	class BoxComponent* mBoxComp;
@@ -32,5 +37,7 @@ private:
 	bool isOnLine;
 	bool isCaught;
 	bool isFleeing;
+	float fishDistance;
+	Vector3 fishOnLineStartPosition;
 	// here is where I will have to put the movement parts
 };

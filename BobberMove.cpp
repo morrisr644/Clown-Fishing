@@ -78,7 +78,7 @@ void BobberMove::Update(float deltaTime)
 		
 
 
-		if (bobberPosition.z <= -100.0 || water)
+		if (water)
 		{
 			bobber->PutInWater();
 			bobber->HitGround();

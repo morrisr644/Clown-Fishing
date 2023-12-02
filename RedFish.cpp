@@ -22,6 +22,8 @@ RedFish::RedFish(Game* game)
 	, angularMovement(0.2)
 	, forwardMovement(200)
 	, fishTimer(1.0)
+	, fishDistance(50.0)
+	, fishOnLineStartPosition(0.0,0.0,0.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
@@ -135,29 +137,9 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	 // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
-	// Test segment vs world
-	//const float segmentLength = 30.0f;
-	//Vector3 start = GetGame()->GetRedFish()->GetPosition();
-	//Vector3 dir = GetGame()->GetRedFish()->GetForward();
-	//Vector3 end = start + dir * segmentLength;
-	//LineSegment l(start, end);
-	//PhysWorld* phys = GetGame()->GetPhysWorld();
-	//PhysWorld::CollisionInfo info;
-	//if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
-	//{
-	//	// If we collided, reflect the ball about the normal
-	//	dir = Vector3::Reflect(dir, info.mNormal);
-	//	GetGame()->GetRedFish()->RotateToNewForward(dir);
-	//}
-	
-	
 
 }
 
-//void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
-//{
-//}
 
 void RedFish::GetOnLine() // Rebecca Morris
 {
@@ -166,6 +148,7 @@ void RedFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	SetOnLinePosition();
 }
 
 void RedFish::FixCollisions() // pulled from Madhav FPSActor
@@ -320,4 +303,9 @@ void RedFish::SetMovementSpeed(float newMovementSpeed)
 void RedFish::SetFishTimer(float newTimer)
 {
 	fishTimer = newTimer;
+}
+
+void RedFish::SetOnLinePosition()
+{
+	fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
 }
