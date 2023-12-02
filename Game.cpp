@@ -317,6 +317,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
+				yfish->SetFishDistance(30);
 			}
 			RedFish* rfish = mRedFish;
 			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)

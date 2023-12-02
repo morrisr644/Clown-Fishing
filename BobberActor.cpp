@@ -90,13 +90,13 @@ void BobberActor::CheckYellowFish(float deltaTime)
 	BobberActor* currentBobber = GetGame()->GetBobber();
 	if (yellowFish->GetState() == Actor::EActive)
 	{
-		float yelloFishTimer = yellowFish->GetFishTimer();
+		float yellowFishTimer = yellowFish->GetFishTimer();
 		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
 		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
 		{
-			yelloFishTimer -= deltaTime;
-			yellowFish->SetFishTimer(yelloFishTimer);
-			if (yelloFishTimer <= 0)
+			yellowFishTimer -= deltaTime;
+			yellowFish->SetFishTimer(yellowFishTimer);
+			if (yellowFishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
 				fishFacingBobber.x = currentPosition.x - yellowFishCurrentPosition.x;
@@ -106,8 +106,8 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
 			}
-		} //&& ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0))
-		else if ((currentBobber->GetFishOnStatus() == true))
+		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
+		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == false) // add an and this fish is not on the line here
 		{
 			if (yellowFish->GetFleeingStatus() == false)
 			{
@@ -119,15 +119,60 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
 				yellowFish->SetFleeingStatus(true);
+
 			}
+
 		}
-		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0 || (abs(currentPosition.z - yellowFishCurrentPosition.z) > 200.0))))
+		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true)
 		{
-			yellowFish->SetFishTimer(2.0);
-			yellowFish->SetMovementSpeed(100);
-			yellowFish->SetAngularSpeed(0.3);
+			Vector3 startPos = yellowFish->GetOnLinePosition();
+			Vector3 currPos = yellowFish->GetPosition();
+			Vector3 difference;
+			difference.x = abs(currPos.x - startPos.x);
+			difference.y = abs(currPos.y - startPos.y);
+			difference.z = abs(currPos.z - startPos.z);
+			float totalDistance = difference.x + difference.y + difference.z;
+			if (totalDistance > yellowFish->GetFishDistance())
+			{
+				Vector3 turnFishAround = yellowFish->GetForward();
+				turnFishAround.x = -turnFishAround.x;
+				turnFishAround.y = -turnFishAround.y;
+				turnFishAround.z = -turnFishAround.z;
+				turnFishAround.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				yellowFish->SetFleeingStatus(true);
+				yellowFish->SetLineStatus(false);
+				Vector3 bobberSpawnPoint(20000, 20000, 0);
+				currentBobber->SetPosition(bobberSpawnPoint);
+				yellowFish->SetFishTimer(1.0);
+				yellowFish->SetMovementSpeed(200);
+				yellowFish->SetAngularSpeed(0.2);
+				GetGame()->isReelingIn = false;
+
+			}
+
+		}
+		// if the fish is on the line, grab the position of the fish when it first gets on the line.
+				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
+				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
+				// and should be it?
+		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - yellowFishCurrentPosition.z) > 200.0)))
+		{
+			yellowFish->SetFishTimer(1.0);
+			yellowFish->SetMovementSpeed(200);
+			yellowFish->SetAngularSpeed(0.2);
 			yellowFish->SetFleeingStatus(false);
 		}
+
+		else if (yellowFish->GetFleeingStatus() == true)
+		{
+			yellowFish->SetFishTimer(1.0);
+			yellowFish->SetMovementSpeed(200);
+			yellowFish->SetAngularSpeed(0.2);
+			yellowFish->SetFleeingStatus(false);
+		}
+
 	}
 }
 
