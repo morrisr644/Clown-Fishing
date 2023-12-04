@@ -87,6 +87,8 @@ public:
 	bool GetReelState() { return isReelingIn; }
 	void StartReeling() { isReelingIn = true; }
 	void StopReeling() { isReelingIn = false; }
+
+	float GetTime() { return mCurrentTime; }
 	
 	class Font* GetFont(const std::string& fileName);
 
@@ -96,6 +98,14 @@ public:
 	void AddPlane(class PlaneActor* plane);
 	void RemovePlane(class PlaneActor* plane);
 	std::vector<class PlaneActor*>& GetPlanes() { return mPlanes; }
+
+	void AddGrassPlane(class GrassPlaneActor* grass);
+	void RemoveGrassPlane(class GrassPlaneActor* grass);
+	std::vector<class GrassPlaneActor*>& GetGrassPlanes() { return mGrassPlanes; }
+
+	void AddShorePlane(class ShorePlaneActor* shore);
+	void RemoveShorePlane(class ShorePlaneActor* shore);
+	std::vector<class ShorePlaneActor*>& GetShorePlanes() { return mShorePlanes; }
 
 	void AddWoodPlane(class WoodPlaneActor* wood);
 	void RemoveWoodPlane(class WoodPlaneActor* wood);
@@ -112,6 +122,8 @@ public:
 	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
 	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
+
+	void TurnFishScreenOn(){ isFishOnScreenOn = true; }
 
 	bool GetAllCaughtFish(int index);
 	// Track if the fish is being reeled in
@@ -158,7 +170,9 @@ private:
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
 	std::vector<class WoodPlaneActor*> mWoodPlanes;
+	std::vector<class GrassPlaneActor*> mGrassPlanes;
 	std::vector<class WaterPlaneActor*> mWaterPlanes;
+	std::vector<class ShorePlaneActor*> mShorePlanes;
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
 	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	class BasicFish* mBasicFish;
@@ -174,4 +188,5 @@ private:
 	class YellowFish* mYellowFish;
 	class RedFish* mRedFish;
 	class SkyBox* mSkybox;
+	bool isFishOnScreenOn;
 };

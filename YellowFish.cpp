@@ -15,6 +15,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 YellowFish::YellowFish(Game* game)
@@ -152,6 +153,10 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	this->GetGame()->StartReeling();
 	isOnLine = true;
 	SetOnLinePosition();
+  
+	isOnLine = true; 
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishScreenOn();
 }
 
 void YellowFish::FixCollisions() // pulled from Madhav FPSActor
@@ -270,7 +275,7 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 
 	Vector3 currentPos = this->GetPosition();
 
-	if (isOnLine && currentPos.y <= 300.0)
+	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
 		// It either got away or was caught
