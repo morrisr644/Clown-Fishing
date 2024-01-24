@@ -31,6 +31,7 @@
 #include "PauseMenu.h"
 #include "InventoryMenu.h"
 #include "FishOnScreen.h"
+#include "FishOffScreen.h"
 #include "CatchScreen.h"
 #include "SkyBox.h"
 #include <SDL/SDL.h>
@@ -102,6 +103,8 @@ bool Game::Initialize()
 	mReeling.SetPaused(true);
 
 	isFishOnScreenOn = false;
+	isFishOffScreenOn = false;
+	didFishGetAway = false;
 	
 	return true;
 }
@@ -431,8 +434,7 @@ void Game::HandleKeyPress(int key)
 
 				caughtFish->SetState(Actor::EDead);
 			}
-
-			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
+			else if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
 				fishPos = mYellowFish->GetPosition();
 				caughtFish = mYellowFish;
@@ -449,6 +451,10 @@ void Game::HandleKeyPress(int key)
 				new CatchScreen(this);
 
 				caughtFish->SetState(Actor::EDead);
+			}
+			else
+			{
+				new FishOffScreen(this); // This technically works but we can make it better
 			}
 
 		}

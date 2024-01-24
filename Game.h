@@ -123,7 +123,9 @@ public:
 	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
 	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
 
-	void TurnFishScreenOn(){ isFishOnScreenOn = true; }
+	void TurnFishOnScreenOn(){ isFishOnScreenOn = true; }
+
+	void TurnFishOffScreenOn() { isFishOffScreenOn = true; }
 
 	bool GetAllCaughtFish(int index);
 	// Track if the fish is being reeled in
@@ -189,4 +191,6 @@ private:
 	class RedFish* mRedFish;
 	class SkyBox* mSkybox;
 	bool isFishOnScreenOn;
+	bool isFishOffScreenOn;
+	bool didFishGetAway;
 };

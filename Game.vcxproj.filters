@@ -148,6 +148,9 @@
     <ClCompile Include="ShorePlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FishOffScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -281,6 +284,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ShorePlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FishOffScreen.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

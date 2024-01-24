@@ -63,7 +63,7 @@ void BasicFish::GetOnLine() // Rebecca Morris
 	this->GetGame()->StartReeling();
 	isOnLine = true;
 	new FishOnScreen(this->GetGame());
-	this->GetGame()->TurnFishScreenOn();
+	this->GetGame()->TurnFishOnScreenOn();
 }
 
 void BasicFish::FixCollisions() // pulled from Madhav FPSActor
