@@ -156,7 +156,7 @@ void YellowFish::GetOnLine() // Rebecca Morris
   
 	isOnLine = true; 
 	new FishOnScreen(this->GetGame());
-	this->GetGame()->TurnFishScreenOn();
+	this->GetGame()->TurnFishOnScreenOn();
 }
 
 void YellowFish::FixCollisions() // pulled from Madhav FPSActor
