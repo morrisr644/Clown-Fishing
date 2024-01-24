@@ -434,7 +434,7 @@ void Game::HandleKeyPress(int key)
 
 				caughtFish->SetState(Actor::EDead);
 			}
-			else if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
+			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
 				fishPos = mYellowFish->GetPosition();
 				caughtFish = mYellowFish;
@@ -452,10 +452,10 @@ void Game::HandleKeyPress(int key)
 
 				caughtFish->SetState(Actor::EDead);
 			}
-			else
-			{
-				new FishOffScreen(this); // This technically works but we can make it better
-			}
+			//else
+			//{
+			//	new FishOffScreen(this); // This technically works but we can make it better
+			//}
 
 		}
 

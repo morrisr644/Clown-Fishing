@@ -20,6 +20,7 @@
 #include "BasicFish.h"
 #include "YellowFish.h"
 #include "RedFish.h"
+#include "FishOffScreen.h"
 
 BobberActor::BobberActor(Game* game)
 	:Actor(game)
@@ -150,6 +151,9 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				yellowFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
 
+				new FishOffScreen(this->GetGame());
+				this->GetGame()->TurnFishOffScreenOn();
+
 			}
 
 		}
@@ -243,6 +247,9 @@ void BobberActor::CheckRedFish(float deltaTime)
 				redFish->SetMovementSpeed(200);
 				redFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
+
+				new FishOffScreen(this->GetGame());
+				this->GetGame()->TurnFishOffScreenOn();
 				
 			}
 			
