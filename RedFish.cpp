@@ -59,7 +59,7 @@ void RedFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 	
 	Vector3 redCurrPosition = this->GetPosition(); //This works but it stalls at the beginning
-	if (redCurrPosition.z >= -100.0 )
+	if (redCurrPosition.z >= -140.0 )
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -73,7 +73,7 @@ void RedFish::UpdateActor(float deltaTime)
 		//this->RotateToNewForward(dir);
 
 	}
-	if(redCurrPosition.z <= -600.0)
+	if(redCurrPosition.z <= -800.0)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -86,7 +86,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.x >= 1250.0f)
+	if (redCurrPosition.x >= 1400.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -99,7 +99,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.x <= -1250.0f)
+	if (redCurrPosition.x <= -1400.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -112,7 +112,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.y >= 1000.0f)
+	if (redCurrPosition.y >= 1200.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();

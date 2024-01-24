@@ -413,6 +413,9 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 fishPos;
 
+			Vector3 bobberSpawnPoint (20000.0, 20000.0, 0.0);
+			mSingleBobber->SetPosition(bobberSpawnPoint);
+
 			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
 				fishPos = mRedFish->GetPosition();

@@ -60,7 +60,7 @@ void YellowFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 
 	Vector3 yellowCurrPosition = this->GetPosition();
-	if (yellowCurrPosition.z >= -100.0)
+	if (yellowCurrPosition.z >= -140.0)
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
