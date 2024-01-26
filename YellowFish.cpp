@@ -60,7 +60,7 @@ void YellowFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 
 	Vector3 yellowCurrPosition = this->GetPosition();
-	if (yellowCurrPosition.z >= -140.0)
+	if (yellowCurrPosition.z >= -140.0 && isOnLine == false)
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -152,6 +152,11 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+
+	Vector3 currPos = this->GetPosition();
+	Vector3 currPosZDown = currPos;
+	currPosZDown.z = currPosZDown.z - 10;
+	this->SetPosition(currPosZDown);
 	SetOnLinePosition();
   
 	isOnLine = true; 

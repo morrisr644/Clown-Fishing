@@ -59,7 +59,7 @@ void RedFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 	
 	Vector3 redCurrPosition = this->GetPosition(); //This works but it stalls at the beginning
-	if (redCurrPosition.z >= -140.0 )
+	if (redCurrPosition.z >= -140.0 && isOnLine == false)
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -149,6 +149,11 @@ void RedFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	// here maybe drop z by 10???
+	Vector3 currPos = this->GetPosition();
+	Vector3 currPosZDown = currPos;
+	currPosZDown.z = currPosZDown.z - 10;
+	this->SetPosition(currPosZDown);
 	SetOnLinePosition();
   
 	new FishOnScreen(this->GetGame());
