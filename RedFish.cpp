@@ -157,7 +157,7 @@ void RedFish::GetOnLine() // Rebecca Morris
 	SetOnLinePosition();
   
 	new FishOnScreen(this->GetGame());
-	this->GetGame()->TurnFishScreenOn();
+	this->GetGame()->TurnFishOnScreenOn();
 }
 
 void RedFish::FixCollisions() // pulled from Madhav FPSActor
