@@ -15,6 +15,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 RedFish::RedFish(Game* game)
@@ -22,6 +23,8 @@ RedFish::RedFish(Game* game)
 	, angularMovement(0.2)
 	, forwardMovement(200)
 	, fishTimer(1.0)
+	, fishDistance(50.0)
+	, fishOnLineStartPosition(0.0,0.0,0.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
@@ -56,7 +59,7 @@ void RedFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 	
 	Vector3 redCurrPosition = this->GetPosition(); //This works but it stalls at the beginning
-	if (redCurrPosition.z >= -100.0 )
+	if (redCurrPosition.z >= -140.0 && isOnLine == false)
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -70,7 +73,7 @@ void RedFish::UpdateActor(float deltaTime)
 		//this->RotateToNewForward(dir);
 
 	}
-	if(redCurrPosition.z <= -600.0)
+	if(redCurrPosition.z <= -800.0)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -83,7 +86,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.x >= 1250.0f)
+	if (redCurrPosition.x >= 1400.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -96,7 +99,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.x <= -1250.0f)
+	if (redCurrPosition.x <= -1400.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -109,7 +112,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	if (redCurrPosition.y >= 1000.0f)
+	if (redCurrPosition.y >= 1200.0f)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -135,29 +138,9 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 	}
-	 // Here is the code that SHOULD be causing reflections but isnt working Rebecca.
-	// Test segment vs world
-	//const float segmentLength = 30.0f;
-	//Vector3 start = GetGame()->GetRedFish()->GetPosition();
-	//Vector3 dir = GetGame()->GetRedFish()->GetForward();
-	//Vector3 end = start + dir * segmentLength;
-	//LineSegment l(start, end);
-	//PhysWorld* phys = GetGame()->GetPhysWorld();
-	//PhysWorld::CollisionInfo info;
-	//if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
-	//{
-	//	// If we collided, reflect the ball about the normal
-	//	dir = Vector3::Reflect(dir, info.mNormal);
-	//	GetGame()->GetRedFish()->RotateToNewForward(dir);
-	//}
-	
-	
 
 }
 
-//void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
-//{
-//}
 
 void RedFish::GetOnLine() // Rebecca Morris
 {
@@ -166,6 +149,15 @@ void RedFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+	// here maybe drop z by 10???
+	Vector3 currPos = this->GetPosition();
+	Vector3 currPosZDown = currPos;
+	currPosZDown.z = currPosZDown.z - 10;
+	this->SetPosition(currPosZDown);
+	SetOnLinePosition();
+  
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishOnScreenOn();
 }
 
 void RedFish::FixCollisions() // pulled from Madhav FPSActor
@@ -293,7 +285,7 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 
 	Vector3 currentPos = this->GetPosition();
 
-	if (isOnLine && currentPos.y <= 300.0)
+	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
 		// It either got away or was caught
@@ -320,4 +312,9 @@ void RedFish::SetMovementSpeed(float newMovementSpeed)
 void RedFish::SetFishTimer(float newTimer)
 {
 	fishTimer = newTimer;
+}
+
+void RedFish::SetOnLinePosition()
+{
+	fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
 }

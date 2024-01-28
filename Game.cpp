@@ -22,12 +22,16 @@
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "WoodPlaneActor.h"
+#include "ShorePlaneActor.h"
+#include "GrassPlaneActor.h"
 #include "UnderPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
 #include "InventoryMenu.h"
+#include "FishOnScreen.h"
+#include "FishOffScreen.h"
 #include "CatchScreen.h"
 #include "SkyBox.h"
 #include <SDL/SDL.h>
@@ -97,6 +101,10 @@ bool Game::Initialize()
 
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
+
+	isFishOnScreenOn = false;
+	isFishOffScreenOn = false;
+	didFishGetAway = false;
 	
 	return true;
 }
@@ -122,6 +130,17 @@ void Game::RemovePlane(PlaneActor* plane)
 	mPlanes.erase(iter);
 }
 
+void Game::AddGrassPlane(GrassPlaneActor* grass)
+{
+	mGrassPlanes.emplace_back(grass);
+}
+
+void Game::RemoveGrassPlane(GrassPlaneActor* grass)
+{
+	auto iter = std::find(mGrassPlanes.begin(), mGrassPlanes.end(), grass);
+	mGrassPlanes.erase(iter);
+}
+
 void Game::AddWoodPlane(WoodPlaneActor* plane)
 {
 	mWoodPlanes.emplace_back(plane);
@@ -131,6 +150,17 @@ void Game::RemoveWoodPlane(WoodPlaneActor* plane)
 {
 	auto iter = std::find(mWoodPlanes.begin(), mWoodPlanes.end(), plane);
 	mWoodPlanes.erase(iter);
+}
+
+void Game::AddShorePlane(ShorePlaneActor* plane)
+{
+	mShorePlanes.emplace_back(plane);
+}
+
+void Game::RemoveShorePlane(ShorePlaneActor* plane)
+{
+	auto iter = std::find(mShorePlanes.begin(), mShorePlanes.end(), plane);
+	mShorePlanes.erase(iter);
 }
 
 void Game::AddWaterPlane(WaterPlaneActor* water) // Rebecca Morris
@@ -317,6 +347,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
+				yfish->SetFishDistance(30);
 			}
 			RedFish* rfish = mRedFish;
 			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
@@ -326,6 +357,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
+				rfish->SetFishDistance(30);
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
@@ -356,7 +388,7 @@ void Game::HandleKeyPress(int key)
 			
 			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
-				if (bobberPos.z > -100.0)
+				if (bobberPos.z > -100.0 || fishPos.z > -160.0)
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
@@ -371,7 +403,6 @@ void Game::HandleKeyPress(int key)
 
 				//StopReeling();
 			}
-
 			hookedFish->SetPosition(newFishPos);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
@@ -384,6 +415,9 @@ void Game::HandleKeyPress(int key)
 			auto caughtFish = mBasicFish;
 
 			Vector3 fishPos;
+
+			Vector3 bobberSpawnPoint (20000.0, 20000.0, 0.0);
+			mSingleBobber->SetPosition(bobberSpawnPoint);
 
 			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
@@ -403,7 +437,6 @@ void Game::HandleKeyPress(int key)
 
 				caughtFish->SetState(Actor::EDead);
 			}
-
 			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
 				fishPos = mYellowFish->GetPosition();
@@ -422,6 +455,10 @@ void Game::HandleKeyPress(int key)
 
 				caughtFish->SetState(Actor::EDead);
 			}
+			//else
+			//{
+			//	new FishOffScreen(this); // This technically works but we can make it better
+			//}
 
 		}
 
@@ -446,6 +483,7 @@ void Game::UpdateGame()
 {
 	// Compute delta time
 	// Wait until 16ms has elapsed since last frame
+
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
 		;
 
@@ -588,7 +626,7 @@ void Game::LoadData()
 	mRedFish = new RedFish(this);
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
-	mSingleBobber->SetPosition(Vector3(2000, 2000, 0));
+	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -350.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -350.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
@@ -617,9 +655,14 @@ void Game::LoadData()
 			a = new UnderPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
 		}
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 4; j++)
 		{
-			a = new WoodPlaneActor(this);
+			a = new GrassPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 4; j < 5; j++)
+		{
+			a = new ShorePlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 5; j < 10; j++) // Rebecca Morris

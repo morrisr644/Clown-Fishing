@@ -15,6 +15,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
+#include "FishOnScreen.h"
 
 
 YellowFish::YellowFish(Game* game)
@@ -22,6 +23,8 @@ YellowFish::YellowFish(Game* game)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
+	, fishDistance(50.0)
+	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(0.5f);
 	MeshComponent* mc = new MeshComponent(this);
@@ -57,7 +60,7 @@ void YellowFish::UpdateActor(float deltaTime)
 	PhysWorld::CollisionInfo info;
 
 	Vector3 yellowCurrPosition = this->GetPosition();
-	if (yellowCurrPosition.z >= -100.0)
+	if (yellowCurrPosition.z >= -140.0 && isOnLine == false)
 	{
 		//turn the fish around here
 		Vector3 turnFishAround = this->GetForward();
@@ -149,6 +152,16 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
+
+	Vector3 currPos = this->GetPosition();
+	Vector3 currPosZDown = currPos;
+	currPosZDown.z = currPosZDown.z - 10;
+	this->SetPosition(currPosZDown);
+	SetOnLinePosition();
+  
+	isOnLine = true; 
+	new FishOnScreen(this->GetGame());
+	this->GetGame()->TurnFishOnScreenOn();
 }
 
 void YellowFish::FixCollisions() // pulled from Madhav FPSActor
@@ -267,7 +280,7 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 
 	Vector3 currentPos = this->GetPosition();
 
-	if (isOnLine && currentPos.y <= 300.0)
+	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
 		// It either got away or was caught
@@ -295,4 +308,9 @@ void YellowFish::SetMovementSpeed(float newMovementSpeed)
 void YellowFish::SetFishTimer(float newTimer)
 {
 	fishTimer = newTimer;
+}
+
+void YellowFish::SetOnLinePosition()
+{
+	fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
 }

@@ -23,10 +23,13 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="FishOffScreen.cpp" />
+    <ClCompile Include="FishOnScreen.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GrassPlaneActor.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InventoryBox.cpp" />
     <ClCompile Include="InventoryMenu.cpp" />
@@ -42,6 +45,7 @@
     <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShorePlaneActor.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -68,10 +72,13 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="FishOffScreen.h" />
+    <ClInclude Include="FishOnScreen.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GrassPlaneActor.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InventoryBox.h" />
     <ClInclude Include="InventoryMenu.h" />
@@ -86,6 +93,7 @@
     <ClInclude Include="RedFish.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShorePlaneActor.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />
