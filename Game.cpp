@@ -32,6 +32,7 @@
 #include "InventoryMenu.h"
 #include "FishOnScreen.h"
 #include "FishOffScreen.h"
+#include "TensionMeter.h"
 #include "CatchScreen.h"
 #include "SkyBox.h"
 #include <SDL/SDL.h>
@@ -47,6 +48,7 @@ Game::Game()
 ,mPhysWorld(nullptr)
 ,mGameState(EGameplay)
 ,mUpdatingActors(false)
+//,mTensionMeter(nullptr)
 {
 	
 }
@@ -105,6 +107,8 @@ bool Game::Initialize()
 	isFishOnScreenOn = false;
 	isFishOffScreenOn = false;
 	didFishGetAway = false;
+
+	//mTensionMeter = new TensionMeter(this);
 	
 	return true;
 }

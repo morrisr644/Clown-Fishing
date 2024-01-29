@@ -15,6 +15,7 @@
 #include "FPSActor.h"
 #include <algorithm>
 #include "TargetComponent.h"
+#include "TensionMeter.h"
 
 HUD::HUD(Game* game)
 	:UIScreen(game)
@@ -23,7 +24,16 @@ HUD::HUD(Game* game)
 	,mTargetEnemy(false)
 {
 	Renderer* r = mGame->GetRenderer();
-	mHealthBar = r->GetTexture("Assets/HealthBar.png");
+	mBlankTensionBar = r->GetTexture("Assets/BlankBar.png");
+	mTensionBar1 = r->GetTexture("Assets/TensionLevel1.png");
+	mTensionBar2 = r->GetTexture("Assets/TensionLevel2.png");
+	mTensionBar3 = r->GetTexture("Assets/TensionLevel3.png");
+	mTensionBar4 = r->GetTexture("Assets/TensionLevel4.png");
+	mTensionBar5 = r->GetTexture("Assets/TensionLevel5.png");
+	mTensionBar6 = r->GetTexture("Assets/TensionLevel6.png");
+	mTensionBar7 = r->GetTexture("Assets/TensionLevel7.png");
+	mTensionBar8 = r->GetTexture("Assets/TensionLevel8.png");
+
 	mRadar = r->GetTexture("Assets/Radar.png");
 	mCrosshair = r->GetTexture("Assets/Crosshair.png");
 	mCrosshairEnemy = r->GetTexture("Assets/CrosshairRed.png");
@@ -41,6 +51,7 @@ void HUD::Update(float deltaTime)
 	
 	UpdateCrosshair(deltaTime);
 	UpdateRadar(deltaTime);
+	UpdateTensionBar(deltaTime);
 }
 
 void HUD::Draw(Shader* shader)
@@ -59,9 +70,18 @@ void HUD::Draw(Shader* shader)
 	}
 	// Radar arrow
 	DrawTexture(shader, mRadarArrow, cRadarPos);
+
+	// Tension bar
+	DrawTexture(shader, mBlankTensionBar, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar1, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar2, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar3, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar4, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar5, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar6, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar7, Vector2(-350.0f, -350.0f));
+	DrawTexture(shader, mTensionBar8, Vector2(-350.0f, -350.0f));
 	
-	//// Health bar
-	//DrawTexture(shader, mHealthBar, Vector2(-350.0f, -350.0f));
 }
 
 void HUD::AddTargetComponent(TargetComponent* tc)
@@ -99,6 +119,57 @@ void HUD::UpdateCrosshair(float deltaTime)
 			}
 		}
 	}
+}
+
+void HUD::UpdateTensionBar(float deltaTime)
+{
+	mBlankTensionBar.clear(); // these need tobe here or we just get a ton of health bars
+	mHealthBar75p.clear();
+	mHealthBar50p.clear();
+	mHealthBar25p.clear();
+	Renderer* r = mGame->GetRenderer();
+
+	if (mGame->isReelingIn)
+	{
+		// Tension bar
+		//DrawTexture(shader, mTensionBar, Vector2(-350.0f, -350.0f));
+		//mTensionBar = r->GetTexture("Assets/HealthBar.png");
+
+
+		// BasicFish
+		int TensionLevel = 1; //= basicFish.getTensionLevel();
+
+		switch (TensionLevel)
+		{
+		case 1:
+			mTensionBar = r->GetTexture("Assets/HealthBar.png");
+			break;
+		case 2:
+			mTensionBar = r->GetTexture("Assets/TensionLevel2.png");
+			break;
+		case 3:
+			mTensionBar = r->GetTexture("Assets/TensionLevel3.png");
+			break;
+		case 4:
+			mTensionBar = r->GetTexture("Assets/TensionLevel4.png");
+			break;
+		case 5:
+			mTensionBar = r->GetTexture("Assets/TensionLevel5.png");
+			break;
+		case 6:
+			mTensionBar = r->GetTexture("Assets/TensionLevel6.png");
+			break;
+		case 7:
+			mTensionBar = r->GetTexture("Assets/TensionLevel7.png");
+			break;
+		case 8:
+			mTensionBar = r->GetTexture("Assets/TensionLevel8.png");
+			break;
+		}
+	}
+	else
+		mTensionBar = r->GetTexture("Assets/BlankBar.png");
+
 }
 
 void HUD::UpdateRadar(float deltaTime)

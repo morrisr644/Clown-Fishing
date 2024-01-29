@@ -25,8 +25,17 @@ public:
 protected:
 	void UpdateCrosshair(float deltaTime);
 	void UpdateRadar(float deltaTime);
+	void UpdateTensionBar(float deltaTime);
 	
-	class Texture* mHealthBar;
+	class Texture* mBlankTensionBar;
+	class Texture* mTensionBar1;
+	class Texture* mTensionBar2;
+	class Texture* mTensionBar3;
+	class Texture* mTensionBar4;
+	class Texture* mTensionBar5;
+	class Texture* mTensionBar6;
+	class Texture* mTensionBar7;
+	class Texture* mTensionBar8;
 	class Texture* mRadar;
 	class Texture* mCrosshair;
 	class Texture* mCrosshairEnemy;
@@ -42,4 +51,14 @@ protected:
 	float mRadarRadius;
 	// Whether the crosshair targets an enemy
 	bool mTargetEnemy;
+
+	std::vector<Vector2> mTensionBarBlank; //Tension Bars
+	std::vector<Vector2> mTensionBarFull;
+	std::vector<Vector2> mTensionBarAlmostFull;
+	std::vector<Vector2> mTensionBar3;
+	std::vector<Vector2> mTensionBar4;
+	std::vector<Vector2> mTensionBar5;
+	std::vector<Vector2> mTensionBar6;
+	std::vector<Vector2> mTensionBar7;
+	std::vector<Vector2> mTensionBarAlmostEmpty;
 };

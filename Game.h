@@ -13,6 +13,7 @@
 #include "Math.h"
 #include "SoundEvent.h"
 #include <SDL/SDL_types.h>
+#include "TensionMeter.h"
 
 class Game
 {
@@ -35,6 +36,7 @@ public:
 	class AudioSystem* GetAudioSystem() { return mAudioSystem; }
 	class PhysWorld* GetPhysWorld() { return mPhysWorld; }
 	class HUD* GetHUD() { return mHUD; }
+	//class TensionMeter* GetTensionMeter() { return mTensionMeter; }
 	
 	// Manage UI stack
 	const std::vector<class UIScreen*>& GetUIStack() { return mUIStack; }
@@ -193,4 +195,5 @@ private:
 	bool isFishOnScreenOn;
 	bool isFishOffScreenOn;
 	bool didFishGetAway;
+	//class TensionMeter mTensionMeter;
 };
