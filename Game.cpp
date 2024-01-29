@@ -388,7 +388,7 @@ void Game::HandleKeyPress(int key)
 			
 			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
-				if (bobberPos.z > -100.0)
+				if (bobberPos.z > -100.0 || fishPos.z > -160.0)
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
@@ -416,6 +416,9 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 fishPos;
 
+			
+			
+
 			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
 				fishPos = mRedFish->GetPosition();
@@ -433,6 +436,8 @@ void Game::HandleKeyPress(int key)
 				new CatchScreen(this);
 
 				caughtFish->SetState(Actor::EDead);
+				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
 			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
@@ -451,6 +456,8 @@ void Game::HandleKeyPress(int key)
 				new CatchScreen(this);
 
 				caughtFish->SetState(Actor::EDead);
+				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
 			//else
 			//{
