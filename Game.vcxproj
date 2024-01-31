@@ -30,6 +30,7 @@
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GrassPlaneActor.cpp" />
+    <ClCompile Include="Hook.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InventoryBox.cpp" />
     <ClCompile Include="InventoryMenu.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GrassPlaneActor.h" />
+    <ClInclude Include="Hook.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InventoryBox.h" />
     <ClInclude Include="InventoryMenu.h" />

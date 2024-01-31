@@ -88,7 +88,7 @@ public:
 	void StartReeling() { isReelingIn = true; }
 	void StopReeling() { isReelingIn = false; }
 	float GetFishHookDistance() { return fishHookDistance; }
-	float SetFishHookDistance(float newDistance) { fishHookDistance = newDistance; }
+	void SetFishHookDistance(float newDistance) { fishHookDistance = newDistance; }
 
 	float GetTime() { return mCurrentTime; }
 	
@@ -196,4 +196,5 @@ private:
 	bool isFishOffScreenOn;
 	bool didFishGetAway;
 	float fishHookDistance;
+	class Hook* currentHook;
 };
