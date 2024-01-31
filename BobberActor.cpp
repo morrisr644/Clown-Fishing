@@ -133,6 +133,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 			difference.y = abs(currPos.y - startPos.y);
 			difference.z = abs(currPos.z - startPos.z);
 			float totalDistance = difference.x + difference.y + difference.z;
+			GetGame()->SetFishHookDistance(totalDistance);
 			if (totalDistance > yellowFish->GetFishDistance())
 			{
 				Vector3 turnFishAround = yellowFish->GetForward();
@@ -190,6 +191,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 	{
 		float redFishTimer = redFish->GetFishTimer();
 		Vector3 redFishCurrentPosition = redFish->GetPosition();
+		// if the fish is not currently on the line, and its in range, head towards the bobber
 		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
 		{
 			redFishTimer -= deltaTime;
@@ -205,6 +207,8 @@ void BobberActor::CheckRedFish(float deltaTime)
 				GetGame()->GetRedFish()->SetAngularSpeed(0);
 			}
 		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
+		//if a fish that is not the red fish is on the line do this.
+		// seems like this is currently not working?
 		else if (currentBobber->GetFishOnStatus() == true && redFish->GetLineStatus() == false) // add an and this fish is not on the line here
 		{
 			if (redFish->GetFleeingStatus() == false)
@@ -221,6 +225,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 			}
 
 		}
+		// if the current fish on the line is the red fish
 		else if (currentBobber->GetFishOnStatus() == true && redFish->GetLineStatus() == true)
 		{
 			Vector3 startPos = redFish->GetOnLinePosition();
@@ -230,6 +235,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 			difference.y = abs(currPos.y - startPos.y);
 			difference.z = abs(currPos.z - startPos.z);
 			float totalDistance = difference.x + difference.y + difference.z;
+			GetGame()->SetFishHookDistance(totalDistance);
 			if (totalDistance > redFish->GetFishDistance())
 			{
 				Vector3 turnFishAround = redFish->GetForward();
