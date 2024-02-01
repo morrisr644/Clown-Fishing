@@ -348,7 +348,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
-				yfish->SetFishDistance(30);
+				yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
 			}
 			RedFish* rfish = mRedFish;
 			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
@@ -358,7 +358,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
-				rfish->SetFishDistance(30);
+				rfish->SetFishDistance(50);
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;

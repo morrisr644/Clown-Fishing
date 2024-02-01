@@ -48,6 +48,7 @@ public:
 			return mBobbers[0];
 		}*/
 	}
+	class Hook* GetHook() { return currentHook; }
 	class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}
