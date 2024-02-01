@@ -151,6 +151,12 @@
     <ClCompile Include="FishOffScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HookMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -287,6 +293,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="FishOffScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hook.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HookMove.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
