@@ -51,7 +51,6 @@
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TargetActor.cpp" />
     <ClCompile Include="TargetComponent.cpp" />
-    <ClCompile Include="TensionMeter.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UIScreen.cpp" />
     <ClCompile Include="UnderPlaneActor.cpp" />
@@ -100,7 +99,6 @@
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TargetActor.h" />
     <ClInclude Include="TargetComponent.h" />
-    <ClInclude Include="TensionMeter.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UIScreen.h" />
     <ClInclude Include="UnderPlaneActor.h" />

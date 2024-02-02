@@ -15,7 +15,6 @@
 #include "FPSActor.h"
 #include <algorithm>
 #include "TargetComponent.h"
-#include "TensionMeter.h"
 
 HUD::HUD(Game* game)
 	:UIScreen(game)
@@ -25,7 +24,7 @@ HUD::HUD(Game* game)
 {
 	Renderer* r = mGame->GetRenderer();
 	mBlankTensionBar = r->GetTexture("Assets/BlankBar.png");
-	mTensionBar1 = r->GetTexture("Assets/TensionLevel1.png");
+	mTensionBar1 = r->GetTexture("Assets/HealthBar.png");
 	mTensionBar2 = r->GetTexture("Assets/TensionLevel2.png");
 	mTensionBar3 = r->GetTexture("Assets/TensionLevel3.png");
 	mTensionBar4 = r->GetTexture("Assets/TensionLevel4.png");
@@ -71,16 +70,43 @@ void HUD::Draw(Shader* shader)
 	// Radar arrow
 	DrawTexture(shader, mRadarArrow, cRadarPos);
 
-	// Tension bar
-	DrawTexture(shader, mBlankTensionBar, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar1, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar2, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar3, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar4, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar5, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar6, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar7, Vector2(-350.0f, -350.0f));
-	DrawTexture(shader, mTensionBar8, Vector2(-350.0f, -350.0f));
+	// Tension bars
+	for (Vector2& fullHealth : mTensionBarBlank)
+	{
+		DrawTexture(shader, mBlankTensionBar, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel1)
+	{
+		DrawTexture(shader, mTensionBar1, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel2)
+	{
+		DrawTexture(shader, mTensionBar2, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel3)
+	{
+		DrawTexture(shader, mTensionBar3, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel4)
+	{
+		DrawTexture(shader, mTensionBar4, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel5)
+	{
+		DrawTexture(shader, mTensionBar5, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel6)
+	{
+		DrawTexture(shader, mTensionBar6, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel7)
+	{
+		DrawTexture(shader, mTensionBar7, Vector2(0, 350.0f));
+	}
+	for (Vector2& fullHealth : mTensionBarLevel8)
+	{
+		DrawTexture(shader, mTensionBar8, Vector2(0, 350.0f));
+	}
 	
 }
 
@@ -123,10 +149,16 @@ void HUD::UpdateCrosshair(float deltaTime)
 
 void HUD::UpdateTensionBar(float deltaTime)
 {
-	mBlankTensionBar.clear(); // these need tobe here or we just get a ton of health bars
-	mHealthBar75p.clear();
-	mHealthBar50p.clear();
-	mHealthBar25p.clear();
+	mTensionBarBlank.clear(); // these need tobe here or we just get a ton of health bars
+	mTensionBarLevel1.clear();
+	mTensionBarLevel2.clear();
+	mTensionBarLevel3.clear();
+	mTensionBarLevel4.clear();
+	mTensionBarLevel5.clear();
+	mTensionBarLevel6.clear();
+	mTensionBarLevel7.clear();
+	mTensionBarLevel8.clear();
+
 	Renderer* r = mGame->GetRenderer();
 
 	if (mGame->isReelingIn)
@@ -142,33 +174,33 @@ void HUD::UpdateTensionBar(float deltaTime)
 		switch (TensionLevel)
 		{
 		case 1:
-			mTensionBar = r->GetTexture("Assets/HealthBar.png");
+			mTensionBarLevel1.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 2:
-			mTensionBar = r->GetTexture("Assets/TensionLevel2.png");
+			mTensionBarLevel2.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 3:
-			mTensionBar = r->GetTexture("Assets/TensionLevel3.png");
+			mTensionBarLevel3.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 4:
-			mTensionBar = r->GetTexture("Assets/TensionLevel4.png");
+			mTensionBarLevel4.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 5:
-			mTensionBar = r->GetTexture("Assets/TensionLevel5.png");
+			mTensionBarLevel5.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 6:
-			mTensionBar = r->GetTexture("Assets/TensionLevel6.png");
+			mTensionBarLevel6.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 7:
-			mTensionBar = r->GetTexture("Assets/TensionLevel7.png");
+			mTensionBarLevel7.emplace_back(Vector2(0, 350.0f));
 			break;
 		case 8:
-			mTensionBar = r->GetTexture("Assets/TensionLevel8.png");
+			mTensionBarLevel8.emplace_back(Vector2(0, 350.0f));
 			break;
 		}
 	}
 	else
-		mTensionBar = r->GetTexture("Assets/BlankBar.png");
+		mTensionBarBlank.emplace_back(Vector2(0, 350.0f));
 
 }
 

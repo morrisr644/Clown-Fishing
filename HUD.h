@@ -53,12 +53,12 @@ protected:
 	bool mTargetEnemy;
 
 	std::vector<Vector2> mTensionBarBlank; //Tension Bars
-	std::vector<Vector2> mTensionBarFull;
-	std::vector<Vector2> mTensionBarAlmostFull;
-	std::vector<Vector2> mTensionBar3;
-	std::vector<Vector2> mTensionBar4;
-	std::vector<Vector2> mTensionBar5;
-	std::vector<Vector2> mTensionBar6;
-	std::vector<Vector2> mTensionBar7;
-	std::vector<Vector2> mTensionBarAlmostEmpty;
+	std::vector<Vector2> mTensionBarLevel1;
+	std::vector<Vector2> mTensionBarLevel2;
+	std::vector<Vector2> mTensionBarLevel3;
+	std::vector<Vector2> mTensionBarLevel4;
+	std::vector<Vector2> mTensionBarLevel5;
+	std::vector<Vector2> mTensionBarLevel6;
+	std::vector<Vector2> mTensionBarLevel7;
+	std::vector<Vector2> mTensionBarLevel8;
 };
