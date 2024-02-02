@@ -40,6 +40,7 @@
 #include <fstream>
 #include <sstream>
 #include <rapidjson/document.h>
+#include "Hook.h"
 
 Game::Game()
 :mRenderer(nullptr)
@@ -347,7 +348,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
-				yfish->SetFishDistance(30);
+				yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
 			}
 			RedFish* rfish = mRedFish;
 			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
@@ -357,7 +358,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
-				rfish->SetFishDistance(30);
+				rfish->SetFishDistance(50);
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
@@ -559,6 +560,20 @@ void Game::UpdateGame()
 			++iter;
 		}
 	}
+
+	if(mSingleBobber->GetInWaterStatus() == true)
+	{
+		//currentHook = new Hook(this);
+		Vector3 hooksSunkenPosition = mSingleBobber->GetPosition();
+		hooksSunkenPosition.z = hooksSunkenPosition.z - 60;
+
+		currentHook->SetPosition(hooksSunkenPosition);
+	}
+
+	if (mSingleBobber->GetInWaterStatus() == false)
+	{
+		currentHook->SetPosition(Vector3(20000, 20000, 20000));
+	}
 }
 
 void Game::GenerateOutput()
@@ -631,6 +646,8 @@ void Game::LoadData()
 	mYellowFish = new YellowFish(this);
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
+	currentHook = new Hook(this);
+	currentHook->SetPosition(Vector3(20000, 20000, 2000));
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -350.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(1000.0f, 500.0f, -350.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?

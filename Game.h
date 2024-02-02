@@ -48,6 +48,7 @@ public:
 			return mBobbers[0];
 		}*/
 	}
+	class Hook* GetHook() { return currentHook; }
 	class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}
@@ -87,6 +88,8 @@ public:
 	bool GetReelState() { return isReelingIn; }
 	void StartReeling() { isReelingIn = true; }
 	void StopReeling() { isReelingIn = false; }
+	float GetFishHookDistance() { return fishHookDistance; }
+	void SetFishHookDistance(float newDistance) { fishHookDistance = newDistance; }
 
 	float GetTime() { return mCurrentTime; }
 	
@@ -193,4 +196,6 @@ private:
 	bool isFishOnScreenOn;
 	bool isFishOffScreenOn;
 	bool didFishGetAway;
+	float fishHookDistance;
+	class Hook* currentHook;
 };
