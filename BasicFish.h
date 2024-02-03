@@ -18,6 +18,8 @@ public:
 	bool GetLineStatus() { return isOnLine; }
 	bool GetCatchStatus() { return isCaught; }
 	void SetFishTimer(float newTimer);
+	float GetFishDistance() { return fishDistance; }
+	void SetFishDistance(float newDistance) { fishDistance = newDistance + fishDistance; }
 
 private:
 	class BoxComponent* mBoxComp;
@@ -29,4 +31,6 @@ private:
 	bool isOnLine;
 	bool isCaught;
 	// here is where I will have to put the movement parts
+	float fishDistance;
+	Vector3 fishOnLineStartPosition;
 };

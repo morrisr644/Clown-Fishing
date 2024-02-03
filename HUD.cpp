@@ -15,6 +15,10 @@
 #include "FPSActor.h"
 #include <algorithm>
 #include "TargetComponent.h"
+#include "BasicFish.h"
+#include "RedFish.h"
+#include "YellowFish.h"
+#include "BobberActor.h"
 
 HUD::HUD(Game* game)
 	:UIScreen(game)
@@ -169,7 +173,100 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 
 		// BasicFish
-		int TensionLevel = 1; //= basicFish.getTensionLevel();
+		int TensionLevel = 1;
+
+		auto* currentFish = mGame->GetBasicFish();
+
+		int fishType = mGame->GetCurrentFishType();
+
+		switch (fishType)
+		{
+			case 0:
+				currentFish = mGame->GetBasicFish();
+				break;
+			case 1:
+				currentFish = mGame->GetRedFish();
+				break;
+			case 2:
+				currentFish = mGame->GetYellowFish();
+				break;
+		}
+
+		BobberActor* bobber = mGame->GetBobber();
+
+		float totalDistance = bobber->getTotalDistance();
+		float fishDistance = currentFish->GetFishDistance();
+		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed
+
+		float percent = (fishDistance/totalDistance) * 10;  //Why isnt this working
+		//float percent = totalDistance - fishDistance;
+
+		if (percent >= 8.5f)
+		{
+			TensionLevel = 1;
+		}
+		else if (8.5f > percent && percent >= 7.3f)
+		{
+			TensionLevel = 2;
+		}
+		else if (7.3f > percent && percent >= 6.1f)
+		{
+			TensionLevel = 3;
+		}
+		else if (6.1f > percent && percent >= 4.9f)
+		{
+			TensionLevel = 4;
+		}
+		else if (4.9f > percent && percent >= 3.7f)
+		{
+			TensionLevel = 5;
+		}
+		else if (3.7f > percent && percent >= 2.5f)
+		{
+			TensionLevel = 6;
+		}
+		else if (2.5f > percent && percent >= 1.3f)
+		{
+			TensionLevel = 7;
+		}
+		else if (1.3f > percent && percent >= 0.1f)
+		{
+			TensionLevel = 8;
+		}
+
+		//if (percent >= 15.0f)
+		//{
+		//	TensionLevel = 1;
+		//}
+		//else if (14.9f >= percent && percent >= 12.8f)
+		//{
+		//	TensionLevel = 2;
+		//}
+		//else if (12.7f >= percent && percent >= 10.6f)
+		//{
+		//	TensionLevel = 3;
+		//}
+		//else if (10.5f >= percent && percent >= 8.4f)
+		//{
+		//	TensionLevel = 4;
+		//}
+		//else if (8.3f >= percent && percent >= 6.2f)
+		//{
+		//	TensionLevel = 5;
+		//}
+		//else if (6.1f >= percent && percent >= 4.1f)
+		//{
+		//	TensionLevel = 6;
+		//}
+		//else if (4.0f >= percent && percent >= 2.0f)
+		//{
+		//	TensionLevel = 7;
+		//}
+		//else //if (1.2f >= percent && percent >= 0.1)
+		//{
+		//	TensionLevel = 8;
+		//}
+
 
 		switch (TensionLevel)
 		{

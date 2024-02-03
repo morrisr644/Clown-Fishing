@@ -134,6 +134,14 @@ public:
 	// Track if the fish is being reeled in
 	bool isReelingIn;
 
+	class BasicFish* GetCurrentFish() { return mCurrentFish; };
+
+	void SetCurrentFish(BasicFish* fish, int type);
+
+	int GetCurrentFishType() { return CurrentFishType; }
+
+	float GetCurrentFishDistance() { return mCurrentFishDistance; }
+
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
@@ -198,4 +206,7 @@ private:
 	bool didFishGetAway;
 	float fishHookDistance;
 	class Hook* currentHook;
+	class BasicFish* mCurrentFish;
+	int CurrentFishType;
+	float mCurrentFishDistance;
 };

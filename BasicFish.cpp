@@ -19,6 +19,8 @@
 
 BasicFish::BasicFish(Game* game)
 	:Actor(game)
+	, fishDistance(50.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
+	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(0.5f);
 	//MeshComponent* mc = new MeshComponent(this);
