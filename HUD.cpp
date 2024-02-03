@@ -198,7 +198,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 		float fishDistance = currentFish->GetFishDistance();
 		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed
 
-		float percent = (fishDistance/totalDistance) * 10;  //Why isnt this working
+		float percent = (fishDistance/totalDistance) * 10;  //Why isnt this working for red fish
 		//float percent = totalDistance - fishDistance;
 
 		if (percent >= 8.5f)
