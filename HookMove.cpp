@@ -14,6 +14,7 @@
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
+#include "BobberActor.h"
 
 HookMove::HookMove(Actor* owner) :MoveComponent(owner)
 {
@@ -37,4 +38,27 @@ void HookMove::Update(float deltaTime)
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
 	Hook* hook = mOwner->GetGame()->GetHook();
+	BobberActor* bobber = mOwner->GetGame()->GetBobber();
+	Vector3 bobberPosition = bobber->GetPosition();
+
+	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
+	{
+		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
+		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
+
+		if (yellowFish && !bobber->GetFishOnStatus())
+		{
+			yellowFish->GetOnLine();
+			bobber->FishOn();
+			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
+			bobber->SetPosition(newBobberPosition);
+		}
+		if (redFish && !bobber->GetFishOnStatus())
+		{
+			redFish->GetOnLine();
+			bobber->FishOn();
+			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
+			bobber->SetPosition(newBobberPosition);
+		}
+	}
 }
