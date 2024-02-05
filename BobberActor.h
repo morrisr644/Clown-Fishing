@@ -35,6 +35,7 @@ public:
 	void CheckYellowFish(float deltaTime);
 	void CheckRedFish(float deltaTime);
 	void SetTensionSpeed(float tensionSpeed);
+	float getTotalDistance() { return mTotalDistance; };
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
@@ -47,4 +48,5 @@ private:
 	bool hasAlreadySplashed;
 	SoundEvent mSplash;
 	SoundEvent mBubbles;
+	float mTotalDistance;
 };

@@ -202,6 +202,12 @@ bool Game::GetAllCaughtFish(int index)
 	return mAllCaughtFish[index];
 }
 
+void Game::SetCurrentFish(BasicFish* fish, int type)
+{
+	mCurrentFish = fish;
+	CurrentFishType = type;
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -343,22 +349,28 @@ void Game::HandleKeyPress(int key)
 			YellowFish* yfish = mYellowFish; 
 			if (yfish->GetLineStatus() && yfish->GetState() == Actor::EActive)
 			{
+				SetCurrentFish(yfish, 2); //Yellow is 2
+
 				fishPos = yfish->GetPosition();
 				//yfish->SetPosition(playerPos);
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
 				yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
+				mCurrentFishDistance = yfish->GetFishDistance();
 			}
 			RedFish* rfish = mRedFish;
 			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
 			{
+				SetCurrentFish(rfish, 1); //Red is 1
+
 				fishPos = rfish->GetPosition();
 				//rfish->SetPosition(playerPos);
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
 				rfish->SetFishDistance(50);
+				mCurrentFishDistance = rfish->GetFishDistance();
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
