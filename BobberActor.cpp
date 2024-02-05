@@ -21,6 +21,7 @@
 #include "YellowFish.h"
 #include "RedFish.h"
 #include "FishOffScreen.h"
+#include "Hook.h"
 
 BobberActor::BobberActor(Game* game)
 	:Actor(game)
@@ -90,20 +91,22 @@ void BobberActor::CheckYellowFish(float deltaTime)
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 	YellowFish* yellowFish = GetGame()->GetYellowFish();
 	BobberActor* currentBobber = GetGame()->GetBobber();
+	Hook* currentHook = GetGame()->GetHook();
+	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
 	if (yellowFish->GetState() == Actor::EActive)
 	{
 		float yellowFishTimer = yellowFish->GetFishTimer();
 		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
-		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) < 100.0)))
-		{
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook.
 			yellowFishTimer -= deltaTime;
 			yellowFish->SetFishTimer(yellowFishTimer);
 			if (yellowFishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentPosition.x - yellowFishCurrentPosition.x;
-				fishFacingBobber.y = currentPosition.y - yellowFishCurrentPosition.y;
-				fishFacingBobber.z = currentPosition.z - yellowFishCurrentPosition.z;
+				fishFacingBobber.x = currentHookPosition.x - yellowFishCurrentPosition.x;
+				fishFacingBobber.y = currentHookPosition.y - yellowFishCurrentPosition.y;
+				fishFacingBobber.z = currentHookPosition.z - yellowFishCurrentPosition.z;
 				fishFacingBobber.Normalize();
 				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetYellowFish()->SetAngularSpeed(0);
@@ -125,7 +128,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 			}
 
 		}
-		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true)
+		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
 		{
 			Vector3 startPos = yellowFish->GetOnLinePosition();
 			Vector3 currPos = yellowFish->GetPosition();
@@ -188,21 +191,23 @@ void BobberActor::CheckRedFish(float deltaTime)
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
 	RedFish* redFish = GetGame()->GetRedFish();
 	BobberActor* currentBobber = GetGame()->GetBobber();
+	Hook* currentHook = GetGame()->GetHook();
+	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
 	if (redFish->GetState() == Actor::EActive)
 	{
 		float redFishTimer = redFish->GetFishTimer();
 		Vector3 redFishCurrentPosition = redFish->GetPosition();
 		// if the fish is not currently on the line, and its in range, head towards the bobber
-		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0)))
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - redFishCurrentPosition.y) < 100.0)))
 		{
 			redFishTimer -= deltaTime;
 			redFish->SetFishTimer(redFishTimer);
 			if (redFishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentPosition.x - redFishCurrentPosition.x;
-				fishFacingBobber.y = currentPosition.y - redFishCurrentPosition.y;
-				fishFacingBobber.z = currentPosition.z - redFishCurrentPosition.z;
+				fishFacingBobber.x = currentHookPosition.x - redFishCurrentPosition.x;
+				fishFacingBobber.y = currentHookPosition.y - redFishCurrentPosition.y;
+				fishFacingBobber.z = currentHookPosition.z - redFishCurrentPosition.z;
 				fishFacingBobber.Normalize();
 				GetGame()->GetRedFish()->RotateToNewForward(fishFacingBobber);
 				GetGame()->GetRedFish()->SetAngularSpeed(0);
