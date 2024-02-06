@@ -16,6 +16,8 @@
 #include "BobberActor.h"
 #include "PhysWorld.h"
 #include "FishOnScreen.h"
+#include "Texture.h"
+#include "AssimpLoad.h"
 
 
 YellowFish::YellowFish(Game* game)
@@ -26,14 +28,26 @@ YellowFish::YellowFish(Game* game)
 	, fishDistance(50.0)
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
-	SetScale(0.5f);
-	MeshComponent* mc = new MeshComponent(this);
+	SetScale(5.0f);
+	/*MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/YellowRacingCar.gpmesh");
-	mc->SetMesh(mesh);
+	mc->SetMesh(mesh);*/
+
+	Texture* texture = new Texture; texture->Load("Assets/models/fish.jpg");
+	std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	setSpecular(meshes, 30000.0);
+
+	for (auto&& mesh : meshes)
+	{
+		MeshComponent* mc = new MeshComponent(this); mc->SetMesh(mesh);
+		meshComponents_.push_back(mc);
+		mBoxComp = new BoxComponent(this); //Ashley
+		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox()); //Ashley
+	}
 
 	//Adding a collision box for the fish
-	BoxComponent* bc = new BoxComponent(this);
-	bc->SetObjectBox(mesh->GetBox());
+	//BoxComponent* bc = new BoxComponent(this);
+	//bc->SetObjectBox(mesh->GetBox());
 
 	mMoveComp = new MoveComponent(this);
 	mMoveComp->SetForwardSpeed(forwardMovement);

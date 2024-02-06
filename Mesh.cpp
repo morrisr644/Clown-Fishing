@@ -28,7 +28,7 @@ Mesh::~Mesh()
 {
 }
 
-bool Mesh::Load(const std::string& fileName, Renderer* renderer)
+bool Mesh::Load(const std::string & fileName, Renderer* renderer)
 {
 	std::ifstream file(fileName);
 	if (!file.is_open())
@@ -61,9 +61,17 @@ bool Mesh::Load(const std::string& fileName, Renderer* renderer)
 
 	mShaderName = doc["shader"].GetString();
 
-	// Skip the vertex format/shader for now
-	// (This is changed in a later chapter's code)
+	// Set the vertex layout/size based on the format in the file
+	VertexArray::Layout layout = VertexArray::PosNormTex;
 	size_t vertSize = 8;
+
+	std::string vertexFormat = doc["vertexformat"].GetString();
+	if (vertexFormat == "PosNormSkinTex")
+	{
+		layout = VertexArray::PosNormSkinTex;
+		// This is the number of "Vertex" unions, which is 8 + 2 (for skinning)s
+		vertSize = 10;
+	}
 
 	// Load textures
 	const rapidjson::Value& textures = doc["textures"];
@@ -82,7 +90,7 @@ bool Mesh::Load(const std::string& fileName, Renderer* renderer)
 		Texture* t = renderer->GetTexture(texName);
 		if (t == nullptr)
 		{
-			// Try loading the texture
+			// Try loading the texture  //2023-03-16 WSB: isn't this redundant -- doesn't renderer->GetTexture load it if it needs loading?
 			t = renderer->GetTexture(texName);
 			if (t == nullptr)
 			{
@@ -101,14 +109,14 @@ bool Mesh::Load(const std::string& fileName, Renderer* renderer)
 		return false;
 	}
 
-	std::vector<float> vertices;
+	std::vector<Vertex> vertices;
 	vertices.reserve(vertsJson.Size() * vertSize);
 	mRadius = 0.0f;
 	for (rapidjson::SizeType i = 0; i < vertsJson.Size(); i++)
 	{
 		// For now, just assume we have 8 elements
 		const rapidjson::Value& vert = vertsJson[i];
-		if (!vert.IsArray() || vert.Size() != 8)
+		if (!vert.IsArray())
 		{
 			SDL_Log("Unexpected vertex format for %s", fileName.c_str());
 			return false;
@@ -118,10 +126,42 @@ bool Mesh::Load(const std::string& fileName, Renderer* renderer)
 		mRadius = Math::Max(mRadius, pos.LengthSq());
 		mBox.UpdateMinMax(pos);
 
-		// Add the floats
-		for (rapidjson::SizeType i = 0; i < vert.Size(); i++)
+		if (layout == VertexArray::PosNormTex)
 		{
-			vertices.emplace_back(static_cast<float>(vert[i].GetDouble()));
+			Vertex v;
+			// Add the floats
+			for (rapidjson::SizeType j = 0; j < vert.Size(); j++)
+			{
+				v.f = static_cast<float>(vert[j].GetDouble());
+				vertices.emplace_back(v);
+			}
+		}
+		else
+		{
+			Vertex v;
+			// Add pos/normal
+			for (rapidjson::SizeType j = 0; j < 6; j++)
+			{
+				v.f = static_cast<float>(vert[j].GetDouble());
+				vertices.emplace_back(v);
+			}
+
+			// Add skin information
+			for (rapidjson::SizeType j = 6; j < 14; j += 4)
+			{
+				v.b[0] = vert[j].GetUint();
+				v.b[1] = vert[j + 1].GetUint();
+				v.b[2] = vert[j + 2].GetUint();
+				v.b[3] = vert[j + 3].GetUint();
+				vertices.emplace_back(v);
+			}
+
+			// Add tex coords
+			for (rapidjson::SizeType j = 14; j < vert.Size(); j++)
+			{
+				v.f = vert[j].GetDouble();
+				vertices.emplace_back(v);
+			}
 		}
 	}
 
@@ -154,7 +194,7 @@ bool Mesh::Load(const std::string& fileName, Renderer* renderer)
 
 	// Now create a vertex array
 	mVertexArray = new VertexArray(vertices.data(), static_cast<unsigned>(vertices.size()) / vertSize,
-		indices.data(), static_cast<unsigned>(indices.size()));
+		layout, indices.data(), static_cast<unsigned>(indices.size()));
 	return true;
 }
 

@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <map> //2023-03-28 WSB
 #include <SDL/SDL.h>
 #include "Math.h"
 
@@ -23,8 +24,12 @@ struct DirectionalLight
 	Vector3 mSpecColor;
 };
 
+class Game; class Mesh; class Texture; //2023-03-28 WSB
+
 class Renderer
 {
+	friend void LoadAssimpMeshes(std::vector<Mesh*>& meshes, Game* game, const char* fName, Texture* t, const char* nameForDebugging); 
+	//2023-03-28 WSB
 public:
 	Renderer(class Game* game);
 	~Renderer();
@@ -69,13 +74,14 @@ private:
 	// Map of textures loaded
 	std::unordered_map<std::string, class Texture*> mTextures;
 	// Map of meshes loaded
-	std::unordered_map<std::string, class Mesh*> mMeshes;
+	std::multimap<std::string, class Mesh*> mMeshes;
 
 	// All the sprite components drawn
 	std::vector<class SpriteComponent*> mSprites;
 
-	// All mesh components drawn
+	// All (non-skeletal) mesh components drawn
 	std::vector<class MeshComponent*> mMeshComps;
+	std::vector<class SkeletalMeshComponent*> mSkeletalMeshes;
 
 	// Game
 	class Game* mGame;
@@ -87,6 +93,8 @@ private:
 
 	// Mesh shader
 	class Shader* mMeshShader;
+	// Skinned shader
+	class Shader* mSkinnedShader;
 
 	// View/projection for 3D shaders
 	Matrix4 mView;

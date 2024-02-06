@@ -1,5 +1,8 @@
 #pragma once
 #include "BasicFish.h"
+#include "Actor.h"
+
+class MeshComponent;
 
 class YellowFish : public BasicFish
 {
@@ -36,5 +39,6 @@ private:
 	bool isFleeing;
 	float fishDistance;
 	Vector3 fishOnLineStartPosition;
+	std::vector<MeshComponent*> meshComponents_;
 	// here is where I will have to put the movement parts
 };

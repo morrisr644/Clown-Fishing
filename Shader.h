@@ -16,13 +16,14 @@ class Shader
 public:
 	Shader();
 	~Shader();
-	// Load the vertex/fragment shaders with the given names
 	bool Load(const std::string& vertName, const std::string& fragName);
 	void Unload();
 	// Set this as the active shader program
 	void SetActive();
 	// Sets a Matrix uniform
 	void SetMatrixUniform(const char* name, const Matrix4& matrix);
+	// Sets an array of matrix uniforms
+	void SetMatrixUniforms(const char* name, Matrix4* matrices, unsigned count);
 	// Sets a Vector3 uniform
 	void SetVectorUniform(const char* name, const Vector3& vector);
 	// Sets a float uniform
@@ -37,7 +38,8 @@ private:
 	bool IsCompiled(GLuint shader);
 	// Tests whether vertex/fragment programs link
 	bool IsValidProgram();
-private:
+//private: //2023-03-16 WSB
+public: //2023-03-16 WSB
 	// Store the shader object IDs
 	GLuint mVertexShader;
 	GLuint mFragShader;
