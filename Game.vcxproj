@@ -12,26 +12,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AssimpLoad.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
+    <ClCompile Include="BallActor.cpp" />
+    <ClCompile Include="BallMove.cpp" />
     <ClCompile Include="BasicFish.cpp" />
     <ClCompile Include="BobberActor.cpp" />
     <ClCompile Include="BobberMove.cpp" />
+    <ClCompile Include="BoneTransform.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CatchScreen.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="DialogBox.cpp" />
     <ClCompile Include="FishOffScreen.cpp" />
     <ClCompile Include="FishOnScreen.cpp" />
-    <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GrassPlaneActor.cpp" />
     <ClCompile Include="Hook.cpp" />
     <ClCompile Include="HookMove.cpp" />
+    <ClCompile Include="IcosphereActor.cpp" />
+    <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="FollowActor.cpp" />
+    <ClCompile Include="FollowCamera.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InventoryBox.cpp" />
     <ClCompile Include="InventoryMenu.cpp" />
@@ -46,8 +54,12 @@
     <ClCompile Include="PlaneActor.cpp" />
     <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShorePlaneActor.cpp" />
+    <ClCompile Include="SimpleManActor.cpp" />
+    <ClCompile Include="SkeletalMeshComponent.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
@@ -63,41 +75,54 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="AudioSystem.h" />
+    <ClInclude Include="BallActor.h" />
+    <ClInclude Include="BallMove.h" />
     <ClInclude Include="BasicFish.h" />
     <ClInclude Include="BobberActor.h" />
     <ClInclude Include="BobberMove.h" />
+    <ClInclude Include="BoneTransform.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CatchScreen.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="AssimpLoad.h" />
     <ClInclude Include="FishOffScreen.h" />
     <ClInclude Include="FishOnScreen.h" />
-    <ClInclude Include="Font.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCamera.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="GrassPlaneActor.h" />
     <ClInclude Include="Hook.h" />
     <ClInclude Include="HookMove.h" />
-    <ClInclude Include="HUD.h" />
+    <ClInclude Include="IcosphereActor.h" />
+    <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="FollowActor.h" />
+    <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="InventoryBox.h" />
     <ClInclude Include="InventoryMenu.h" />
     <ClInclude Include="InvisiblePlaneActor.h" />
+    <ClInclude Include="RedFish.h" />
+    <ClInclude Include="Scenery.h" />
+    <ClInclude Include="ShorePlaneActor.h" />
+    <ClInclude Include="SimpleManActor.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MatrixPalette.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PhysWorld.h" />
     <ClInclude Include="PlaneActor.h" />
-    <ClInclude Include="RedFish.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShorePlaneActor.h" />
+    <ClInclude Include="SkeletalMeshComponent.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />
@@ -151,9 +176,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>..\External\Assimp\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>C:\Users\gkopa\Desktop\cs451 fall 2021\cs452 briggs\code-master\External\Assimp\lib\x64;C:\Users\gkopa\Desktop\cs451 fall 2021\cs452 briggs\code-master\External\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,16 +189,17 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\external\SDL\include;..\external\GLEW\include;..\external\SOIL\include;..\external\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\External\Assimp\include;..\external\SDL\include;..\external\GLEW\include;..\external\SOIL\include;..\external\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\external\SDL\lib\win\x86;..\external\GLEW\lib\win\x86;..\external\SOIL\lib\win\x86;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;glew32.lib;SOIL.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\External\Assimp\lib\x86;..\external\SDL\lib\win\x86;..\external\Assimp\include;..\external\GLEW\lib\win\x86;..\external\SOIL\lib\win\x86;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;d3d11.lib;DXGI.lib;D3DCompiler.lib;d3d11.lib;dxgi.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;glew32.lib;SOIL.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)\..\external\SDL\lib\win\x86\*.dll" "$(OutDir)" /i /s /y
@@ -190,7 +218,7 @@ xcopy "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\external\SDL\include;..\external\GLEW\include;..\external\SOIL\include;..\external\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\External\Assimp\include;..\external\SDL\include;..\external\GLEW\include;..\external\SOIL\include;..\external\rapidjson\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
@@ -200,7 +228,7 @@ xcopy "C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studi
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\external\SDL\lib\win\x86;..\external\GLEW\lib\win\x86;..\external\SOIL\lib\win\x86;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;glew32.lib;SOIL.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;d3d11.lib;DXGI.lib;D3DCompiler.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;glew32.lib;SOIL.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)\..\external\SDL\lib\win\x86\*.dll" "$(OutDir)" /i /s /y

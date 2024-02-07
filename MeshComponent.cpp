@@ -15,11 +15,12 @@
 #include "Texture.h"
 #include "VertexArray.h"
 
-MeshComponent::MeshComponent(Actor* owner)
+MeshComponent::MeshComponent(Actor* owner, bool isSkeletal)
 	:Component(owner)
 	,mMesh(nullptr)
 	,mTextureIndex(0)
 	,mVisible(true)
+	,mIsSkeletal(isSkeletal)
 {
 	mOwner->GetGame()->GetRenderer()->AddMeshComp(this);
 }

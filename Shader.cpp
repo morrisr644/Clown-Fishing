@@ -76,6 +76,13 @@ void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix)
 	glUniformMatrix4fv(loc, 1, GL_TRUE, matrix.GetAsFloatPtr());
 }
 
+void Shader::SetMatrixUniforms(const char* name, Matrix4* matrices, unsigned count)
+{
+	GLuint loc = glGetUniformLocation(mShaderProgram, name);
+	// Send the matrix data to the uniform
+	glUniformMatrix4fv(loc, count, GL_TRUE, matrices->GetAsFloatPtr());
+}
+
 void Shader::SetVectorUniform(const char* name, const Vector3& vector)
 {
 	GLuint loc = glGetUniformLocation(mShaderProgram, name);
@@ -91,14 +98,14 @@ void Shader::SetFloatUniform(const char* name, float value)
 }
 
 bool Shader::CompileShader(const std::string& fileName,
-	GLenum shaderType,
-	GLuint& outShader)
+				   GLenum shaderType,
+				   GLuint& outShader)
 {
 	// Open file
 	std::ifstream shaderFile(fileName);
 	if (shaderFile.is_open())
 	{
-		// Read all the text into a string
+		// Read all of the text into a string
 		std::stringstream sstream;
 		sstream << shaderFile.rdbuf();
 		std::string contents = sstream.str();

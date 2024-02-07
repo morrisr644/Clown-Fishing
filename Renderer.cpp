@@ -17,11 +17,13 @@
 #include "UIScreen.h"
 #include "Game.h"
 #include <GL/glew.h>
+#include "SkeletalMeshComponent.h"
 
 Renderer::Renderer(Game* game)
 	:mGame(game)
 	,mSpriteShader(nullptr)
 	,mMeshShader(nullptr)
+	,mSkinnedShader(nullptr)
 {
 }
 
@@ -51,7 +53,7 @@ bool Renderer::Initialize(float screenWidth, float screenHeight)
 	// Force OpenGL to use hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 11)", 100, 100,
+	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 12)", 100, 100,
 		static_cast<int>(mScreenWidth), static_cast<int>(mScreenHeight), SDL_WINDOW_OPENGL);
 	if (!mWindow)
 	{
@@ -127,8 +129,8 @@ void Renderer::Draw()
 	// Draw mesh components
 	// Enable depth buffering/disable alpha blend
 	glEnable(GL_DEPTH_TEST);
+	//Enable this for invisible walls
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Set the mesh shader active
 	mMeshShader->SetActive();
 	// Update view-projection matrix
@@ -140,6 +142,20 @@ void Renderer::Draw()
 		if (mc->GetVisible())
 		{
 			mc->Draw(mMeshShader);
+		}
+	}
+
+	// Draw any skinned meshes now
+	mSkinnedShader->SetActive();
+	// Update view-projection matrix
+	mSkinnedShader->SetMatrixUniform("uViewProj", mView * mProjection);
+	// Update lighting uniforms
+	SetLightUniforms(mSkinnedShader);
+	for (auto sk : mSkeletalMeshes)
+	{
+		if (sk->GetVisible())
+		{
+			sk->Draw(mSkinnedShader);
 		}
 	}
 
@@ -200,13 +216,30 @@ void Renderer::RemoveSprite(SpriteComponent* sprite)
 
 void Renderer::AddMeshComp(MeshComponent* mesh)
 {
-	mMeshComps.emplace_back(mesh);
+	if (mesh->GetIsSkeletal())
+	{
+		SkeletalMeshComponent* sk = static_cast<SkeletalMeshComponent*>(mesh);
+		mSkeletalMeshes.emplace_back(sk);
+	}
+	else
+	{
+		mMeshComps.emplace_back(mesh);
+	}
 }
 
 void Renderer::RemoveMeshComp(MeshComponent* mesh)
 {
-	auto iter = std::find(mMeshComps.begin(), mMeshComps.end(), mesh);
-	mMeshComps.erase(iter);
+	if (mesh->GetIsSkeletal())
+	{
+		SkeletalMeshComponent* sk = static_cast<SkeletalMeshComponent*>(mesh);
+		auto iter = std::find(mSkeletalMeshes.begin(), mSkeletalMeshes.end(), sk);
+		mSkeletalMeshes.erase(iter);
+	}
+	else
+	{
+		auto iter = std::find(mMeshComps.begin(), mMeshComps.end(), mesh);
+		mMeshComps.erase(iter);
+	}
 }
 
 Texture* Renderer::GetTexture(const std::string& fileName)
@@ -284,6 +317,20 @@ bool Renderer::LoadShaders()
 	mProjection = Matrix4::CreatePerspectiveFOV(Math::ToRadians(70.0f),
 		mScreenWidth, mScreenHeight, 10.0f, 10000.0f);
 	mMeshShader->SetMatrixUniform("uViewProj", mView * mProjection);
+
+	// Create skinned shader
+	mSkinnedShader = new Shader();
+	if (!mSkinnedShader->Load("Shaders/Skinned.vert", "Shaders/Phong.frag"))
+	{
+		return false;
+	}
+
+	mSkinnedShader->SetActive();
+	// Set the view-projection matrix
+	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
+	mProjection = Matrix4::CreatePerspectiveFOV(Math::ToRadians(70.0f),
+		mScreenWidth, mScreenHeight, 10.0f, 10000.0f);
+	mSkinnedShader->SetMatrixUniform("uViewProj", mView * mProjection);
 	return true;
 }
 
@@ -301,7 +348,7 @@ void Renderer::CreateSpriteVerts()
 		2, 3, 0
 	};
 
-	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+	mSpriteVerts = new VertexArray(vertices, 4, VertexArray::PosNormTex, indices, 6);
 }
 
 void Renderer::SetLightUniforms(Shader* shader)

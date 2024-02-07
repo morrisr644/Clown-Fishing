@@ -36,6 +36,7 @@ public:
 	class PhysWorld* GetPhysWorld() { return mPhysWorld; }
 	class HUD* GetHUD() { return mHUD; }
 	
+
 	// Manage UI stack
 	const std::vector<class UIScreen*>& GetUIStack() { return mUIStack; }
 	void PushUI(class UIScreen* screen);
@@ -94,6 +95,9 @@ public:
 	float GetTime() { return mCurrentTime; }
 	
 	class Font* GetFont(const std::string& fileName);
+
+	class Animation* GetAnimation(const std::string& fileName);
+	class Skeleton* GetSkeleton(const std::string& fileName);
 
 	void LoadText(const std::string& fileName);
 	const std::string& GetText(const std::string& key);
@@ -159,6 +163,10 @@ private:
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
 	std::unordered_map<std::string, class Font*> mFonts;
+	// Map of loaded skeletons
+	std::unordered_map<std::string, class Skeleton*> mSkeletons;
+	// Map of loaded animations
+	std::unordered_map<std::string, class Animation*> mAnims;
 
 	// Map for text localization
 	std::unordered_map<std::string, std::string> mText;

@@ -17,6 +17,8 @@ InvisiblePlaneActor::InvisiblePlaneActor(Game* game)
 	:Actor(game)
 {
 	SetScale(10.0f);
+	//What would happen if we didn't add a mesh at all?
+	//
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/InvisiblePlane.gpmesh");
 	mc->SetMesh(mesh);

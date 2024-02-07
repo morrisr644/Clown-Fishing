@@ -4,6 +4,8 @@
 #include "Actor.h"
 #include "BasicFish.h"
 
+class MeshComponent;
+
 class RedFish : public BasicFish
 {
 public:
@@ -39,5 +41,6 @@ private:
 	bool isFleeing;
 	float fishDistance;
 	Vector3 fishOnLineStartPosition;
+	std::vector<MeshComponent*> meshComponents_;
 	// here is where I will have to put the movement parts
 };
