@@ -288,7 +288,7 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 
 			}
 
-			else if (phys->SegmentCast(l, info) && !this->GetLineStatus())
+			else if (phys->SegmentCast(l, info) && !this->GetLineStatus()) // im not sure this is doing anything here
 			{
 				dir = Vector3::Reflect(dir, info.mNormal);
 				this->RotateToNewForward(dir);
