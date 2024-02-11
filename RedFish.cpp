@@ -50,11 +50,11 @@ RedFish::RedFish(Game* game)
 	mMoveComp->SetForwardSpeed(forwardMovement);
 	mMoveComp->SetAngularSpeed(angularMovement);
 
-	/*mBoxComp = new BoxComponent(this);
+	/*mBoxComp = new BoxComponent(this); // commenting this out did nothing.
 	AABB myBox(Vector3(-25.0f, -25.0f, -87.5f),
 		Vector3(25.0f, 25.0f, 87.5f));
-	mBoxComp->SetObjectBox(myBox);*/
-	mBoxComp->SetShouldRotate(false);
+	mBoxComp->SetObjectBox(myBox);
+	mBoxComp->SetShouldRotate(false);*/
 	isOnLine = false;
 	isCaught = false;
 	isFleeing = false;
@@ -67,9 +67,27 @@ void RedFish::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
 
+	// Construct segment in direction of travel
+	const float segmentLength = 30.0f;
+	Vector3 start = this->GetPosition();
+	Vector3 dir = this->GetForward();
+	Vector3 end = start + dir * segmentLength;
+
+	// Create line segment
+	LineSegment l(start, end);
+
+	// Test segment vs world
+	PhysWorld* phys = this->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
+
+	if (phys->SegmentCast(l, info))
+	{
+		dir = Vector3::Reflect(dir, info.mNormal);
+		this->RotateToNewForward(dir);
+	}
 	
 	Vector3 redCurrPosition = this->GetPosition(); //This works but it stalls at the beginning
+	/*
 	if (redCurrPosition.z >= -140.0 && isOnLine == false)
 	{
 		//turn the fish around here
@@ -83,7 +101,7 @@ void RedFish::UpdateActor(float deltaTime)
 		this->RotateToNewForward(turnFishAround);
 		//this->RotateToNewForward(dir);
 
-	}
+	}*/
 	if(redCurrPosition.z <= -800.0)
 	{
 		//turn around here as well
@@ -241,9 +259,20 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 
 		const AABB& planeBox = pa->GetBox()->GetWorldBox();
 
-		if (Intersect(playerBox, planeBox))
+		if (Intersect(playerBox, planeBox)) // this might be where i need to handle reflection collision Adam
 		{
-			
+			// Construct segment in direction of travel
+			const float segmentLength = 30.0f;
+			Vector3 start = this->GetPosition();
+			Vector3 dir = this->GetForward();
+			Vector3 end = start + dir * segmentLength;
+
+			// Create line segment
+			LineSegment l(start, end);
+
+			// Test segment vs world
+			PhysWorld* phys = this->GetGame()->GetPhysWorld();
+			PhysWorld::CollisionInfo info;
 
 			if (this->GetLineStatus())
 			{
@@ -254,6 +283,12 @@ void RedFish::FixCollisions() // pulled from Madhav FPSActor
 				isOnLine = false;
 				GetGame()->StopReeling();
 
+			}
+
+			else if (phys->SegmentCast(l, info) && !this->GetLineStatus()) // im not sure this is doing anything here
+			{
+				dir = Vector3::Reflect(dir, info.mNormal);
+				this->RotateToNewForward(dir);
 			}
 
 			// Calculate all our differences
