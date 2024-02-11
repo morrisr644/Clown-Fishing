@@ -96,13 +96,6 @@ void BobberMove::Update(float deltaTime)
 			bobber->FishOn();
 		}*/
 
-		if (yellowFish && !bobber->GetFishOnStatus())
-		{
-			yellowFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
-		}
 		
 		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive) // this handles the fishes tension
 		{
@@ -125,14 +118,6 @@ void BobberMove::Update(float deltaTime)
 			yFish->RotateToNewForward(fishOppPlayer);
 			bobber->SetTensionSpeed(30.0);
 			yFish->SetMovementSpeed(-30.0);
-		}
-
-		if (redFish && !bobber->GetFishOnStatus())
-		{
-			redFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
 		}
 
 		if (rFish->GetLineStatus() && rFish->GetState() == Actor::EActive) // this handles the fishes tension
