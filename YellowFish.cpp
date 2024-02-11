@@ -29,9 +29,6 @@ YellowFish::YellowFish(Game* game)
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(5.0f);
-	/*MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/YellowRacingCar.gpmesh");
-	mc->SetMesh(mesh);*/
 
 	Texture* texture = new Texture; texture->Load("Assets/models/fish.jpg");
 	std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
@@ -41,8 +38,8 @@ YellowFish::YellowFish(Game* game)
 	{
 		MeshComponent* mc = new MeshComponent(this); mc->SetMesh(mesh);
 		meshComponents_.push_back(mc);
-		mBoxComp = new BoxComponent(this); //Ashley
-		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox()); //Ashley
+		mBoxComp = new BoxComponent(this); 
+		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox()); 
 	}
 
 	//Adding a collision box for the fish
@@ -56,6 +53,7 @@ YellowFish::YellowFish(Game* game)
 	/*mBoxComp = new BoxComponent(this);
 	AABB myBox(Vector3(-25.0f, -25.0f, -87.5f),
 		Vector3(25.0f, 25.0f, 87.5f));
+    
 	mBoxComp->SetObjectBox(myBox);
 	mBoxComp->SetShouldRotate(false);*/
 
