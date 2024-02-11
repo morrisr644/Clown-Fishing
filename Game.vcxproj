@@ -16,8 +16,6 @@
     <ClCompile Include="AssimpLoad.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
-    <ClCompile Include="BallActor.cpp" />
-    <ClCompile Include="BallMove.cpp" />
     <ClCompile Include="BasicFish.cpp" />
     <ClCompile Include="BobberActor.cpp" />
     <ClCompile Include="BobberMove.cpp" />
@@ -57,7 +55,6 @@
     <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShorePlaneActor.cpp" />
-    <ClCompile Include="SimpleManActor.cpp" />
     <ClCompile Include="SkeletalMeshComponent.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -78,8 +75,6 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="AudioSystem.h" />
-    <ClInclude Include="BallActor.h" />
-    <ClInclude Include="BallMove.h" />
     <ClInclude Include="BasicFish.h" />
     <ClInclude Include="BobberActor.h" />
     <ClInclude Include="BobberMove.h" />
@@ -109,7 +104,6 @@
     <ClInclude Include="RedFish.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="ShorePlaneActor.h" />
-    <ClInclude Include="SimpleManActor.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MatrixPalette.h" />

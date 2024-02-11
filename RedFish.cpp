@@ -29,9 +29,6 @@ RedFish::RedFish(Game* game)
 	, fishOnLineStartPosition(0.0,0.0,0.0)
 {
 	SetScale(5.0f);
-	/*MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/RacingCar.gpmesh");
-	mc->SetMesh(mesh);*/
 
 	Texture* texture = new Texture; texture->Load("Assets/models/Redfish.png");
 	std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/Fish.obj", texture);
@@ -41,8 +38,8 @@ RedFish::RedFish(Game* game)
 	{
 		MeshComponent* mc = new MeshComponent(this); mc->SetMesh(mesh);
 		meshComponents_.push_back(mc);
-		mBoxComp = new BoxComponent(this); //Ashley
-		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox()); //Ashley
+		mBoxComp = new BoxComponent(this); 
+		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox()); 
 	}
 
 	//Adding a collision box for the fish
@@ -53,10 +50,10 @@ RedFish::RedFish(Game* game)
 	mMoveComp->SetForwardSpeed(forwardMovement);
 	mMoveComp->SetAngularSpeed(angularMovement);
 
-	mBoxComp = new BoxComponent(this);
+	/*mBoxComp = new BoxComponent(this);
 	AABB myBox(Vector3(-25.0f, -25.0f, -87.5f),
 		Vector3(25.0f, 25.0f, 87.5f));
-	mBoxComp->SetObjectBox(myBox);
+	mBoxComp->SetObjectBox(myBox);*/
 	mBoxComp->SetShouldRotate(false);
 	isOnLine = false;
 	isCaught = false;

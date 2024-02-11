@@ -100,12 +100,6 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BallActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BallMove.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BoneTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -119,9 +113,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scenery.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleManActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SkeletalMeshComponent.cpp">
@@ -279,39 +270,96 @@
     <ClInclude Include="AssimpLoad.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="BallActor.h" />
-    <ClInclude Include="BallMove.h" />
-    <ClInclude Include="BoneTransform.h" />
-    <ClInclude Include="IcosphereActor.h" />
-    <ClInclude Include="FollowActor.h" />
-    <ClInclude Include="FollowCamera.h" />
-    <ClInclude Include="Scenery.h" />
-    <ClInclude Include="SimpleManActor.h" />
-    <ClInclude Include="MatrixPalette.h" />
-    <ClInclude Include="SkeletalMeshComponent.h" />
-    <ClInclude Include="Skeleton.h" />
-    <ClInclude Include="BasicFish.h" />
-    <ClInclude Include="BobberActor.h" />
-    <ClInclude Include="BobberMove.h" />
-    <ClInclude Include="FishOffScreen.h" />
-    <ClInclude Include="FishOnScreen.h" />
-    <ClInclude Include="GrassPlaneActor.h" />
-    <ClInclude Include="Hook.h" />
-    <ClInclude Include="HookMove.h" />
-    <ClInclude Include="InventoryBox.h" />
-    <ClInclude Include="InventoryMenu.h" />
-    <ClInclude Include="InvisiblePlaneActor.h" />
-    <ClInclude Include="RedFish.h" />
-    <ClInclude Include="ShorePlaneActor.h" />
-    <ClInclude Include="SkyBox.h" />
-    <ClInclude Include="UnderPlaneActor.h" />
-    <ClInclude Include="WaterPlaneActor.h" />
-    <ClInclude Include="WoodPlaneActor.h" />
-    <ClInclude Include="YellowFish.h" />
-    <ClInclude Include="CatchScreen.h" />
-    <ClInclude Include="FPSActor.h" />
-    <ClInclude Include="FPSCamera.h" />
+    <ClInclude Include="Animation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicFish.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BobberActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BobberMove.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneTransform.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CatchScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FishOffScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FishOnScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowCamera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCamera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hook.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HookMove.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IcosphereActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryBox.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryMenu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InvisiblePlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixPalette.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedFish.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenery.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShorePlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnderPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodPlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="YellowFish.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">

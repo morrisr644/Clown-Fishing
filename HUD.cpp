@@ -173,7 +173,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 
 		// BasicFish
-		int TensionLevel = 1;
+		int TensionLevel = 1; // This is set to 1 as a default
 
 		auto* currentFish = mGame->GetBasicFish();
 
@@ -200,6 +200,8 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 		float percent = (fishDistance/totalDistance) * 10;  //Why isnt this working for red fish
 		//float percent = totalDistance - fishDistance;
+
+
 
 		if (percent >= 8.5f)
 		{
