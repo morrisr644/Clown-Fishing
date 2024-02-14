@@ -25,7 +25,7 @@ YellowFish::YellowFish(Game* game)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
-	, fishDistance(50.0)
+	, fishDistance(500.0)
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(5.0f);

@@ -194,11 +194,11 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 		BobberActor* bobber = mGame->GetBobber();
 
-		float totalDistance = bobber->getTotalDistance();
+		float totalDistance = mGame->GetFishHookDistance();
 		float fishDistance = currentFish->GetFishDistance();
 		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed
 
-		float percent = (fishDistance/totalDistance) * 10;  //Why isnt this working for red fish
+		float percent = (totalDistance/fishDistance) * 10;  //Why isnt this working for red fish
 		//float percent = totalDistance - fishDistance;
 
 
