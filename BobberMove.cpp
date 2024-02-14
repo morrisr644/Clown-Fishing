@@ -66,8 +66,16 @@ void BobberMove::Update(float deltaTime)
 
 		if (!invisWall)
 		{
+			if (rFish || yFish)
+			{
+				//do nothing
+			}
 			// Make the bobber stop when hitting Ground
-			static_cast<BobberActor*>(mOwner)->HitGround();
+			else
+			{
+				static_cast<BobberActor*>(mOwner)->HitGround();
+			}
+			
 		}
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);

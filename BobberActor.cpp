@@ -130,7 +130,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 		}
 		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
 		{
-			Vector3 startPos = yellowFish->GetOnLinePosition();
+			Vector3 startPos = this->GetPosition();
 			Vector3 currPos = yellowFish->GetPosition();
 			Vector3 difference;
 			difference.x = abs(currPos.x - startPos.x);

@@ -25,7 +25,7 @@ RedFish::RedFish(Game* game)
 	, angularMovement(0.2)
 	, forwardMovement(200)
 	, fishTimer(1.0)
-	, fishDistance(50.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
+	, fishDistance(80.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
 	, fishOnLineStartPosition(0.0,0.0,0.0)
 {
 	SetScale(5.0f);
