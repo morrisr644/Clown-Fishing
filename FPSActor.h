@@ -10,6 +10,8 @@
 #include "Actor.h"
 #include "SoundEvent.h"
 
+class MeshComponent;
+
 class FPSActor : public Actor
 {
 public:
@@ -30,10 +32,11 @@ public:
 private:
 	class MoveComponent* mMoveComp;
 	class AudioComponent* mAudioComp;
-	class MeshComponent* mMeshComp;
+	//class MeshComponent* mMeshComp;
 	class FPSCamera* mCameraComp;
 	class BoxComponent* mBoxComp;
 	class Actor* mFPSModel;
 	SoundEvent mFootstep;
 	float mLastFootstep;
+	std::vector<MeshComponent*> meshComponents_;
 };

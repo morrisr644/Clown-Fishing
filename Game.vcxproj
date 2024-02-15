@@ -52,6 +52,7 @@
     <ClCompile Include="PlaneActor.cpp" />
     <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShorePlaneActor.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="InventoryMenu.h" />
     <ClInclude Include="InvisiblePlaneActor.h" />
     <ClInclude Include="RedFish.h" />
+    <ClInclude Include="RodActor.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="ShorePlaneActor.h" />
     <ClInclude Include="HUD.h" />
