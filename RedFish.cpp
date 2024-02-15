@@ -184,6 +184,8 @@ void RedFish::GetOnLine() // Rebecca Morris
 	currPosZDown.z = currPosZDown.z - 10;
 	this->SetPosition(currPosZDown);
 	SetOnLinePosition();
+
+	fishDistance = 800.0f; //Made the game too hard :(
   
 	new FishOnScreen(this->GetGame());
 	this->GetGame()->TurnFishOnScreenOn();
