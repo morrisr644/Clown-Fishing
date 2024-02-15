@@ -358,7 +358,7 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = yfish;
 				//mSingleBobber->SetPosition(playerPos);
-				yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
+				//yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
 				mCurrentFishDistance = yfish->GetFishDistance();
 			}
 			RedFish* rfish = mRedFish;
@@ -371,8 +371,8 @@ void Game::HandleKeyPress(int key)
 
 				hookedFish = rfish;
 				//mSingleBobber->SetPosition(playerPos);
-				rfish->SetFishDistance(50);
-				mCurrentFishDistance = rfish->GetFishDistance();
+				//rfish->SetFishDistance(50);
+				mCurrentFishDistance = rfish->GetFishDistance(); // grabbing for HUD
 			}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
@@ -403,7 +403,7 @@ void Game::HandleKeyPress(int key)
 			
 			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
-				if (bobberPos.z > -100.0 || fishPos.z > -160.0)
+				if (bobberPos.z > -110.0 || fishPos.z > -170.0) // if the bobber is coming out of the water, or the fish
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
@@ -419,6 +419,8 @@ void Game::HandleKeyPress(int key)
 				//StopReeling();
 			}
 			hookedFish->SetPosition(newFishPos);
+			//Experiment with increasing the fish distance, this definitely gives closer to desired effect
+			hookedFish->SetFishDistance(50.0);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
 		else
