@@ -105,6 +105,11 @@ void YellowFish::UpdateActor(float deltaTime)
 
 	}*/
 
+	if (isOnLine)
+	{
+		SetFishDistance(-0.05);
+	}
+
 	if (yellowCurrPosition.z <= -600.0)
 	{
 		//turn around here as well
@@ -182,7 +187,9 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	SetMovementSpeed(0.0f);
 	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
-	isOnLine = true;
+	isOnLine = true; //Why does this happen twice?
+
+	fishDistance = 500.0f; //I made the game too hard :(
 
 	Vector3 currPos = this->GetPosition();
 	Vector3 currPosZDown = currPos;
