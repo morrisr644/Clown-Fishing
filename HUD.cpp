@@ -194,46 +194,59 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 		BobberActor* bobber = mGame->GetBobber();
 
-		float totalDistance = mGame->GetFishHookDistance();
-		float fishDistance = currentFish->GetFishDistance();
+		float totalDistance = mGame->GetFishHookDistance(); //Gets smaller as space is pressed and larger as space is not pressed
+		float fishDistance = currentFish->GetFishDistance(); //Gets larger as spaced is pressed (should it get smaller?)
 		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed
 
-		float percent = (totalDistance/fishDistance) * 10;  //Why isnt this working for red fish
+		//This needs to be, the closer (totalDistance/fishDistance) is to 0, the 
+
+		//The more space is pressed = the smaller the percent becomes
+		//The longer space is not pressed = the larger the value gets
+		float percent = (totalDistance/fishDistance) * 10;  
+
+		//Remember that if totalDistance < fishDistance then the fish escapes
+
+		//Therefore the percent should be (|totalDistance - fishDistance|)/totalDistance?
+
+		//float percent = ((abs(totalDistance - fishDistance)) / totalDistance) * 10;
+
+		//float percent = ((abs(totalDistance - fishDistance))) * 10;
+
 		//float percent = totalDistance - fishDistance;
 
 
 
 		if (percent >= 8.5f)
 		{
-			TensionLevel = 1;
+			TensionLevel = 8;
 		}
 		else if (8.5f > percent && percent >= 7.3f)
 		{
-			TensionLevel = 2;
+			TensionLevel = 7;
 		}
 		else if (7.3f > percent && percent >= 6.1f)
 		{
-			TensionLevel = 3;
+			TensionLevel = 6;
 		}
 		else if (6.1f > percent && percent >= 4.9f)
 		{
-			TensionLevel = 4;
+			TensionLevel = 5;
 		}
 		else if (4.9f > percent && percent >= 3.7f)
 		{
-			TensionLevel = 5;
+			TensionLevel = 4;
 		}
 		else if (3.7f > percent && percent >= 2.5f)
 		{
-			TensionLevel = 6;
+			TensionLevel = 3;
 		}
 		else if (2.5f > percent && percent >= 1.3f)
 		{
-			TensionLevel = 7;
+			TensionLevel = 2;
 		}
 		else if (1.3f > percent && percent >= 0.1f)
 		{
-			TensionLevel = 8;
+			TensionLevel = 1;
 		}
 
 		//if (percent >= 15.0f)

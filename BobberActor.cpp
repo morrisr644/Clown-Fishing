@@ -137,8 +137,8 @@ void BobberActor::CheckYellowFish(float deltaTime)
 			difference.y = abs(currPos.y - startPos.y);
 			difference.z = abs(currPos.z - startPos.z);
 			mTotalDistance = difference.x + difference.y + difference.z;
-			GetGame()->SetFishHookDistance(mTotalDistance);
-			if (mTotalDistance > yellowFish->GetFishDistance()) // Rebecca, this chunk of code handles if the YellowFish gets too far from the bobber
+			GetGame()->SetFishHookDistance(mTotalDistance); 
+			if (mTotalDistance > yellowFish->GetFishDistance() && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
 			{
 				Vector3 turnFishAround = yellowFish->GetForward();
 				turnFishAround.x = -turnFishAround.x;
@@ -234,7 +234,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 		// if the current fish on the line is the red fish
 		else if (currentBobber->GetFishOnStatus() == true && redFish->GetLineStatus() == true)
 		{
-			Vector3 startPos = redFish->GetOnLinePosition();
+			Vector3 startPos = this->GetPosition();
 			Vector3 currPos = redFish->GetPosition();
 			Vector3 difference;
 			difference.x = abs(currPos.x - startPos.x);
@@ -242,7 +242,7 @@ void BobberActor::CheckRedFish(float deltaTime)
 			difference.z = abs(currPos.z - startPos.z);
 			float totalDistance = difference.x + difference.y + difference.z;
 			GetGame()->SetFishHookDistance(totalDistance);
-			if (totalDistance > redFish->GetFishDistance()) // Rebecca, this chunk of code handles if the RedFish gets too far from the bobber
+			if (totalDistance > redFish->GetFishDistance() && totalDistance != 0) // Rebecca, this chunk of code handles if the RedFish gets too far from the bobber
 			{
 				Vector3 turnFishAround = redFish->GetForward();
 				turnFishAround.x = -turnFishAround.x;

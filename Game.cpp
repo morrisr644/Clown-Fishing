@@ -419,6 +419,8 @@ void Game::HandleKeyPress(int key)
 				//StopReeling();
 			}
 			hookedFish->SetPosition(newFishPos);
+			//Experiment with increasing the fish distance, this definitely gives closer to desired effect
+			hookedFish->SetFishDistance(50.0);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
 		else
