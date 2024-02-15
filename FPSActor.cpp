@@ -23,6 +23,10 @@
 #include "UnderPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "PhysWorld.h"
+#include "Texture.h"
+#include "AssimpLoad.h"
+#include "Mesh.h"
+#include "RodActor.h"
 
 FPSActor::FPSActor(Game* game)
 	:Actor(game)
@@ -35,10 +39,14 @@ FPSActor::FPSActor(Game* game)
 
 	mCameraComp = new FPSCamera(this);
 
-	mFPSModel = new Actor(game);
+	/*mFPSModel = new Actor(game);
 	mFPSModel->SetScale(1.0f);
 	mMeshComp = new MeshComponent(mFPSModel);
-	mMeshComp->SetMesh(game->GetRenderer()->GetMesh("Assets/Rifle.gpmesh"));
+	mMeshComp->SetMesh(game->GetRenderer()->GetMesh("Assets/Rifle.gpmesh"));*/
+
+	//Added Rod Actor to make the addition of the new model simpler - Rebecca
+	mFPSModel = new RodActor(game);
+	mFPSModel->SetScale(0.05f);
 
 	// Add a box component
 	mBoxComp = new BoxComponent(this);
@@ -109,7 +117,7 @@ void FPSActor::UpdateActor(float deltaTime)
 	}
 	
 	// Update position of FPS model relative to actor position
-	const Vector3 modelOffset(Vector3(10.0f, 10.0f, -10.0f));
+	const Vector3 modelOffset(Vector3(15.0f, -15.0f, -10.0f));
 	Vector3 modelPos = GetPosition();
 	modelPos += GetForward() * modelOffset.x;
 	modelPos += GetRight() * modelOffset.y;
@@ -119,6 +127,10 @@ void FPSActor::UpdateActor(float deltaTime)
 	Quaternion q = GetRotation();
 	// Rotate by pitch from camera
 	q = Quaternion::Concatenate(q, Quaternion(GetRight(), mCameraComp->GetPitch()));
+	//Adjusted the pitch to make the rod face the right way - Rebecca
+	q = Quaternion::Concatenate(q, Quaternion(GetRight(), -180.0));
+	//Quaternion r = mFPSModel->GetRotation();
+	
 	mFPSModel->SetRotation(q);
 }
 
@@ -215,7 +227,7 @@ void FPSActor::SetFootstepSurface(float value)
 
 void FPSActor::SetVisible(bool visible)
 {
-	mMeshComp->SetVisible(visible);
+	//mMeshComp->SetVisible(visible);
 }
 
 void FPSActor::FixCollisions()
