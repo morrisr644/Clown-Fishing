@@ -41,6 +41,8 @@ BobberActor::BobberActor(Game* game)
 	mSplash.SetPaused(true);
 	mBubbles = mAudioComp->PlayEvent("event:/Bubbles");
 	mBubbles.SetPaused(true);
+	mLose = mAudioComp->PlayEvent("event:/Lose");
+	mLose.SetPaused(true);
 	isInWater = false;
 	isFishOn = false;
 	hasAlreadySplashed = false;
@@ -162,6 +164,9 @@ void BobberActor::CheckYellowFish(float deltaTime)
 				yellowFish->SetMovementSpeed(200);
 				yellowFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
+
+				mLose.SetPaused(false);
+				mLose.Restart();
 
 				new FishOffScreen(this->GetGame());
 				this->GetGame()->TurnFishOffScreenOn();
@@ -369,6 +374,9 @@ void BobberActor::CheckRedFish(float deltaTime)
 				redFish->SetMovementSpeed(200);
 				redFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
+
+				mLose.SetPaused(false);
+				mLose.Restart();
 
 				new FishOffScreen(this->GetGame());
 				this->GetGame()->TurnFishOffScreenOn();

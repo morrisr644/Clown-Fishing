@@ -1,0 +1,11 @@
+{98efe6ba-c5dc-444a-8789-e83a26526e08} event:/Bubbles
+{2a697231-ae75-4e98-8bf6-98dc6453ea37} event:/CastLine
+{eb3aa5cb-1c79-4751-adf9-2687d6c86c6a} event:/Footstep
+{06497337-986c-4938-91ae-037cb9e6073d} event:/Lose
+{a8602855-71d4-4678-8835-c3eebad3b48e} event:/Music
+{6fca4881-abda-4ba4-9a0f-c13135cd8120} event:/Music2
+{5d3682b5-d988-43c3-951e-2ff5cb2b5d2d} event:/ReelingIn
+{af8abef9-0828-4e2f-8724-838ad6d618c1} event:/Splash
+{9016ba32-6bd2-48af-a4d1-bea399885577} bus:/
+{a24bf307-cf30-4ad9-9f0a-ce531f041465} bus:/Reverb
+{f63da8cf-7e13-4545-a959-116c2b822028} bank:/Master Bank
