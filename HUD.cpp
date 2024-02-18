@@ -193,7 +193,9 @@ void HUD::UpdateTensionBar(float deltaTime)
 		}
 
 		BobberActor* bobber = mGame->GetBobber();
-
+		// this is 500 on second catch, that should not be a thing.
+		// this is simply not working right at all, the total distance is not getting reset, fishDistance should never change no matter waht is pressed
+		// everytime a fihs is hooked it should compare current distance with the bobber position and the fish position.
 		float totalDistance = mGame->GetFishHookDistance(); //Gets smaller as space is pressed and larger as space is not pressed
 		float fishDistance = currentFish->GetFishDistance(); //Gets larger as spaced is pressed (should it get smaller?)
 		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed

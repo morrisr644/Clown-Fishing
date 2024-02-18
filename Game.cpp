@@ -453,6 +453,7 @@ void Game::HandleKeyPress(int key)
 				new CatchScreen(this);
 
 				caughtFish->SetState(Actor::EDead);
+				mRedFish->SetState(Actor::EDead);
 				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
@@ -473,6 +474,7 @@ void Game::HandleKeyPress(int key)
 				new CatchScreen(this);
 
 				caughtFish->SetState(Actor::EDead);
+				mYellowFish->SetState(Actor::EDead);
 				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
@@ -581,7 +583,8 @@ void Game::UpdateGame()
 	{
 		//currentHook = new Hook(this);
 		Vector3 hooksSunkenPosition = mSingleBobber->GetPosition();
-		hooksSunkenPosition.z = hooksSunkenPosition.z - 60;
+		// this is where we spawn the hook in for the game.
+		hooksSunkenPosition.z = hooksSunkenPosition.z - 300; // possible solution, but need to fix the meter now.
 
 		currentHook->SetPosition(hooksSunkenPosition);
 	}
@@ -664,8 +667,8 @@ void Game::LoadData()
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	currentHook = new Hook(this);
 	currentHook->SetPosition(Vector3(20000, 20000, 2000));
-	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -350.0f)); // why does the fish float?
-	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -350.0f));
+	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f)); // why does the fish float?
+	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -450.0f));
 	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
 
 	//// Create target actors
@@ -720,7 +723,15 @@ void Game::LoadData()
 	for (int i = 0; i < 10; i++)
 	{
 		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f)); 
+		a->SetRotation(q);
+	}
+
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
+		a->SetPosition(Vector3(start + i * size, start - (size - 1600.0f), -300.0f)); // Added this wall to keep the player back off of the shore
 		a->SetRotation(q);
 	}
 
