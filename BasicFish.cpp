@@ -19,7 +19,7 @@
 
 BasicFish::BasicFish(Game* game)
 	:Actor(game)
-	, fishDistance(500.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
+	, fishDistance(900.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 {
 	SetScale(0.5f);
