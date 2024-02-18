@@ -48,5 +48,6 @@ private:
 	bool hasAlreadySplashed;
 	SoundEvent mSplash;
 	SoundEvent mBubbles;
+	SoundEvent mLose; // For when you lose the fish
 	float mTotalDistance;
 };
