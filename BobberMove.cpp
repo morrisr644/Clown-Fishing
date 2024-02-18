@@ -105,7 +105,7 @@ void BobberMove::Update(float deltaTime)
 		}*/
 
 		
-		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive) // this handles the fishes tension
+		if (yFish->GetState() == Actor::EActive && yFish->GetLineStatus()) // this handles the fishes tension
 		{
 			// make the fish face bobber instead of the player.
 			// get fish to reflect off of wall.
@@ -128,7 +128,7 @@ void BobberMove::Update(float deltaTime)
 			yFish->SetMovementSpeed(-30.0);
 		}
 
-		if (rFish->GetLineStatus() && rFish->GetState() == Actor::EActive) // this handles the fishes tension
+		if (rFish->GetState() == Actor::EActive && rFish->GetLineStatus()) // this handles the fishes tension
 		{
 			Vector3 playerPos = player->GetPosition();
 			Vector3 bobberPos = bobber->GetPosition();

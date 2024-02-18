@@ -107,7 +107,7 @@ void YellowFish::UpdateActor(float deltaTime)
 
 	if (isOnLine)
 	{
-		SetFishDistance(-0.05);
+		//SetFishDistance(-0.05);
 	}
 
 	if (yellowCurrPosition.z <= -600.0)
@@ -189,7 +189,7 @@ void YellowFish::GetOnLine() // Rebecca Morris
 	this->GetGame()->StartReeling();
 	isOnLine = true; //Why does this happen twice?
 
-	fishDistance = 500.0f; //I made the game too hard :(
+	fishDistance = 900.0f; //I made the game too hard :(
 
 	Vector3 currPos = this->GetPosition();
 	Vector3 currPosZDown = currPos;
@@ -318,7 +318,7 @@ void YellowFish::FixCollisions() // pulled from Madhav FPSActor
 
 	Vector3 currentPos = this->GetPosition();
 
-	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
+	if (isOnLine && currentPos.y <= 280.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
 		// It either got away or was caught

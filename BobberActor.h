@@ -36,6 +36,7 @@ public:
 	void CheckRedFish(float deltaTime);
 	void SetTensionSpeed(float tensionSpeed);
 	float getTotalDistance() { return mTotalDistance; };
+	//void CheckFish(float deltaTime, BasicFish* currFish);
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
