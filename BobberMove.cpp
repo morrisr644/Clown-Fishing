@@ -16,8 +16,8 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "BasicFish.h"
-#include "YellowFish.h"
-#include "RedFish.h"
+//#include "YellowFish.h"
+//#include "RedFish.h"
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
@@ -59,8 +59,8 @@ void BobberMove::Update(float deltaTime)
 
 		
 		FPSActor* player = mOwner->GetGame()->GetPlayer();
-		YellowFish* yFish = mOwner->GetGame()->GetYellowFish();
-		RedFish* rFish = mOwner->GetGame()->GetRedFish();
+		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
+		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
 
 		InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
 
@@ -79,8 +79,8 @@ void BobberMove::Update(float deltaTime)
 		}
 
 		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
-		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
-		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
+		BasicFish* yellowFish = dynamic_cast<BasicFish*>(info.mActor); //Do we need these 2 now? -Rebecca
+		BasicFish* redFish = dynamic_cast<BasicFish*>(info.mActor);
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
 
 		

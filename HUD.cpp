@@ -16,9 +16,10 @@
 #include <algorithm>
 #include "TargetComponent.h"
 #include "BasicFish.h"
-#include "RedFish.h"
-#include "YellowFish.h"
+//#include "RedFish.h"
+//#include "YellowFish.h"
 #include "BobberActor.h"
+#include <string.h>
 
 HUD::HUD(Game* game)
 	:UIScreen(game)
@@ -175,11 +176,19 @@ void HUD::UpdateTensionBar(float deltaTime)
 		// BasicFish
 		int TensionLevel = 1; // This is set to 1 as a default
 
-		auto* currentFish = mGame->GetBasicFish();
+		//auto* currentFish = mGame->GetBasicFish();
+		BasicFish* currentFish;
 
-		int fishType = mGame->GetCurrentFishType();
+		char fishType = mGame->GetCurrentFishType();
 
-		switch (fishType)
+		currentFish = mGame->GetRedFish();
+
+		if (fishType == 'r')
+			currentFish = mGame->GetRedFish();
+		if (fishType == 'y')
+			currentFish = mGame->GetYellowFish();
+
+		/*switch (fishType)
 		{
 			case 0:
 				currentFish = mGame->GetBasicFish();
@@ -190,7 +199,9 @@ void HUD::UpdateTensionBar(float deltaTime)
 			case 2:
 				currentFish = mGame->GetYellowFish();
 				break;
-		}
+		}*/
+
+
 
 		BobberActor* bobber = mGame->GetBobber();
 		// this is 500 on second catch, that should not be a thing.
