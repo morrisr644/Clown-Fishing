@@ -18,8 +18,8 @@
 #include "AudioComponent.h"
 #include "Math.h"
 #include "BasicFish.h"
-#include "YellowFish.h"
-#include "RedFish.h"
+//#include "YellowFish.h"
+//#include "RedFish.h"
 #include "FishOffScreen.h"
 #include "Hook.h"
 
@@ -98,7 +98,7 @@ void BobberActor::UpdateActor(float deltaTime)
 void BobberActor::CheckYellowFish(float deltaTime)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
-	YellowFish* yellowFish = GetGame()->GetYellowFish();
+	BasicFish* yellowFish = GetGame()->GetYellowFish();
 	BobberActor* currentBobber = GetGame()->GetBobber();
 	Hook* currentHook = GetGame()->GetHook();
 	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
@@ -304,7 +304,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 void BobberActor::CheckRedFish(float deltaTime)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
-	RedFish* redFish = GetGame()->GetRedFish();
+	BasicFish* redFish = GetGame()->GetRedFish();
 	BobberActor* currentBobber = GetGame()->GetBobber();
 	Hook* currentHook = GetGame()->GetHook();
 	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();

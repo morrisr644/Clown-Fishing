@@ -50,16 +50,16 @@ public:
 		}*/
 	}
 	class Hook* GetHook() { return currentHook; }
-	class BasicFish* GetBasicFish() {
+	/*class BasicFish* GetBasicFish() {
 		return mBasicFish;
-	}
+	}*/
 	int GetCaughtFishType() {
 		return mCaughtFishType;
 	}
-	class YellowFish* GetYellowFish() {
+	class BasicFish* GetYellowFish() {
 		return mYellowFish;
 	}
-	class RedFish* GetRedFish() {
+	class BasicFish* GetRedFish() {
 		return mRedFish;
 	}
 	std::vector<class BasicFish*> GetBasicFishes()
@@ -140,9 +140,9 @@ public:
 
 	class BasicFish* GetCurrentFish() { return mCurrentFish; };
 
-	void SetCurrentFish(BasicFish* fish, int type);
+	void SetCurrentFish(BasicFish* fish);
 
-	int GetCurrentFishType() { return CurrentFishType; }
+	char GetCurrentFishType() { return CurrentFishType; }
 
 	float GetCurrentFishDistance() { return mCurrentFishDistance; }
 
@@ -196,7 +196,7 @@ private:
 	std::vector<class ShorePlaneActor*> mShorePlanes;
 	std::vector<class UnderPlaneActor*> mUnderPlanes;
 	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
-	class BasicFish* mBasicFish;
+	//class BasicFish* mBasicFish;
 	int mCaughtFishType;
 	bool mAllCaughtFish[2]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
 	float mCurrentTime;
@@ -206,8 +206,8 @@ private:
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
 	SoundEvent mReeling;
-	class YellowFish* mYellowFish;
-	class RedFish* mRedFish;
+	class BasicFish* mYellowFish;
+	class BasicFish* mRedFish;
 	class SkyBox* mSkybox;
 	bool isFishOnScreenOn;
 	bool isFishOffScreenOn;
@@ -215,6 +215,6 @@ private:
 	float fishHookDistance;
 	class Hook* currentHook;
 	class BasicFish* mCurrentFish;
-	int CurrentFishType;
+	char CurrentFishType;
 	float mCurrentFishDistance;
 };

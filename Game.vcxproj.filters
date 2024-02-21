@@ -154,9 +154,6 @@
     <ClCompile Include="InvisiblePlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RedFish.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShorePlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -170,9 +167,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WoodPlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="YellowFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CatchScreen.cpp">
@@ -333,9 +327,6 @@
     <ClInclude Include="MatrixPalette.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="RedFish.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scenery.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -358,9 +349,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="WoodPlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="YellowFish.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="RodActor.h">

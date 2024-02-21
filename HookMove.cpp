@@ -9,8 +9,8 @@
 #include "TargetActor.h"
 #include "Hook.h"
 #include "BasicFish.h"
-#include "YellowFish.h"
-#include "RedFish.h"
+//#include "YellowFish.h"
+//#include "RedFish.h"
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
@@ -43,11 +43,11 @@ void HookMove::Update(float deltaTime)
 
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
-		YellowFish* yellowFish = dynamic_cast<YellowFish*>(info.mActor);
-		RedFish* redFish = dynamic_cast<RedFish*>(info.mActor);
+		BasicFish* yellowFish = dynamic_cast<BasicFish*>(info.mActor); //Same comment, do we need both or just one? -Rebecca
+		BasicFish* redFish = dynamic_cast<BasicFish*>(info.mActor);
 		FPSActor* player = mOwner->GetGame()->GetPlayer();
-		YellowFish* yFish = mOwner->GetGame()->GetYellowFish();
-		RedFish* rFish = mOwner->GetGame()->GetRedFish();
+		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
+		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
 
 		if (yellowFish && !bobber->GetFishOnStatus())
 		{

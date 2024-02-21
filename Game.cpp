@@ -17,8 +17,8 @@
 #include "MeshComponent.h"
 #include "FPSActor.h"
 #include "BasicFish.h"
-#include "YellowFish.h"
-#include "RedFish.h"
+//#include "YellowFish.h"
+//#include "RedFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
 #include "WoodPlaneActor.h"
@@ -204,10 +204,9 @@ bool Game::GetAllCaughtFish(int index)
 	return mAllCaughtFish[index];
 }
 
-void Game::SetCurrentFish(BasicFish* fish, int type)
+void Game::SetCurrentFish(BasicFish* fish)
 {
 	mCurrentFish = fish;
-	CurrentFishType = type;
 }
 
 void Game::ProcessInput()
@@ -332,48 +331,63 @@ void Game::HandleKeyPress(int key)
 
 			float offsetFloat = 25.0f;
 
-			auto hookedFish = mBasicFish;
-
+			BasicFish* hookedFish = mYellowFish; //set as default, please work
+			
 			Vector3 fishPos;
 			// Find out which fish was hooked
-			//for (auto fish : mBasicFishes)
-			//{
-			//	if (fish->GetLineStatus())
-			//	{
-			//		fishPos = fish->GetPosition();
-			//		fish->SetPosition(playerPos);
+			for (BasicFish* fish : mBasicFishes)
+			{
+				if (fish->GetLineStatus() && fish->GetState() == Actor::EActive)
+				{
+					//fishPos = fish->GetPosition();
+					//fish->SetPosition(playerPos);
 
-			//		hookedFish = fish;
-			//		//mSingleBobber->SetPosition(playerPos);
-			//	}
+					//SetCurrentFish(fish);
+
+					hookedFish = fish;
+					//mSingleBobber->SetPosition(playerPos);
+					//mCurrentFishDistance = fish->GetFishDistance();
+				}
+			}
+
+			fishPos = hookedFish->GetPosition();
+
+			CurrentFishType = hookedFish->GetColor();
+
+			SetCurrentFish(hookedFish);
+			mCurrentFish = hookedFish;
+
+
+			mCurrentFishDistance = hookedFish->GetFishDistance();
+
+			//Updated for removal of RedFish and Yellowfish
+			//Still needs some refactoring - Rebecca 
+
+			//if (mYellowFish->GetLineStatus() && mYellowFish->GetState() == Actor::EActive)
+			//{
+			//	SetCurrentFish(mYellowFish); //Yellow is 2
+
+			//	fishPos = mYellowFish->GetPosition();
+			//	//yfish->SetPosition(playerPos);
+
+			//	hookedFish = mYellowFish;
+			//	//mSingleBobber->SetPosition(playerPos);
+			//	//yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
+			//	mCurrentFishDistance = mYellowFish->GetFishDistance();
 			//}
 
-			YellowFish* yfish = mYellowFish; 
-			if (yfish->GetLineStatus() && yfish->GetState() == Actor::EActive)
-			{
-				SetCurrentFish(yfish, 2); //Yellow is 2
+			//if (mRedFish->GetLineStatus() && mRedFish->GetState() == Actor::EActive)
+			//{
+			//	SetCurrentFish(mRedFish); //Red is 1
 
-				fishPos = yfish->GetPosition();
-				//yfish->SetPosition(playerPos);
+			//	fishPos = mRedFish->GetPosition();
+			//	//rfish->SetPosition(playerPos);
 
-				hookedFish = yfish;
-				//mSingleBobber->SetPosition(playerPos);
-				//yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
-				mCurrentFishDistance = yfish->GetFishDistance();
-			}
-			RedFish* rfish = mRedFish;
-			if (rfish->GetLineStatus() && rfish->GetState() == Actor::EActive)
-			{
-				SetCurrentFish(rfish, 1); //Red is 1
-
-				fishPos = rfish->GetPosition();
-				//rfish->SetPosition(playerPos);
-
-				hookedFish = rfish;
-				//mSingleBobber->SetPosition(playerPos);
-				//rfish->SetFishDistance(50);
-				mCurrentFishDistance = rfish->GetFishDistance(); // grabbing for HUD
-			}
+			//	hookedFish = mRedFish;
+			//	//mSingleBobber->SetPosition(playerPos);
+			//	//rfish->SetFishDistance(50);
+			//	mCurrentFishDistance = mRedFish->GetFishDistance(); // grabbing for HUD
+			//}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
 			bobberFacePlayer.Normalize();
@@ -429,7 +443,7 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 playerPos = mFPSActor->GetPosition();
 
-			auto caughtFish = mBasicFish;
+			BasicFish* caughtFish;
 
 			Vector3 fishPos;
 
@@ -660,16 +674,18 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
-	mBasicFish = new BasicFish(this);
-	mRedFish = new RedFish(this);
-	mYellowFish = new YellowFish(this);
+	//mBasicFish = new BasicFish(this, "null", "null"); //possibly change later to have default value - Rebecca
+	mRedFish = new BasicFish(this, 'r', "Assets/models/Redfish.png");
+	mYellowFish = new BasicFish(this, 'y', "Assets/models/fish.jpg");
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	currentHook = new Hook(this);
 	currentHook->SetPosition(Vector3(20000, 20000, 2000));
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -450.0f));
-	//mBasicFish->SetPosition(Vector3(1000.0f, 300.0f, -250.0f)); // why does the fish float?
+
+	//For some reason initializing mBasicFish is spawning in a new fish, putting it under the floor for now - Rebecca
+	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?
 
 	//// Create target actors
 	//a = new TargetActor(this);

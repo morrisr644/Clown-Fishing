@@ -50,7 +50,6 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="PhysWorld.cpp" />
     <ClCompile Include="PlaneActor.cpp" />
-    <ClCompile Include="RedFish.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Scenery.cpp" />
@@ -69,7 +68,6 @@
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="WaterPlaneActor.cpp" />
     <ClCompile Include="WoodPlaneActor.cpp" />
-    <ClCompile Include="YellowFish.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -102,7 +100,6 @@
     <ClInclude Include="InventoryBox.h" />
     <ClInclude Include="InventoryMenu.h" />
     <ClInclude Include="InvisiblePlaneActor.h" />
-    <ClInclude Include="RedFish.h" />
     <ClInclude Include="RodActor.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="ShorePlaneActor.h" />
@@ -130,7 +127,6 @@
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="WaterPlaneActor.h" />
     <ClInclude Include="WoodPlaneActor.h" />
-    <ClInclude Include="YellowFish.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BasicMesh.frag" />
