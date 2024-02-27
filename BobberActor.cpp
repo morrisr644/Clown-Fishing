@@ -74,7 +74,7 @@ void BobberActor::UpdateActor(float deltaTime)
 
 	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
 	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
-	if (mMyMove->GetForwardSpeed() == 0 && !isFishOn)
+	/*if (mMyMove->GetForwardSpeed() == 0 && !isFishOn)
 	{
 		Vector3 stopVelocity(0.0, 0.0, 0.0);
 		SetForwardVelocity(stopVelocity);
@@ -83,14 +83,20 @@ void BobberActor::UpdateActor(float deltaTime)
 			CheckYellowFish(deltaTime);
 			CheckRedFish(deltaTime);
 		}
-	}
-	if (GetGame()->GetYellowFish()->GetState() != Actor::EDead)
+	}*/
+
+	BasicFish* yellowFish = GetGame()->GetYellowFish();
+	BasicFish* redFish = GetGame()->GetRedFish();
+	//bool yellowStatus = yellowFish->GetCatchStatus();
+	//&& yellowFish->GetCatchStatus() == false
+	// && redFish->GetCatchStatus() == false
+	if (GetGame()->GetYellowFish()->GetState() != Actor::EDead )
 	{
-		CheckYellowFish(deltaTime); // Note check only if alive
+		CheckFish(deltaTime, yellowFish); // Note check only if alive
 	}
 	if (GetGame()->GetRedFish()->GetState() != Actor::EDead)
 	{
-		CheckRedFish(deltaTime);
+		CheckFish(deltaTime, redFish);
 	}
 	
 }
@@ -199,7 +205,7 @@ void BobberActor::CheckYellowFish(float deltaTime)
 	}
 }
 
-/*
+
 void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 {
 	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
@@ -208,21 +214,21 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
 	if (currFish->GetState() == Actor::EActive)
 	{
-		float yellowFishTimer = currFish->GetFishTimer();
-		Vector3 yellowFishCurrentPosition = currFish->GetPosition();
-		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		float fishTimer = currFish->GetFishTimer();
+		Vector3 fishCurrentPosition = currFish->GetPosition();
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - fishCurrentPosition.y) < 100.0)))
 		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook.
-			yellowFishTimer -= deltaTime;
-			currFish->SetFishTimer(yellowFishTimer);
-			if (yellowFishTimer <= 0)
+			fishTimer -= deltaTime;
+			currFish->SetFishTimer(fishTimer);
+			if (fishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentHookPosition.x - yellowFishCurrentPosition.x;
-				fishFacingBobber.y = currentHookPosition.y - yellowFishCurrentPosition.y;
-				fishFacingBobber.z = currentHookPosition.z - yellowFishCurrentPosition.z;
+				fishFacingBobber.x = currentHookPosition.x - fishCurrentPosition.x;
+				fishFacingBobber.y = currentHookPosition.y - fishCurrentPosition.y;
+				fishFacingBobber.z = currentHookPosition.z - fishCurrentPosition.z;
 				fishFacingBobber.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
-				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				currFish->RotateToNewForward(fishFacingBobber);
+				currFish->SetAngularSpeed(0);
 			}
 		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
 		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == false) // add an and this fish is not on the line here
@@ -234,8 +240,8 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				turnFishAround.y = -turnFishAround.y;
 				turnFishAround.z = -turnFishAround.z;
 				turnFishAround.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				currFish->RotateToNewForward(turnFishAround);
+				currFish->SetAngularSpeed(0);
 				currFish->SetFleeingStatus(true);
 
 			}
@@ -251,15 +257,15 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			difference.z = abs(currPos.z - startPos.z);
 			mTotalDistance = difference.x + difference.y + difference.z;
 			GetGame()->SetFishHookDistance(mTotalDistance);
-			if (mTotalDistance > 500.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
+			if (mTotalDistance > 800.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
 			{ // yellowFish->GetFishDistance()
 				Vector3 turnFishAround = currFish->GetForward();
 				turnFishAround.x = -turnFishAround.x;
 				turnFishAround.y = -turnFishAround.y;
 				turnFishAround.z = -turnFishAround.z;
 				turnFishAround.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				currFish->RotateToNewForward(turnFishAround);
+				currFish->SetAngularSpeed(0);
 				currFish->SetFleeingStatus(true);
 				currFish->SetLineStatus(false);
 				Vector3 bobberSpawnPoint(20000, 20000, 0);
@@ -281,7 +287,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
 				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
 				// and should be it?
-		else if (((abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - yellowFishCurrentPosition.z) > 200.0)))
+		else if (((abs(currentPosition.x - fishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - fishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - fishCurrentPosition.z) > 200.0)))
 		{
 			currFish->SetFishTimer(1.0);
 			currFish->SetMovementSpeed(200);
@@ -299,7 +305,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 
 	}
 }
-*/
+
 // Clean this function up, break it up a bit
 void BobberActor::CheckRedFish(float deltaTime)
 {

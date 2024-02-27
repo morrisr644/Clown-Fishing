@@ -465,9 +465,9 @@ void Game::HandleKeyPress(int key)
 				caughtFish->UpdateActor(mCurrentTime);
 
 				new CatchScreen(this);
-
+				caughtFish->SetCatchStatus(true);
 				caughtFish->SetState(Actor::EDead);
-				mRedFish->SetState(Actor::EDead);
+				//mRedFish->SetState(Actor::EDead);
 				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
@@ -486,9 +486,9 @@ void Game::HandleKeyPress(int key)
 				caughtFish->UpdateActor(mCurrentTime);
 
 				new CatchScreen(this);
-
+ 				caughtFish->SetCatchStatus(true);
 				caughtFish->SetState(Actor::EDead);
-				mYellowFish->SetState(Actor::EDead);
+				//mYellowFish->SetState(Actor::EDead);
 				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
