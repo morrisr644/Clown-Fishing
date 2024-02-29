@@ -33,9 +33,7 @@ public:
 	void ResetMoveAwayTimer() { moveAwayTimer = 3.0; }
 	bool GetFishOnStatus() { return isFishOn; }
 	bool BobberActor::GetInWaterStatus() { return isInWater; }
-	void CheckYellowFish(float deltaTime);
 	void CheckFish(float deltaTime, BasicFish* currFish);
-	void CheckRedFish(float deltaTime);
 	void SetTensionSpeed(float tensionSpeed);
 	float getTotalDistance() { return mTotalDistance; };
 	//void CheckFish(float deltaTime, BasicFish* currFish);

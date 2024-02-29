@@ -35,21 +35,21 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 
 	Texture* texture = new Texture;
 
-	std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/Fish.obj", texture);
+	std::vector<Mesh*> meshes;
 
 	if (mColor == 'r')
 	{
 		fishDistance = 800.0;
 		fishTimer = 1.0;
 		texture->Load("Assets/models/Redfish.png");
-		std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/Fish.obj", texture);
+		LoadAssimpMeshes(meshes, game, "Assets/models/Fish.obj", texture);
 	}
 
 	if (mColor == 'y')
 	{
 		fishDistance = 500.0;
 		texture->Load("Assets/models/fish.jpg");
-		std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
 	}
 
 	//Texture* texture = new Texture; texture->Load("Assets/models/Redfish.png");
@@ -64,19 +64,11 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 		mBoxComp->SetObjectBox(mc->GetMeshComp()->GetBox());
 	}
 
-	//Adding a collision box for the fish
-	/*BoxComponent* bc = new BoxComponent(this);
-	bc->SetObjectBox(mesh->GetBox());*/
 
 	mMoveComp = new MoveComponent(this);
 	mMoveComp->SetForwardSpeed(forwardMovement);
 	mMoveComp->SetAngularSpeed(angularMovement);
 
-	/*mBoxComp = new BoxComponent(this); // commenting this out did nothing.
-	AABB myBox(Vector3(-25.0f, -25.0f, -87.5f),
-		Vector3(25.0f, 25.0f, 87.5f));
-	mBoxComp->SetObjectBox(myBox);
-	mBoxComp->SetShouldRotate(false);*/
 	isOnLine = false;
 	isCaught = false;
 	isFleeing = false;
@@ -109,60 +101,14 @@ void BasicFish::UpdateActor(float deltaTime)
 	}
 
 	Vector3 currPosition = this->GetPosition(); //This works but it stalls at the beginning
-	
-	if (currPosition.z <= -800.0)
-	{
-		//turn around here as well
-		Vector3 turnFishAround = this->GetForward();
-		turnFishAround.x = -turnFishAround.x;
-		turnFishAround.y = -turnFishAround.y;
-		turnFishAround.z = -turnFishAround.z;
-		turnFishAround.Normalize();
-		Vector3 dir = this->GetForward();
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(turnFishAround);
-		//this->RotateToNewForward(dir);
-	}
-	if (currPosition.x >= 1400.0f)
-	{
-		//turn around here as well
-		Vector3 turnFishAround = this->GetForward();
-		turnFishAround.x = -turnFishAround.x;
-		turnFishAround.y = -turnFishAround.y;
-		turnFishAround.z = -turnFishAround.z;
-		turnFishAround.Normalize();
-		Vector3 dir = this->GetForward();
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(turnFishAround);
-		//this->RotateToNewForward(dir);
-	}
-	if (currPosition.x <= -1400.0f)
-	{
-		//turn around here as well
-		Vector3 turnFishAround = this->GetForward();
-		turnFishAround.x = -turnFishAround.x;
-		turnFishAround.y = -turnFishAround.y;
-		turnFishAround.z = -turnFishAround.z;
-		turnFishAround.Normalize();
-		Vector3 dir = this->GetForward();
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(turnFishAround);
-		//this->RotateToNewForward(dir);
-	}
-	if (currPosition.y >= 1200.0f)
-	{
-		//turn around here as well
-		Vector3 turnFishAround = this->GetForward();
-		turnFishAround.x = -turnFishAround.x;
-		turnFishAround.y = -turnFishAround.y;
-		turnFishAround.z = -turnFishAround.z;
-		turnFishAround.Normalize();
-		Vector3 dir = this->GetForward();
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(turnFishAround);
-		//this->RotateToNewForward(dir);
-	}
-	if (currPosition.y <= 300.0f) //This one wont work for some reason
+	constexpr float LEFTSIDE = -1400.0;
+	constexpr float RIGHTSIDE = 1400.0;
+	constexpr float FRONT = 300.0;
+	constexpr float BACK = 1200.0;
+	constexpr float BOTTOM = -800.0;
+
+
+	if (currPosition.z <= BOTTOM || currPosition.x >= RIGHTSIDE || currPosition.x <= LEFTSIDE || currPosition.y >= BACK || currPosition.y <= FRONT)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();

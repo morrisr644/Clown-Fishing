@@ -72,139 +72,27 @@ void BobberActor::UpdateActor(float deltaTime)
 		SetPosition(pos);
 	}
 
-	//Currently I am checking if the movement speed is 0, and if it is then its considered in the water.
-	//Note for Adam: refactoring in the future by putting these in their own functions is probably a good idea to clean up code.
-	/*if (mMyMove->GetForwardSpeed() == 0 && !isFishOn)
-	{
-		Vector3 stopVelocity(0.0, 0.0, 0.0);
-		SetForwardVelocity(stopVelocity);
-		if (GetGame()->GetBobber()->GetInWaterStatus())
-		{
-			CheckYellowFish(deltaTime);
-			CheckRedFish(deltaTime);
-		}
-	}*/
-
 	BasicFish* yellowFish = GetGame()->GetYellowFish();
 	BasicFish* redFish = GetGame()->GetRedFish();
-	//bool yellowStatus = yellowFish->GetCatchStatus();
-	//&& yellowFish->GetCatchStatus() == false
-	// && redFish->GetCatchStatus() == false
-	if (GetGame()->GetYellowFish()->GetState() != Actor::EDead )
+	const int NUMOFFISH = 2;
+	BasicFish* fishArray[NUMOFFISH] = { yellowFish, redFish };
+	for (BasicFish* fish : fishArray)
+	{
+		if (fish->GetState() != Actor::EDead)
+		{
+			CheckFish(deltaTime, fish); // Note check only if alive
+		}
+	}
+	/*if (GetGame()->GetYellowFish()->GetState() != Actor::EDead)
 	{
 		CheckFish(deltaTime, yellowFish); // Note check only if alive
 	}
 	if (GetGame()->GetRedFish()->GetState() != Actor::EDead)
 	{
 		CheckFish(deltaTime, redFish);
-	}
+	}*/
 	
 }
-
-void BobberActor::CheckYellowFish(float deltaTime)
-{
-	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
-	BasicFish* yellowFish = GetGame()->GetYellowFish();
-	BobberActor* currentBobber = GetGame()->GetBobber();
-	Hook* currentHook = GetGame()->GetHook();
-	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
-	if (yellowFish->GetState() == Actor::EActive)
-	{
-		float yellowFishTimer = yellowFish->GetFishTimer();
-		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
-		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - yellowFishCurrentPosition.y) < 100.0)))
-		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook.
-			yellowFishTimer -= deltaTime;
-			yellowFish->SetFishTimer(yellowFishTimer);
-			if (yellowFishTimer <= 0)
-			{
-				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentHookPosition.x - yellowFishCurrentPosition.x;
-				fishFacingBobber.y = currentHookPosition.y - yellowFishCurrentPosition.y;
-				fishFacingBobber.z = currentHookPosition.z - yellowFishCurrentPosition.z;
-				fishFacingBobber.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
-				GetGame()->GetYellowFish()->SetAngularSpeed(0);
-			}
-		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
-		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == false && GetGame()->GetYellowFish()->GetState() != Actor::EDead) // add an and this fish is not on the line here
-		{
-			if (yellowFish->GetFleeingStatus() == false && GetGame()->GetYellowFish()->GetState() != Actor::EDead)
-			{
-				Vector3 turnFishAround = yellowFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
-				turnFishAround.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-				//GetGame()->GetYellowFish()->SetAngularSpeed(0);
-				yellowFish->SetFleeingStatus(true);
-
-			}
-
-		}
-		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
-		{
-			Vector3 startPos = this->GetPosition();
-			Vector3 currPos = yellowFish->GetPosition();
-			Vector3 difference;
-			difference.x = abs(currPos.x - startPos.x);
-			difference.y = abs(currPos.y - startPos.y);
-			difference.z = abs(currPos.z - startPos.z);
-			mTotalDistance = difference.x + difference.y + difference.z;
-			GetGame()->SetFishHookDistance(mTotalDistance); 
-			if (mTotalDistance > 900.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
-			{ // yellowFish->GetFishDistance()
-				Vector3 turnFishAround = yellowFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
-				turnFishAround.Normalize();
-				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
-				GetGame()->GetYellowFish()->SetAngularSpeed(0);
-				yellowFish->SetFleeingStatus(true);
-				yellowFish->SetLineStatus(false);
-				Vector3 bobberSpawnPoint(20000, 20000, 0);
-				currentBobber->SetPosition(bobberSpawnPoint);
-				yellowFish->SetFishTimer(1.0);
-				yellowFish->SetMovementSpeed(200);
-				yellowFish->SetAngularSpeed(0.2);
-				GetGame()->isReelingIn = false;
-
-				mLose.SetPaused(false);
-				mLose.Restart();
-
-				new FishOffScreen(this->GetGame());
-				this->GetGame()->TurnFishOffScreenOn();
-				
-				mTotalDistance = 0;
-
-			}
-
-		}
-		// if the fish is on the line, grab the position of the fish when it first gets on the line.
-				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
-				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
-				// and should be it?
-		else if ((GetGame()->GetYellowFish()->GetState() != Actor::EDead && abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - yellowFishCurrentPosition.z) > 200.0))
-		{
-			yellowFish->SetFishTimer(1.0);
-			yellowFish->SetMovementSpeed(200);
-			yellowFish->SetAngularSpeed(0.2);
-			yellowFish->SetFleeingStatus(false);
-		}
-
-		else if (yellowFish->GetFleeingStatus() == true)
-		{
-			yellowFish->SetFishTimer(1.0);
-			yellowFish->SetMovementSpeed(200);
-			yellowFish->SetAngularSpeed(0.2);
-			yellowFish->SetFleeingStatus(false);
-		}
-
-	}
-}
-
 
 void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 {
@@ -287,129 +175,15 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
 				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
 				// and should be it?
-		else if (((abs(currentPosition.x - fishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - fishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - fishCurrentPosition.z) > 200.0)))
+		else if (((abs(currentPosition.x - fishCurrentPosition.x) > 200.0) || 
+			(abs(currentPosition.y - fishCurrentPosition.y) > 200.0) || 
+			(abs(currentPosition.z - fishCurrentPosition.z) > 200.0)) || currFish->GetFleeingStatus())
 		{
 			currFish->SetFishTimer(1.0);
 			currFish->SetMovementSpeed(200);
 			currFish->SetAngularSpeed(0.2);
 			currFish->SetFleeingStatus(false);
 		}
-
-		else if (currFish->GetFleeingStatus() == true)
-		{
-			currFish->SetFishTimer(1.0);
-			currFish->SetMovementSpeed(200);
-			currFish->SetAngularSpeed(0.2);
-			currFish->SetFleeingStatus(false);
-		}
-
-	}
-}
-
-// Clean this function up, break it up a bit
-void BobberActor::CheckRedFish(float deltaTime)
-{
-	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
-	BasicFish* redFish = GetGame()->GetRedFish();
-	BobberActor* currentBobber = GetGame()->GetBobber();
-	Hook* currentHook = GetGame()->GetHook();
-	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
-	if (redFish->GetState() == Actor::EActive)
-	{
-		float redFishTimer = redFish->GetFishTimer();
-		Vector3 redFishCurrentPosition = redFish->GetPosition();
-		// if the fish is not currently on the line, and its in range, head towards the bobber
-		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - redFishCurrentPosition.y) < 100.0)))
-		{
-			redFishTimer -= deltaTime;
-			redFish->SetFishTimer(redFishTimer);
-			if (redFishTimer <= 0)
-			{
-				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentHookPosition.x - redFishCurrentPosition.x;
-				fishFacingBobber.y = currentHookPosition.y - redFishCurrentPosition.y;
-				fishFacingBobber.z = currentHookPosition.z - redFishCurrentPosition.z;
-				fishFacingBobber.Normalize();
-				GetGame()->GetRedFish()->RotateToNewForward(fishFacingBobber);
-				GetGame()->GetRedFish()->SetAngularSpeed(0);
-			}
-		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
-		//if a fish that is not the red fish is on the line do this.
-		// seems like this is currently not working?
-		else if (currentBobber->GetFishOnStatus() == true && redFish->GetLineStatus() == false && GetGame()->GetRedFish()->GetState() != Actor::EDead) // add an and this fish is not on the line here
-		{
-			if (redFish->GetFleeingStatus() == false && GetGame()->GetRedFish()->GetState() != Actor::EDead)
-			{
-				Vector3 turnFishAround = redFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
-				turnFishAround.Normalize();
-				GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
-				//GetGame()->GetRedFish()->SetAngularSpeed(0);
-				redFish->SetFleeingStatus(true);
-				
-			}
-
-		}
-		// if the current fish on the line is the red fish
-		else if (currentBobber->GetFishOnStatus() == true && redFish->GetLineStatus() == true)
-		{
-			Vector3 startPos = this->GetPosition();
-			Vector3 currPos = redFish->GetPosition();
-			Vector3 difference;
-			difference.x = abs(currPos.x - startPos.x);
-			difference.y = abs(currPos.y - startPos.y);
-			difference.z = abs(currPos.z - startPos.z);
-			float totalDistance = difference.x + difference.y + difference.z;
-			GetGame()->SetFishHookDistance(totalDistance);
-			if (totalDistance > 900 && totalDistance != 0) // Rebecca, this chunk of code handles if the RedFish gets too far from the bobber
-			{
-				Vector3 turnFishAround = redFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
-				turnFishAround.Normalize();
-				GetGame()->GetRedFish()->RotateToNewForward(turnFishAround);
-				GetGame()->GetRedFish()->SetAngularSpeed(0);
-				redFish->SetFleeingStatus(true);
-				redFish->SetLineStatus(false);
-				Vector3 bobberSpawnPoint(20000, 20000, 0);
-				currentBobber->SetPosition(bobberSpawnPoint);
-				redFish->SetFishTimer(1.0);
-				redFish->SetMovementSpeed(200);
-				redFish->SetAngularSpeed(0.2);
-				GetGame()->isReelingIn = false;
-
-				mLose.SetPaused(false);
-				mLose.Restart();
-
-				new FishOffScreen(this->GetGame());
-				this->GetGame()->TurnFishOffScreenOn();
-				
-			}
-			
-		}
-		// if the fish is on the line, grab the position of the fish when it first gets on the line.
-				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
-				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
-				// and should be it?
-		else if ((GetGame()->GetRedFish()->GetState() != Actor::EDead && abs(currentPosition.x - redFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - redFishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - redFishCurrentPosition.z) > 200.0))
-		{
-			redFish->SetFishTimer(1.0);
-			redFish->SetMovementSpeed(200);
-			redFish->SetAngularSpeed(0.2);
-			redFish->SetFleeingStatus(false);
-		}
-
-		else if (redFish->GetFleeingStatus() == true)
-		{
-			redFish->SetFishTimer(1.0);
-			redFish->SetMovementSpeed(200);
-			redFish->SetAngularSpeed(0.2);
-			redFish->SetFleeingStatus(false);
-		}
-		
 	}
 }
 
@@ -480,5 +254,109 @@ void BobberActor::SetTensionSpeed(float tensionSpeed)
 	mMyMove->SetForwardSpeed(tensionSpeed);
 }
 
+
+/*void BobberActor::CheckYellowFish(float deltaTime)
+{
+	Vector3 currentPosition = GetGame()->GetBobber()->GetPosition();
+	BasicFish* yellowFish = GetGame()->GetYellowFish();
+	BobberActor* currentBobber = GetGame()->GetBobber();
+	Hook* currentHook = GetGame()->GetHook();
+	Vector3 currentHookPosition = GetGame()->GetHook()->GetPosition();
+	if (yellowFish->GetState() == Actor::EActive)
+	{
+		float yellowFishTimer = yellowFish->GetFishTimer();
+		Vector3 yellowFishCurrentPosition = yellowFish->GetPosition();
+		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - yellowFishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - yellowFishCurrentPosition.y) < 100.0)))
+		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook.
+			yellowFishTimer -= deltaTime;
+			yellowFish->SetFishTimer(yellowFishTimer);
+			if (yellowFishTimer <= 0)
+			{
+				Vector3 fishFacingBobber;
+				fishFacingBobber.x = currentHookPosition.x - yellowFishCurrentPosition.x;
+				fishFacingBobber.y = currentHookPosition.y - yellowFishCurrentPosition.y;
+				fishFacingBobber.z = currentHookPosition.z - yellowFishCurrentPosition.z;
+				fishFacingBobber.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(fishFacingBobber);
+				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+			}
+		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
+		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == false && GetGame()->GetYellowFish()->GetState() != Actor::EDead) // add an and this fish is not on the line here
+		{
+			if (yellowFish->GetFleeingStatus() == false && GetGame()->GetYellowFish()->GetState() != Actor::EDead)
+			{
+				Vector3 turnFishAround = yellowFish->GetForward();
+				turnFishAround.x = -turnFishAround.x;
+				turnFishAround.y = -turnFishAround.y;
+				turnFishAround.z = -turnFishAround.z;
+				turnFishAround.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+				//GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				yellowFish->SetFleeingStatus(true);
+
+			}
+
+		}
+		else if (currentBobber->GetFishOnStatus() == true && yellowFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
+		{
+			Vector3 startPos = this->GetPosition();
+			Vector3 currPos = yellowFish->GetPosition();
+			Vector3 difference;
+			difference.x = abs(currPos.x - startPos.x);
+			difference.y = abs(currPos.y - startPos.y);
+			difference.z = abs(currPos.z - startPos.z);
+			mTotalDistance = difference.x + difference.y + difference.z;
+			GetGame()->SetFishHookDistance(mTotalDistance);
+			if (mTotalDistance > 900.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
+			{ // yellowFish->GetFishDistance()
+				Vector3 turnFishAround = yellowFish->GetForward();
+				turnFishAround.x = -turnFishAround.x;
+				turnFishAround.y = -turnFishAround.y;
+				turnFishAround.z = -turnFishAround.z;
+				turnFishAround.Normalize();
+				GetGame()->GetYellowFish()->RotateToNewForward(turnFishAround);
+				GetGame()->GetYellowFish()->SetAngularSpeed(0);
+				yellowFish->SetFleeingStatus(true);
+				yellowFish->SetLineStatus(false);
+				Vector3 bobberSpawnPoint(20000, 20000, 0);
+				currentBobber->SetPosition(bobberSpawnPoint);
+				yellowFish->SetFishTimer(1.0);
+				yellowFish->SetMovementSpeed(200);
+				yellowFish->SetAngularSpeed(0.2);
+				GetGame()->isReelingIn = false;
+
+				mLose.SetPaused(false);
+				mLose.Restart();
+
+				new FishOffScreen(this->GetGame());
+				this->GetGame()->TurnFishOffScreenOn();
+
+				mTotalDistance = 0;
+
+			}
+
+		}
+		// if the fish is on the line, grab the position of the fish when it first gets on the line.
+				// take that initial position and the current position, get the absolute value of current minus old, then take that number and compare to the 
+				// fishDistance float.  When that number is larger than the fishDistance, put the bobber outside the map to show the bobber going away, set the fish to fleeing,
+				// and should be it?
+		else if ((GetGame()->GetYellowFish()->GetState() != Actor::EDead && abs(currentPosition.x - yellowFishCurrentPosition.x) > 200.0) || (abs(currentPosition.y - yellowFishCurrentPosition.y) > 200.0) || (abs(currentPosition.z - yellowFishCurrentPosition.z) > 200.0))
+		{
+			yellowFish->SetFishTimer(1.0);
+			yellowFish->SetMovementSpeed(200);
+			yellowFish->SetAngularSpeed(0.2);
+			yellowFish->SetFleeingStatus(false);
+		}
+
+		else if (yellowFish->GetFleeingStatus() == true)
+		{
+			yellowFish->SetFishTimer(1.0);
+			yellowFish->SetMovementSpeed(200);
+			yellowFish->SetAngularSpeed(0.2);
+			yellowFish->SetFleeingStatus(false);
+		}
+
+	}
+}*/
 
 

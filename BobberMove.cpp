@@ -16,8 +16,6 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "BasicFish.h"
-//#include "YellowFish.h"
-//#include "RedFish.h"
 #include "WaterPlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
@@ -34,20 +32,21 @@ void BobberMove::Update(float deltaTime)
 	Vector3 start = mOwner->GetPosition();
 	Vector3 dir = mOwner->GetForward();
 	Vector3 end = start + dir * segmentLength;
+	constexpr float LEFTWALL = 1450.0;
+	constexpr float RIGHTWALL = -1450.0;
+	constexpr float WATERLEVEL = -100.0;
 
 	// Create line segment
 	LineSegment l(start, end);
 
-
 	// Test segment vs world
-
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
 	BobberActor* bobber = mOwner->GetGame()->GetBobber();
 	Vector3 bobberPosition = bobber->GetPosition();
 
-	if (bobberPosition.z <= -100.0 && bobberPosition.y < 1450.0 
-		&& bobberPosition.y > -1450.0 && bobberPosition.x < 1450.0 && bobberPosition.x > -1450.0) 
+	if (bobberPosition.z <= WATERLEVEL && bobberPosition.y < RIGHTWALL
+		&& bobberPosition.y > LEFTWALL && bobberPosition.x < RIGHTWALL && bobberPosition.x > LEFTWALL)
 	{
 		bobber->PutInWater();
 		bobber->HitGround();
@@ -70,21 +69,13 @@ void BobberMove::Update(float deltaTime)
 			{
 				//do nothing
 			}
-			// Make the bobber stop when hitting Ground
 			else
 			{
 				static_cast<BobberActor*>(mOwner)->HitGround();
 			}
 			
 		}
-
-		BasicFish* fish = dynamic_cast<BasicFish*>(info.mActor);
-		BasicFish* yellowFish = dynamic_cast<BasicFish*>(info.mActor); //Do we need these 2 now? -Rebecca
-		BasicFish* redFish = dynamic_cast<BasicFish*>(info.mActor);
 		WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
-
-		
-
 
 		if (water)
 		{
@@ -95,64 +86,7 @@ void BobberMove::Update(float deltaTime)
 		{
 			bobber->OutOfWater();
 		}
-
-
-		// If the bobber hits the fish
-		/*if (fish)
-		{
-			fish->GetOnLine();
-			bobber->FishOn();
-		}*/
-
-		
-		if (yFish->GetState() == Actor::EActive && yFish->GetLineStatus()) // this handles the fishes tension
-		{
-			// make the fish face bobber instead of the player.
-			// get fish to reflect off of wall.
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = yFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppPlayer = playerPos - fishPos;
-			bobberOppPlayer.Normalize();
-			fishOppPlayer.Normalize();
-			bobberOppPlayer.x = -bobberOppPlayer.x;
-			bobberOppPlayer.y = -bobberOppPlayer.y;
-			bobberOppPlayer.z = -bobberOppPlayer.z;
-			fishOppPlayer.x = fishOppPlayer.x;
-			fishOppPlayer.y = fishOppPlayer.y;
-			fishOppPlayer.z = fishOppPlayer.z;
-			bobber->RotateToNewForward(bobberOppPlayer);
-			yFish->RotateToNewForward(fishOppPlayer);
-			bobber->SetTensionSpeed(30.0);
-			yFish->SetMovementSpeed(-30.0);
-		}
-
-		if (rFish->GetState() == Actor::EActive && rFish->GetLineStatus()) // this handles the fishes tension
-		{
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = rFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppPlayer = playerPos - fishPos;
-			bobberOppPlayer.Normalize();
-			fishOppPlayer.Normalize();
-			bobberOppPlayer.x = -bobberOppPlayer.x;
-			bobberOppPlayer.y = -bobberOppPlayer.y;
-			bobberOppPlayer.z = -bobberOppPlayer.z;
-			fishOppPlayer.x = fishOppPlayer.x;
-			fishOppPlayer.y = fishOppPlayer.y;
-			fishOppPlayer.z = fishOppPlayer.z;
-			bobber->RotateToNewForward(bobberOppPlayer);
-			rFish->RotateToNewForward(fishOppPlayer);
-			bobber->SetTensionSpeed(20.0);
-			rFish->SetMovementSpeed(-20.0);
-		}
 	}
-		
-
-
-
 	// Base class update moves based on forward speed
 	MoveComponent::Update(deltaTime);
 }
