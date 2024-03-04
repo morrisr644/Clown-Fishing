@@ -130,10 +130,10 @@
     <ClCompile Include="BobberMove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FishOffScreen.cpp">
+    <ClCompile Include="ScreenSaysFishOff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FishOnScreen.cpp">
+    <ClCompile Include="ScreenSaysFishOn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GrassPlaneActor.cpp">
@@ -166,10 +166,7 @@
     <ClCompile Include="WaterPlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WoodPlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CatchScreen.cpp">
+    <ClCompile Include="ScreenSaysFishCaught.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FPSActor.cpp">
@@ -282,13 +279,13 @@
     <ClInclude Include="BoneTransform.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="CatchScreen.h">
+    <ClInclude Include="ScreenSaysFishCaught.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FishOffScreen.h">
+    <ClInclude Include="ScreenSaysFishOff.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FishOnScreen.h">
+    <ClInclude Include="ScreenSaysFishOn.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="FollowActor.h">
@@ -346,9 +343,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="WaterPlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WoodPlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="RodActor.h">

@@ -20,7 +20,7 @@
 #include "BasicFish.h"
 //#include "YellowFish.h"
 //#include "RedFish.h"
-#include "FishOffScreen.h"
+#include "ScreenSaysFishOff.h"
 #include "Hook.h"
 
 BobberActor::BobberActor(Game* game)
@@ -163,8 +163,8 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				currFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
 
-				new FishOffScreen(this->GetGame());
-				this->GetGame()->TurnFishOffScreenOn();
+				new ScreenSaysFishOff(this->GetGame());
+				this->GetGame()->TurnScreenSaysFishOffOn();
 
 				mTotalDistance = 0;
 
@@ -328,8 +328,8 @@ void BobberActor::SetTensionSpeed(float tensionSpeed)
 				mLose.SetPaused(false);
 				mLose.Restart();
 
-				new FishOffScreen(this->GetGame());
-				this->GetGame()->TurnFishOffScreenOn();
+				new ScreenSaysFishOff(this->GetGame());
+				this->GetGame()->TurnScreenSaysFishOffOn();
 
 				mTotalDistance = 0;
 

@@ -6,13 +6,13 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#include "FishOnScreen.h"
+#include "ScreenSaysFishOn.h"
 #include "Game.h"
 #include "DialogBox.h"
 #include "InventoryMenu.h"
 #include <SDL/SDL.h>
 
-FishOnScreen::FishOnScreen(Game* game)
+ScreenSaysFishOn::ScreenSaysFishOn(Game* game)
 	:UIScreen(game)
 {
 	//mGame->SetState(Game::EPaused);
@@ -22,13 +22,13 @@ FishOnScreen::FishOnScreen(Game* game)
 	SetTitle("FishOnTitle");
 }
 
-FishOnScreen::~FishOnScreen()
+ScreenSaysFishOn::~ScreenSaysFishOn()
 {
 	SetRelativeMouseMode(true);
 	mGame->SetState(Game::EGameplay);
 }
 
-void FishOnScreen::Update(float deltaTime)
+void ScreenSaysFishOn::Update(float deltaTime)
 {
 	UIScreen::Update(deltaTime);
 

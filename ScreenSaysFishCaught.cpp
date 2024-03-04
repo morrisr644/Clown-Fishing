@@ -6,12 +6,12 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
-#include "CatchScreen.h"
+#include "ScreenSaysFishCaught.h"
 #include "Game.h"
 #include "DialogBox.h"
 #include <SDL/SDL.h>
 
-CatchScreen::CatchScreen(Game* game)
+ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 	:UIScreen(game)
 {
 	mGame->SetState(Game::EPaused);
@@ -44,13 +44,13 @@ CatchScreen::CatchScreen(Game* game)
 	});
 }
 
-CatchScreen::~CatchScreen()
+ScreenSaysFishCaught::~ScreenSaysFishCaught()
 {
 	SetRelativeMouseMode(true);
 	mGame->SetState(Game::EGameplay);
 }
 
-void CatchScreen::HandleKeyPress(int key)
+void ScreenSaysFishCaught::HandleKeyPress(int key)
 {
 	UIScreen::HandleKeyPress(key);
 	

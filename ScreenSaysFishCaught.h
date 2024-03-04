@@ -7,14 +7,14 @@
 // ----------------------------------------------------------------
 
 #pragma once
-#include "Actor.h"
+#include "UIScreen.h"
+#include "BasicFish.h"
 
-class WoodPlaneActor : public Actor
+class ScreenSaysFishCaught : public UIScreen
 {
 public:
-	WoodPlaneActor(class Game* game);
-	~WoodPlaneActor();
-	class BoxComponent* GetBox() { return mBox; }
-private:
-	class BoxComponent* mBox;
+	ScreenSaysFishCaught(class Game* game);
+	~ScreenSaysFishCaught();
+
+	void HandleKeyPress(int key) override;
 };
