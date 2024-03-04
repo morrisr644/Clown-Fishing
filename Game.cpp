@@ -17,11 +17,8 @@
 #include "MeshComponent.h"
 #include "FPSActor.h"
 #include "BasicFish.h"
-//#include "YellowFish.h"
-//#include "RedFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
-#include "WoodPlaneActor.h"
 #include "ShorePlaneActor.h"
 #include "GrassPlaneActor.h"
 #include "UnderPlaneActor.h"
@@ -30,9 +27,9 @@
 #include "BobberActor.h"
 #include "PauseMenu.h"
 #include "InventoryMenu.h"
-#include "FishOnScreen.h"
-#include "FishOffScreen.h"
-#include "CatchScreen.h"
+#include "ScreenSaysFishOn.h"
+#include "ScreenSaysFishOff.h"
+#include "ScreenSaysFishCaught.h"
 #include "SkyBox.h"
 #include "Skeleton.h"
 #include "Animation.h"
@@ -105,8 +102,8 @@ bool Game::Initialize()
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
 
-	isFishOnScreenOn = false;
-	isFishOffScreenOn = false;
+	isScreenSaysFishOnOn = false;
+	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
 	
 	return true;
@@ -464,7 +461,7 @@ void Game::HandleKeyPress(int key)
 				caughtFish->SetRotation(tPose);
 				caughtFish->UpdateActor(mCurrentTime);
 
-				new CatchScreen(this);
+				new ScreenSaysFishCaught(this);
 				caughtFish->SetCatchStatus(true);
 				caughtFish->SetState(Actor::EDead);
 				//mRedFish->SetState(Actor::EDead);
@@ -485,7 +482,7 @@ void Game::HandleKeyPress(int key)
 				caughtFish->SetRotation(tPose);
 				caughtFish->UpdateActor(mCurrentTime);
 
-				new CatchScreen(this);
+				new ScreenSaysFishCaught(this);
  				caughtFish->SetCatchStatus(true);
 				caughtFish->SetState(Actor::EDead);
 				//mYellowFish->SetState(Actor::EDead);
@@ -494,7 +491,7 @@ void Game::HandleKeyPress(int key)
 			}
 			//else
 			//{
-			//	new FishOffScreen(this); // This technically works but we can make it better
+			//	new ScreenSaysFishOff(this); // This technically works but we can make it better
 			//}
 
 		}

@@ -22,11 +22,11 @@
     <ClCompile Include="BoneTransform.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="CatchScreen.cpp" />
+    <ClCompile Include="ScreenSaysFishCaught.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="FishOffScreen.cpp" />
-    <ClCompile Include="FishOnScreen.cpp" />
+    <ClCompile Include="ScreenSaysFishOff.cpp" />
+    <ClCompile Include="ScreenSaysFishOn.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="GrassPlaneActor.cpp" />
@@ -67,7 +67,6 @@
     <ClCompile Include="UnderPlaneActor.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="WaterPlaneActor.cpp" />
-    <ClCompile Include="WoodPlaneActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -80,12 +79,12 @@
     <ClInclude Include="BoneTransform.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="CatchScreen.h" />
+    <ClInclude Include="ScreenSaysFishCaught.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="AssimpLoad.h" />
-    <ClInclude Include="FishOffScreen.h" />
-    <ClInclude Include="FishOnScreen.h" />
+    <ClInclude Include="ScreenSaysFishOff.h" />
+    <ClInclude Include="ScreenSaysFishOn.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="GrassPlaneActor.h" />
@@ -126,7 +125,6 @@
     <ClInclude Include="UnderPlaneActor.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="WaterPlaneActor.h" />
-    <ClInclude Include="WoodPlaneActor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BasicMesh.frag" />

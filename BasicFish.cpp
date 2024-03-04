@@ -14,7 +14,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
-#include "FishOnScreen.h"
+#include "ScreenSaysFishOn.h"
 #include "Texture.h"
 #include "AssimpLoad.h"
 #include <string.h>
@@ -42,13 +42,13 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 		fishDistance = 800.0;
 		fishTimer = 1.0;
 		texture->Load("Assets/models/Redfish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/Fish.obj", texture);
+		LoadAssimpMeshes(meshes, game, "Assets/models/RedFish.obj", texture);
 	}
 
 	if (mColor == 'y')
 	{
 		fishDistance = 500.0;
-		texture->Load("Assets/models/fish.jpg");
+		texture->Load("Assets/models/YellowFish.jpg");
 		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
 	}
 
@@ -143,8 +143,8 @@ void BasicFish::GetOnLine() // Rebecca Morris
 
 	fishDistance = 800.0f; //Made the game too hard :(
 
-	new FishOnScreen(this->GetGame());
-	this->GetGame()->TurnFishOnScreenOn();
+	new ScreenSaysFishOn(this->GetGame());
+	this->GetGame()->TurnScreenSaysFishOnOn();
 }
 
 void BasicFish::FixCollisions() // pulled from Madhav FPSActor

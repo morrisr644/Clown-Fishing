@@ -13,7 +13,7 @@
 #include "BasicFish.h"
 #//include "YellowFish.h"
 //#include "RedFish.h"
-#include "FishOffScreen.h"
+#include "ScreenSaysFishOff.h"
 #include "Hook.h"
 #include "PhysWorld.h"
 #include "FPSActor.h"

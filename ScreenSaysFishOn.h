@@ -8,13 +8,14 @@
 
 #pragma once
 #include "UIScreen.h"
-#include "BasicFish.h"
 
-class CatchScreen : public UIScreen
+class ScreenSaysFishOn : public UIScreen
 {
 public:
-	CatchScreen(class Game* game);
-	~CatchScreen();
+	ScreenSaysFishOn(class Game* game);
+	~ScreenSaysFishOn();
+	//float startTime;
+	float TimePassed;
 
-	void HandleKeyPress(int key) override;
+	void Update(float deltaTime);
 };

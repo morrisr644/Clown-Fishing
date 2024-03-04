@@ -14,7 +14,7 @@
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
-#include "FishOnScreen.h"
+#include "ScreenSaysFishOn.h"
 #include "Texture.h"
 #include "AssimpLoad.h"
 #include "Mesh.h"

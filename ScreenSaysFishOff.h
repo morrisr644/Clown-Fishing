@@ -9,11 +9,11 @@
 #pragma once
 #include "UIScreen.h"
 
-class FishOnScreen : public UIScreen
+class ScreenSaysFishOff : public UIScreen
 {
 public:
-	FishOnScreen(class Game* game);
-	~FishOnScreen();
+	ScreenSaysFishOff(class Game* game);
+	~ScreenSaysFishOff();
 	//float startTime;
 	float TimePassed;
 
