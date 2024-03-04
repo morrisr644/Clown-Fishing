@@ -11,6 +11,7 @@
 #pragma once
 #include "Actor.h"
 #include "AudioComponent.h"
+#include "BasicFish.h"
 
 class BobberActor : public Actor
 {
@@ -32,8 +33,7 @@ public:
 	void ResetMoveAwayTimer() { moveAwayTimer = 3.0; }
 	bool GetFishOnStatus() { return isFishOn; }
 	bool BobberActor::GetInWaterStatus() { return isInWater; }
-	void CheckYellowFish(float deltaTime);
-	void CheckRedFish(float deltaTime);
+	void CheckFish(float deltaTime, BasicFish* currFish);
 	void SetTensionSpeed(float tensionSpeed);
 	float getTotalDistance() { return mTotalDistance; };
 	//void CheckFish(float deltaTime, BasicFish* currFish);

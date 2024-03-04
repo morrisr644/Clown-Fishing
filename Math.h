@@ -358,6 +358,14 @@ public:
 		z /= length;
 	}
 
+	//Adam's Inline reverse function, takes the current vector and reverses it.
+	void Reverse()
+	{
+		x = -x;
+		y = -y;
+		z = -z;
+	}
+
 	// Normalize the provided vector
 	static Vector3 Normalize(const Vector3& vec)
 	{
@@ -379,6 +387,16 @@ public:
 		temp.x = a.y * b.z - a.z * b.y;
 		temp.y = a.z * b.x - a.x * b.z;
 		temp.z = a.x * b.y - a.y * b.x;
+		return temp;
+	}
+
+	//Adam's opposite vector function
+	static Vector3 Reverse(const Vector3& currVector)
+	{
+		Vector3 temp = currVector;
+		temp.x = -currVector.x;
+		temp.y = -currVector.y;
+		temp.z = -currVector.z;
 		return temp;
 	}
 

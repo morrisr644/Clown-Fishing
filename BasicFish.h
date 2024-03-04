@@ -20,6 +20,7 @@ public:
 	float GetFishTimer() { return fishTimer; }
 	bool GetLineStatus() { return isOnLine; }
 	bool GetCatchStatus() { return isCaught; }
+	void SetCatchStatus(bool status) { isCaught = status; }
 	void SetFishTimer(float newTimer);
 	float GetFishDistance() { return fishDistance; }
 	void SetFishDistance(float newDistance) { fishDistance = newDistance + fishDistance; }

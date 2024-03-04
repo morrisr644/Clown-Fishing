@@ -33,6 +33,4 @@ Hook::Hook(Game* game)
 void Hook::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
-
-	
 }
