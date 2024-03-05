@@ -20,6 +20,7 @@
 #include "FencePlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
+#include "RodActor.h"
 
 BobberMove::BobberMove(Actor* owner)
 	:MoveComponent(owner)
@@ -83,17 +84,21 @@ void BobberMove::Update(float deltaTime)
 			bobber->PutInWater();
 			bobber->HitGround();
 		}
-		else
-		{
-			bobber->OutOfWater();
-		}
+		
 
 		FencePlaneActor* fence = dynamic_cast<FencePlaneActor*>(info.mActor);
+
+		RodActor* rod = dynamic_cast<RodActor*>(info.mActor);
 		
 		if (fence)
 		{
 			dir = Vector3::Reflect(dir, info.mNormal);
 			bobber->RotateToNewForward(dir);
+		}
+		else if (!invisWall || !rod)
+		{
+			//bobber->OutOfWater();
+			bobber->HitGround();
 		}
 
 	}

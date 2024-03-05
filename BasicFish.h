@@ -7,15 +7,15 @@
 
 class MeshComponent;
 
-class BasicFish : public MobileActor
+class BasicFish : public Actor
 {
 public:
 	BasicFish(class Game* game, char color, const char* textureFileName);
 
 	void UpdateActor(float deltaTime) override;
 	void GetOnLine(); // Rebecca Morris
-	//void FixCollisions();
-	void FixFishCollisions();
+	void FixCollisions();
+	//void FixFishCollisions();
 	void SetAngularSpeed(float newSpeed);
 	void SetMovementSpeed(float newMovementSpeed);
 	//void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
