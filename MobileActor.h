@@ -9,6 +9,8 @@ public:
     void UpdateActor(float deltaTime);
     void FixCollisions();
 
+    //void Collisions(Vector3 pos, const AABB& playerBox, const AABB& planeBox);
+
 private:
 
     float mScale;
