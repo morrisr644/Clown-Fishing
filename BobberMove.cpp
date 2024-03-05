@@ -95,7 +95,7 @@ void BobberMove::Update(float deltaTime)
 			dir = Vector3::Reflect(dir, info.mNormal);
 			bobber->RotateToNewForward(dir);
 		}
-		else if (!invisWall || !rod)
+		else if (!invisWall && !rod)
 		{
 			//bobber->OutOfWater();
 			bobber->HitGround();
