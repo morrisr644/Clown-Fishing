@@ -8,11 +8,12 @@
 
 #pragma once
 #include "Actor.h"
+#include "MobileActor.h"
 #include "SoundEvent.h"
 
 class MeshComponent;
 
-class FPSActor : public Actor
+class FPSActor : public MobileActor
 {
 public:
 	FPSActor(class Game* game);
@@ -26,7 +27,7 @@ public:
 
 	void SetVisible(bool visible);
 
-	void FixCollisions();
+	//void FixCollisions();
 
 	class FPSCamera* GetCamera() { return mCameraComp; }
 private:

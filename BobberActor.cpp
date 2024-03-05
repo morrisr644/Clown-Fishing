@@ -22,6 +22,7 @@
 //#include "RedFish.h"
 #include "ScreenSaysFishOff.h"
 #include "Hook.h"
+#include "TargetComponent.h"
 
 BobberActor::BobberActor(Game* game)
 	:Actor(game)
@@ -29,6 +30,9 @@ BobberActor::BobberActor(Game* game)
 	,mLaunchAngle(0.0)
 	, mForwardVelocity()
 {
+
+	new TargetComponent(this);
+
 	//SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh"); // Sphere has been recolored to look more like a bobber (RCM)
@@ -163,8 +167,11 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				currFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
 
+				mLose.SetPaused(false);
+				mLose.Restart();
+
 				new ScreenSaysFishOff(this->GetGame());
-				this->GetGame()->TurnScreenSaysFishOffOn();
+				this->GetGame()->TurnScreenSaysFishOffOn(); 
 
 				mTotalDistance = 0;
 

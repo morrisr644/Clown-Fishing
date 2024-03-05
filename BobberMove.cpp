@@ -17,6 +17,7 @@
 #include "BobberActor.h"
 #include "BasicFish.h"
 #include "WaterPlaneActor.h"
+#include "FencePlaneActor.h"
 #include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
 
@@ -86,6 +87,15 @@ void BobberMove::Update(float deltaTime)
 		{
 			bobber->OutOfWater();
 		}
+
+		FencePlaneActor* fence = dynamic_cast<FencePlaneActor*>(info.mActor);
+		
+		if (fence)
+		{
+			dir = Vector3::Reflect(dir, info.mNormal);
+			bobber->RotateToNewForward(dir);
+		}
+
 	}
 	// Base class update moves based on forward speed
 	MoveComponent::Update(deltaTime);

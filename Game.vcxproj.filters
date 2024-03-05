@@ -178,6 +178,12 @@
     <ClCompile Include="RodActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FencePlaneActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MobileActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -348,6 +354,10 @@
     <ClInclude Include="RodActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="FencePlaneActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MobileActor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">
