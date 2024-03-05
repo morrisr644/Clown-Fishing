@@ -42,6 +42,7 @@ HUD::HUD(Game* game)
 	mCrosshair = r->GetTexture("Assets/Crosshair.png");
 	mCrosshairEnemy = r->GetTexture("Assets/CrosshairRed.png");
 	mBlipTex = r->GetTexture("Assets/Blip.png");
+	mBobberBlipTex = r->GetTexture("Assets/BobberBlip.png");
 	mRadarArrow = r->GetTexture("Assets/RadarArrow.png");
 }
 
@@ -71,6 +72,11 @@ void HUD::Draw(Shader* shader)
 	for (Vector2& blip : mBlips)
 	{
 		DrawTexture(shader, mBlipTex, cRadarPos + blip, 1.0f);
+	}
+	// Bobber Blip
+	for (Vector2& blip : mBobberBlips)
+	{
+		DrawTexture(shader, mBobberBlipTex, cRadarPos + blip, 1.0f);
 	}
 	// Radar arrow
 	DrawTexture(shader, mRadarArrow, cRadarPos);
@@ -188,19 +194,6 @@ void HUD::UpdateTensionBar(float deltaTime)
 		if (fishType == 'y')
 			currentFish = mGame->GetYellowFish();
 
-		/*switch (fishType)
-		{
-			case 0:
-				currentFish = mGame->GetBasicFish();
-				break;
-			case 1:
-				currentFish = mGame->GetRedFish();
-				break;
-			case 2:
-				currentFish = mGame->GetYellowFish();
-				break;
-		}*/
-
 
 
 		BobberActor* bobber = mGame->GetBobber();
@@ -216,17 +209,6 @@ void HUD::UpdateTensionBar(float deltaTime)
 		//The more space is pressed = the smaller the percent becomes
 		//The longer space is not pressed = the larger the value gets
 		float percent = (totalDistance/fishDistance) * 10;  
-
-		//Remember that if totalDistance < fishDistance then the fish escapes
-
-		//Therefore the percent should be (|totalDistance - fishDistance|)/totalDistance?
-
-		//float percent = ((abs(totalDistance - fishDistance)) / totalDistance) * 10;
-
-		//float percent = ((abs(totalDistance - fishDistance))) * 10;
-
-		//float percent = totalDistance - fishDistance;
-
 
 
 		if (percent >= 8.5f)
@@ -262,40 +244,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 			TensionLevel = 1;
 		}
 
-		//if (percent >= 15.0f)
-		//{
-		//	TensionLevel = 1;
-		//}
-		//else if (14.9f >= percent && percent >= 12.8f)
-		//{
-		//	TensionLevel = 2;
-		//}
-		//else if (12.7f >= percent && percent >= 10.6f)
-		//{
-		//	TensionLevel = 3;
-		//}
-		//else if (10.5f >= percent && percent >= 8.4f)
-		//{
-		//	TensionLevel = 4;
-		//}
-		//else if (8.3f >= percent && percent >= 6.2f)
-		//{
-		//	TensionLevel = 5;
-		//}
-		//else if (6.1f >= percent && percent >= 4.1f)
-		//{
-		//	TensionLevel = 6;
-		//}
-		//else if (4.0f >= percent && percent >= 2.0f)
-		//{
-		//	TensionLevel = 7;
-		//}
-		//else //if (1.2f >= percent && percent >= 0.1)
-		//{
-		//	TensionLevel = 8;
-		//}
-
-
+		
 		switch (TensionLevel)
 		{
 		case 1:
@@ -333,6 +282,7 @@ void HUD::UpdateRadar(float deltaTime)
 {
 	// Clear blip positions from last frame
 	mBlips.clear();
+	mBobberBlips.clear();
 	
 	// Convert player position to radar coordinates (x forward, z up)
 	Vector3 playerPos = mGame->GetPlayer()->GetPosition();
@@ -349,6 +299,7 @@ void HUD::UpdateRadar(float deltaTime)
 	// Get positions of blips
 	for (auto tc : mTargetComps)
 	{
+
 		Vector3 targetPos = tc->GetOwner()->GetPosition();
 		Vector2 actorPos2D(targetPos.y, targetPos.x);
 		
@@ -365,7 +316,11 @@ void HUD::UpdateRadar(float deltaTime)
 			
 			// Rotate blipPos
 			blipPos = Vector2::Transform(blipPos, rotMat);
-			mBlips.emplace_back(blipPos);
+
+			if (tc->GetOwner() == mGame->GetBobber())
+				mBobberBlips.emplace_back(blipPos);
+			else
+				mBlips.emplace_back(blipPos);
 		}
 	}
 }

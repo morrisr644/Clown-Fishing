@@ -19,6 +19,7 @@
 #include "BasicFish.h"
 #include "PlaneActor.h"
 #include "WaterPlaneActor.h"
+#include "FencePlaneActor.h"
 #include "ShorePlaneActor.h"
 #include "GrassPlaneActor.h"
 #include "UnderPlaneActor.h"
@@ -141,15 +142,15 @@ void Game::RemoveGrassPlane(GrassPlaneActor* grass)
 	mGrassPlanes.erase(iter);
 }
 
-void Game::AddWoodPlane(WoodPlaneActor* plane)
+void Game::AddFencePlane(FencePlaneActor* plane)
 {
-	mWoodPlanes.emplace_back(plane);
+	mFencePlanes.emplace_back(plane);
 }
 
-void Game::RemoveWoodPlane(WoodPlaneActor* plane)
+void Game::RemoveFencePlane(FencePlaneActor* plane)
 {
-	auto iter = std::find(mWoodPlanes.begin(), mWoodPlanes.end(), plane);
-	mWoodPlanes.erase(iter);
+	auto iter = std::find(mFencePlanes.begin(), mFencePlanes.end(), plane);
+	mFencePlanes.erase(iter);
 }
 
 void Game::AddShorePlane(ShorePlaneActor* plane)
@@ -360,31 +361,6 @@ void Game::HandleKeyPress(int key)
 			//Updated for removal of RedFish and Yellowfish
 			//Still needs some refactoring - Rebecca 
 
-			//if (mYellowFish->GetLineStatus() && mYellowFish->GetState() == Actor::EActive)
-			//{
-			//	SetCurrentFish(mYellowFish); //Yellow is 2
-
-			//	fishPos = mYellowFish->GetPosition();
-			//	//yfish->SetPosition(playerPos);
-
-			//	hookedFish = mYellowFish;
-			//	//mSingleBobber->SetPosition(playerPos);
-			//	//yfish->SetFishDistance(50); // Rebecca you can also change the value here, it will just overwrite the default one in the class.
-			//	mCurrentFishDistance = mYellowFish->GetFishDistance();
-			//}
-
-			//if (mRedFish->GetLineStatus() && mRedFish->GetState() == Actor::EActive)
-			//{
-			//	SetCurrentFish(mRedFish); //Red is 1
-
-			//	fishPos = mRedFish->GetPosition();
-			//	//rfish->SetPosition(playerPos);
-
-			//	hookedFish = mRedFish;
-			//	//mSingleBobber->SetPosition(playerPos);
-			//	//rfish->SetFishDistance(50);
-			//	mCurrentFishDistance = mRedFish->GetFishDistance(); // grabbing for HUD
-			//}
 
 			Vector3 bobberFacePlayer = playerPos - bobberPos;
 			bobberFacePlayer.Normalize();
@@ -683,22 +659,6 @@ void Game::LoadData()
 
 	//For some reason initializing mBasicFish is spawning in a new fish, putting it under the floor for now - Rebecca
 	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?
-
-	//// Create target actors
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(1450.0f, 0.0f, 100.0f));
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(1450.0f, 0.0f, 400.0f));
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(1450.0f, -500.0f, 200.0f));
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(1450.0f, 500.0f, 200.0f));
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(0.0f, -1450.0f, 200.0f));
-	//a->SetRotation(Quaternion(Vector3::UnitZ, Math::PiOver2));
-	//a = new TargetActor(this);
-	//a->SetPosition(Vector3(0.0f, 1450.0f, 200.0f));
-	//a->SetRotation(Quaternion(Vector3::UnitZ, -Math::PiOver2));
 	
 	// Setup floor
 	for (int i = 0; i < 10; i++)
@@ -723,6 +683,16 @@ void Game::LoadData()
 			a = new WaterPlaneActor(this);
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
+		for (int j = 4; j < 5; j++)
+		{
+			a = new ShorePlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+		for (int j = 2; j < 4; j++)
+		{
+			a = new GrassPlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
 	} 
 
 	//const float largerSize = 500.0f;
@@ -731,12 +701,41 @@ void Game::LoadData()
 
 	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - RCM
 
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		a = new FencePlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
+		a->SetPosition(Vector3((start + 300.0f) + i * size, start - size, 0.0f));
+		a->SetRotation(q);
+
+		/*a = new PlaneActor(this);
+		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
+		a->SetRotation(q);*/
+
+		a = new FencePlaneActor(this);
+		a->SetPosition(Vector3((start + 300.0f) + i * size, -start + size, 0.0f));
+		a->SetRotation(q);
+	}
+
+	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
+	// Forward/back walls
+	for (int i = 0; i < 10; i++)
+	{
+		a = new FencePlaneActor(this);
+		a->SetPosition(Vector3(start - size, start + i * size, 0.0f));
+		a->SetRotation(q);
+
+		a = new FencePlaneActor(this);
+		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
+		a->SetRotation(q);
+	}
+
 	// Draw the invisible wall
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f)); 
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
 		a->SetRotation(q);
 	}
 
@@ -748,34 +747,6 @@ void Game::LoadData()
 		a->SetRotation(q);
 	}
 
-	q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	for (int i = 0; i < 10; i++)
-	{
-		a = new PlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, 400.0f));
-		a->SetRotation(q);
-
-		/*a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
-		a->SetRotation(q);*/
-
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, -start + size, 400.0f));
-		a->SetRotation(q);
-	}
-
-	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
-	// Forward/back walls
-	for (int i = 0; i < 10; i++)
-	{
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3(start - size, start + i * size, 400.0f));
-		a->SetRotation(q);
-
-		a = new PlaneActor(this);
-		a->SetPosition(Vector3(-start + size, start + i * size, 400.0f));
-		a->SetRotation(q);
-	}
 }
 
 void Game::UnloadData()

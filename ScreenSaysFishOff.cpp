@@ -25,7 +25,7 @@ ScreenSaysFishOff::ScreenSaysFishOff(Game* game)
 ScreenSaysFishOff::~ScreenSaysFishOff()
 {
 	SetRelativeMouseMode(true);
-	mGame->SetState(Game::EGameplay);
+	//mGame->SetState(Game::EGameplay);
 }
 
 void ScreenSaysFishOff::Update(float deltaTime)

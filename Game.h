@@ -114,9 +114,9 @@ public:
 	void RemoveShorePlane(class ShorePlaneActor* shore);
 	std::vector<class ShorePlaneActor*>& GetShorePlanes() { return mShorePlanes; }
 
-	void AddWoodPlane(class WoodPlaneActor* wood);
-	void RemoveWoodPlane(class WoodPlaneActor* wood);
-	std::vector<class WoodPlaneActor*>& GetWoodPlanes() { return mWoodPlanes; }
+	void AddFencePlane(class FencePlaneActor* fence);
+	void RemoveFencePlane(class FencePlaneActor* fence);
+	std::vector<class FencePlaneActor*>& GetFencePlanes() { return mFencePlanes; }
 
 	void AddWaterPlane(class WaterPlaneActor* water);
 	void RemoveWaterPlane(class WaterPlaneActor* water);
@@ -190,7 +190,7 @@ private:
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
-	std::vector<class WoodPlaneActor*> mWoodPlanes;
+	std::vector<class FencePlaneActor*> mFencePlanes;
 	std::vector<class GrassPlaneActor*> mGrassPlanes;
 	std::vector<class WaterPlaneActor*> mWaterPlanes;
 	std::vector<class ShorePlaneActor*> mShorePlanes;

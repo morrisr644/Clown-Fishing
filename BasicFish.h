@@ -2,18 +2,20 @@
 
 #pragma once
 #include "Actor.h"
+#include "MobileActor.h"
 #include <string.h>
 
 class MeshComponent;
 
-class BasicFish : public Actor
+class BasicFish : public MobileActor
 {
 public:
 	BasicFish(class Game* game, char color, const char* textureFileName);
 
 	void UpdateActor(float deltaTime) override;
 	void GetOnLine(); // Rebecca Morris
-	void FixCollisions();
+	//void FixCollisions();
+	void FixFishCollisions();
 	void SetAngularSpeed(float newSpeed);
 	void SetMovementSpeed(float newMovementSpeed);
 	//void SetPlayer(Actor* player) { mPlayer = player; } // Rebecca Morris
