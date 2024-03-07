@@ -12,13 +12,15 @@
 #include "MeshComponent.h"
 #include "BoxComponent.h"
 #include "Mesh.h"
+#include <string>
 
-PlaneActor::PlaneActor(Game* game)
+PlaneActor::PlaneActor(Game* game, const std::string& fileName)
 	:Actor(game)
 {
 	SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/InvisiblePlane.gpmesh");
+	//Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/InvisiblePlane.gpmesh");
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh(fileName);
 	mc->SetMesh(mesh);
 	// Add collision box
 	mBox = new BoxComponent(this);

@@ -27,6 +27,7 @@ public:
 
 	void SetVisible(bool visible);
 
+	void FixFPSCollisions();
 	//void FixCollisions();
 
 	class FPSCamera* GetCamera() { return mCameraComp; }
