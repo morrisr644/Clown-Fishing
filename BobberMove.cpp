@@ -84,7 +84,7 @@ void BobberMove::Update(float deltaTime)
 
 		RodActor* rod = dynamic_cast<RodActor*>(info.mActor);
 
-		if (bobberPosition.z <= WATERLEVEL + 25.0f && ((bobberPosition.x >= RIGHTWALL
+		if (bobberPosition.z <= WATERLEVEL && ((bobberPosition.x >= RIGHTWALL
 			&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
 			&& bobberPosition.y >= PONDWALL)))
 		{
@@ -97,11 +97,11 @@ void BobberMove::Update(float deltaTime)
 			dir = Vector3::Reflect(dir, info.mNormal);
 			bobber->RotateToNewForward(dir);
 		}
-		else if (!rod)
+		/*else if (!rod)
 		{
 			//bobber->OutOfWater();
 			bobber->HitGround();
-		}
+		}*/
 
 		/*if (water)
 		{
@@ -123,6 +123,17 @@ void BobberMove::Update(float deltaTime)
 		//	bobber->HitGround();
 		//}
 
+	}
+	if (bobberPosition.z <= WATERLEVEL && ((bobberPosition.x >= RIGHTWALL
+		&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
+			&& bobberPosition.y >= PONDWALL)))
+	{
+		bobber->PutInWater();
+		bobber->HitGround();
+	}
+	else if (bobberPosition.z <= WATERLEVEL && bobberPosition.y <= PONDWALL)
+	{
+		bobber->HitGround();
 	}
 	// Base class update moves based on forward speed
 	MoveComponent::Update(deltaTime);
