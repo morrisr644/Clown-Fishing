@@ -114,7 +114,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			{
 				Vector3 fishFacingBobber;
 				fishFacingBobber.x = currentHookPosition.x - fishCurrentPosition.x;
-				fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
+				fishFacingBobber.y = currentHookPosition.y - fishCurrentPosition.y;
 				fishFacingBobber.z = currentHookPosition.z - fishCurrentPosition.z;
 				fishFacingBobber.Normalize();
 				currFish->RotateToNewForward(fishFacingBobber);

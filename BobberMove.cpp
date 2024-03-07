@@ -37,7 +37,7 @@ void BobberMove::Update(float deltaTime)
 	constexpr float LEFTWALL = 1450.0;
 	constexpr float RIGHTWALL = -1450.0;
 	constexpr float FORWARDWALL = 1500.0;
-	constexpr float BACKWALL = -1475.0;
+	constexpr float BACKWALL = -1500.0;
 	constexpr float PONDWALL = 250.0;
 	constexpr float WATERLEVEL = -100.0;
 
@@ -91,8 +91,8 @@ void BobberMove::Update(float deltaTime)
 			bobber->PutInWater();
 			bobber->HitGround();
 		}
-		else if (bobberPosition.z > WATERLEVEL && (bobberPosition.y >= FORWARDWALL || bobberPosition.y <= BACKWALL
-			|| bobberPosition.x >= LEFTWALL || bobberPosition.x <= RIGHTWALL))
+		else if (bobberPosition.z > WATERLEVEL && (bobberPosition.y > FORWARDWALL - 25.0f || bobberPosition.y < BACKWALL + 25.0f
+			|| bobberPosition.x > LEFTWALL || bobberPosition.x < RIGHTWALL))
 		{
 			dir = Vector3::Reflect(dir, info.mNormal);
 			bobber->RotateToNewForward(dir);
