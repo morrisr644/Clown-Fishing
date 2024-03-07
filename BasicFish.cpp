@@ -21,7 +21,7 @@
 
 
 BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
-	:Actor(game)
+	:MobileActor(game)
 	, fishDistance(900.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 	, mColor(color)

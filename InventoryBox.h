@@ -15,4 +15,6 @@ public:
 	// (Lower draw order corresponds with further back)
 	InventoryBox(class Game* game, const std::string& text, int fish);
 	~InventoryBox();
+
+	void HandleKeyPress(int key) override;
 };

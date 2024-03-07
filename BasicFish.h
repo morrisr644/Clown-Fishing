@@ -7,7 +7,7 @@
 
 class MeshComponent;
 
-class BasicFish : public Actor
+class BasicFish : public MobileActor
 {
 public:
 	BasicFish(class Game* game, char color, const char* textureFileName);

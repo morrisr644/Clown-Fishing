@@ -42,3 +42,13 @@ InventoryBox::InventoryBox(Game* game, const std::string& text, int fish)
 InventoryBox::~InventoryBox()
 {
 }
+
+void InventoryBox::HandleKeyPress(int key)
+{
+	UIScreen::HandleKeyPress(key);
+
+	if (key == SDLK_ESCAPE || key == SDLK_e)
+	{
+		Close();
+	}
+}

@@ -409,6 +409,8 @@ void Game::HandleKeyPress(int key)
 		{														// or while there is another menu open
 			new InventoryMenu(this);
 		}
+		else
+
 
 		break;
 	}
