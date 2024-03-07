@@ -8,11 +8,12 @@
 
 #pragma once
 #include "Actor.h"
+#include <string>
 
 class PlaneActor : public Actor
 {
 public:
-	PlaneActor(class Game* game);
+	PlaneActor(class Game* game, const std::string& fileName);
 	~PlaneActor();
 	class BoxComponent* GetBox() { return mBox; }
 private:

@@ -603,11 +603,13 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new UnderPlaneActor(this); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
+		//Replaced Underplane
+		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
 		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
 		a->SetRotation(q);
 
-		a = new UnderPlaneActor(this); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600
+		//Replaced Underplane
+		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600
 		a->SetPosition(Vector3(start + i * size, -start + size, -600.0f));
 		a->SetRotation(q);
 	}
@@ -616,11 +618,13 @@ void Game::LoadData()
 	// Forward/back walls under pond
 	for (int i = 0; i < 10; i++)
 	{
-		a = new UnderPlaneActor(this); //Underplane forward starts at -1500, -1250, -600 and ends at -1500, 1250, -600
+		//Replaced Underplane
+		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane forward starts at -1500, -1250, -600 and ends at -1500, 1250, -600
 		a->SetPosition(Vector3(start - size, start + i * size, -600.0f));
 		a->SetRotation(q);
 
-		a = new UnderPlaneActor(this); //Underplane backward starts at 1500, -1250, -600 and ends at 1500, 1250, -600
+		//Replaced Underplane
+		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane backward starts at 1500, -1250, -600 and ends at 1500, 1250, -600
 		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
@@ -665,32 +669,38 @@ void Game::LoadData()
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			a = new UnderPlaneActor(this);
+			//Replaced UnderPlane
+			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
 		}
 		for (int j = 0; j < 4; j++)
 		{
-			a = new GrassPlaneActor(this);
+			//Replaced GrassPlane
+			a = new PlaneActor(this, "Assets/GrassPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 4; j < 5; j++)
 		{
-			a = new ShorePlaneActor(this);
+			//Replaced ShorePlane
+			a = new PlaneActor(this, "Assets/ShorePlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 5; j < 10; j++) // Rebecca Morris
 		{
-			a = new WaterPlaneActor(this);
+			//Replaced WaterPlane
+			a = new PlaneActor(this, "Assets/WaterPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 4; j < 5; j++)
 		{
-			a = new ShorePlaneActor(this);
+			//Replaced ShorePlane
+			a = new PlaneActor(this, "Assets/ShorePlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 		for (int j = 2; j < 4; j++)
 		{
-			a = new GrassPlaneActor(this);
+			//Replaced GrassPlane
+			a = new PlaneActor(this, "Assets/GrassPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 	} 
@@ -704,7 +714,8 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		a = new FencePlaneActor(this); //Wall starts at 1000, 1500, 400 and ends at ...
+		//Replaced FencePlane
+		a = new PlaneActor(this, "Assets/FencePlane.gpmesh"); //Wall starts at 1000, 1500, 400 and ends at ...
 		a->SetPosition(Vector3((start + 300.0f) + i * size, start - size, 0.0f));
 		a->SetRotation(q);
 
@@ -712,7 +723,8 @@ void Game::LoadData()
 		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
 		a->SetRotation(q);*/
 
-		a = new FencePlaneActor(this);
+		//Replaced FencePlane
+		a = new PlaneActor(this, "Assets/FencePlane.gpmesh");
 		a->SetPosition(Vector3((start + 300.0f) + i * size, -start + size, 0.0f));
 		a->SetRotation(q);
 	}
@@ -721,31 +733,34 @@ void Game::LoadData()
 	// Forward/back walls
 	for (int i = 0; i < 10; i++)
 	{
-		a = new FencePlaneActor(this);
+		//Replaced FencePlane
+		a = new PlaneActor(this, "Assets/FencePlane.gpmesh");
 		a->SetPosition(Vector3(start - size, start + i * size, 0.0f));
 		a->SetRotation(q);
 
-		a = new FencePlaneActor(this);
+		//Replaced FencePlane
+		a = new PlaneActor(this, "Assets/FencePlane.gpmesh");
 		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
 		a->SetRotation(q);
 	}
 
 	// Draw the invisible wall
-	q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	for (int i = 0; i < 10; i++)
-	{
-		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
-		a->SetRotation(q);
-	}
+	//This might disappear
+	//q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
+	//	a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
+	//	a->SetRotation(q);
+	//}
 
-	q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	for (int i = 0; i < 10; i++)
-	{
-		a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-		a->SetPosition(Vector3(start + i * size, start - (size - 1600.0f), -300.0f)); // Added this wall to keep the player back off of the shore
-		a->SetRotation(q);
-	}
+	//q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
+	//	a->SetPosition(Vector3(start + i * size, start - (size - 1600.0f), -300.0f)); // Added this wall to keep the player back off of the shore
+	//	a->SetRotation(q);
+	//}
 
 }
 

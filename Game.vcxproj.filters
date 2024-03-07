@@ -357,7 +357,9 @@
     <ClInclude Include="FencePlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MobileActor.h" />
+    <ClInclude Include="MobileActor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Sprite.frag">

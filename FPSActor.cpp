@@ -39,11 +39,6 @@ FPSActor::FPSActor(Game* game)
 
 	mCameraComp = new FPSCamera(this);
 
-	/*mFPSModel = new Actor(game);
-	mFPSModel->SetScale(1.0f);
-	mMeshComp = new MeshComponent(mFPSModel);
-	mMeshComp->SetMesh(game->GetRenderer()->GetMesh("Assets/Rifle.gpmesh"));*/
-
 	//Added Rod Actor to make the addition of the new model simpler - Rebecca
 	mFPSModel = new RodActor(game);
 	mFPSModel->SetScale(0.05f);
@@ -61,6 +56,7 @@ void FPSActor::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 
 	FixCollisions();
+	FixFPSCollisions();
 
 	// Play the footstep if we're moving and haven't recently
 	mLastFootstep -= deltaTime;
@@ -185,6 +181,16 @@ void FPSActor::SetFootstepSurface(float value)
 void FPSActor::SetVisible(bool visible)
 {
 	//mMeshComp->SetVisible(visible);
+}
+
+void FPSActor::FixFPSCollisions() //Adam this is where we collide with the pond
+{
+	Vector3 pos = GetPosition();
+	if (pos.y >= 175.0f)
+	{
+		pos.y = 174.9f;
+		SetPosition(pos);
+	}
 }
 
 //void FPSActor::FixCollisions()

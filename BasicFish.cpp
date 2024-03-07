@@ -160,7 +160,7 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 	const AABB& playerBox = mBoxComp->GetWorldBox();
 	Vector3 pos = GetPosition();
 
-	auto& planes = GetGame()->GetUnderPlanes();
+	auto& planes = GetGame()->GetPlanes();
 	for (auto pa : planes)
 	{
 		// Do we collide with this PlaneActor?
@@ -203,27 +203,9 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 			SetPosition(pos);
 			mBoxComp->OnUpdateWorldTransform();
 
-			if (this->GetLineStatus())
-			{
-				// If the fish collides with any of the walls, the player is no longer reeling it in
-				// It either got away or was caught
-				GetGame()->StopReeling();
-			}
+			Vector3 currentPos = this->GetPosition();
 
-		}
-	}
-
-	auto& invisPlanes = GetGame()->GetInvisiblePlanes();
-	for (auto pa : invisPlanes)
-	{
-		// Do we collide with this PlaneActor?
-
-		const AABB& planeBox = pa->GetBox()->GetWorldBox();
-
-		if (Intersect(playerBox, planeBox)) // this might be where i need to handle reflection collision Adam
-		{
-
-			if (this->GetLineStatus())
+			if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 			{
 				// If the fish collides with any of the walls, the player is no longer reeling it in
 				// It either got away or was caught
@@ -234,97 +216,128 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 
 			}
 
-		}
-
-		auto& invisPlanes = GetGame()->GetInvisiblePlanes();
-		for (auto pa : invisPlanes)
-		{
-			// Do we collide with this PlaneActor?
-
-			const AABB& planeBox = pa->GetBox()->GetWorldBox();
-
-			if (Intersect(playerBox, planeBox)) // this might be where i need to handle reflection collision Adam
-			{
-				// Construct segment in direction of travel
-				const float segmentLength = 30.0f;
-				Vector3 start = this->GetPosition();
-				Vector3 dir = this->GetForward();
-				Vector3 end = start + dir * segmentLength;
-
-				// Create line segment
-				LineSegment l(start, end);
-
-				// Test segment vs world
-				PhysWorld* phys = this->GetGame()->GetPhysWorld();
-				PhysWorld::CollisionInfo info;
-
-				if (this->GetLineStatus())
-				{
-					// If the fish collides with any of the walls, the player is no longer reeling it in
-					// It either got away or was caught
-
-					isCaught = true;
-					isOnLine = false;
-					GetGame()->StopReeling();
-
-				}
-
-				else if (phys->SegmentCast(l, info) && !this->GetLineStatus()) // im not sure this is doing anything here
-				{
-					dir = Vector3::Reflect(dir, info.mNormal);
-					this->RotateToNewForward(dir);
-				}
-
-				// Calculate all our differences
-				float dx1 = planeBox.mMax.x - playerBox.mMin.x;
-				float dx2 = planeBox.mMin.x - playerBox.mMax.x;
-				float dy1 = planeBox.mMax.y - playerBox.mMin.y;
-				float dy2 = planeBox.mMin.y - playerBox.mMax.y;
-				float dz1 = planeBox.mMax.z - playerBox.mMin.z;
-				float dz2 = planeBox.mMin.z - playerBox.mMax.z;
-
-				// Set dx to whichever of dx1/dx2 have a lower abs
-				float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
-					dx1 : dx2;
-				// Ditto for dy
-				float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
-					dy1 : dy2;
-				// Ditto for dz
-				float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
-					dz1 : dz2;
-
-				// Whichever is closest, adjust x/y position
-				if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
-				{
-					pos.x += dx;
-				}
-				else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
-				{
-					pos.y += dy;
-				}
-				else
-				{
-					pos.z += dz;
-				}
-
-				// Need to set position and update box component
-				SetPosition(pos);
-				mBoxComp->OnUpdateWorldTransform();
-			}
-		}
-		Vector3 currentPos = this->GetPosition();
-
-		if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
-		{
-			// If the fish collides with any of the walls, the player is no longer reeling it in
-			// It either got away or was caught
-
-			isCaught = true;
-			isOnLine = false;
-			GetGame()->StopReeling();
+			//if (this->GetLineStatus())
+			//{
+			//	// If the fish collides with any of the walls, the player is no longer reeling it in
+			//	// It either got away or was caught
+			//	GetGame()->StopReeling();
+			//}
 
 		}
 	}
+
+	//auto& invisPlanes = GetGame()->GetInvisiblePlanes();
+	//for (auto pa : invisPlanes)
+	//{
+	//	// Do we collide with this PlaneActor?
+
+	//	const AABB& planeBox = pa->GetBox()->GetWorldBox();
+
+	//	if (Intersect(playerBox, planeBox)) // this might be where i need to handle reflection collision Adam
+	//	{
+
+	//		if (this->GetLineStatus())
+	//		{
+	//			// If the fish collides with any of the walls, the player is no longer reeling it in
+	//			// It either got away or was caught
+
+	//			isCaught = true;
+	//			isOnLine = false;
+	//			GetGame()->StopReeling();
+
+	//		}
+
+	//	}
+
+	//	auto& invisPlanes = GetGame()->GetInvisiblePlanes();
+	//	for (auto pa : invisPlanes)
+	//	{
+	//		// Do we collide with this PlaneActor?
+
+	//		const AABB& planeBox = pa->GetBox()->GetWorldBox();
+
+	//		if (Intersect(playerBox, planeBox)) // this might be where i need to handle reflection collision Adam
+	//		{
+	//			// Construct segment in direction of travel
+	//			const float segmentLength = 30.0f;
+	//			Vector3 start = this->GetPosition();
+	//			Vector3 dir = this->GetForward();
+	//			Vector3 end = start + dir * segmentLength;
+
+	//			// Create line segment
+	//			LineSegment l(start, end);
+
+	//			// Test segment vs world
+	//			PhysWorld* phys = this->GetGame()->GetPhysWorld();
+	//			PhysWorld::CollisionInfo info;
+
+	//			if (this->GetLineStatus())
+	//			{
+	//				// If the fish collides with any of the walls, the player is no longer reeling it in
+	//				// It either got away or was caught
+
+	//				isCaught = true;
+	//				isOnLine = false;
+	//				GetGame()->StopReeling();
+
+	//			}
+
+	//			else if (phys->SegmentCast(l, info) && !this->GetLineStatus()) // im not sure this is doing anything here
+	//			{
+	//				dir = Vector3::Reflect(dir, info.mNormal);
+	//				this->RotateToNewForward(dir);
+	//			}
+
+	//			// Calculate all our differences
+	//			float dx1 = planeBox.mMax.x - playerBox.mMin.x;
+	//			float dx2 = planeBox.mMin.x - playerBox.mMax.x;
+	//			float dy1 = planeBox.mMax.y - playerBox.mMin.y;
+	//			float dy2 = planeBox.mMin.y - playerBox.mMax.y;
+	//			float dz1 = planeBox.mMax.z - playerBox.mMin.z;
+	//			float dz2 = planeBox.mMin.z - playerBox.mMax.z;
+
+	//			// Set dx to whichever of dx1/dx2 have a lower abs
+	//			float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
+	//				dx1 : dx2;
+	//			// Ditto for dy
+	//			float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
+	//				dy1 : dy2;
+	//			// Ditto for dz
+	//			float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
+	//				dz1 : dz2;
+
+	//			// Whichever is closest, adjust x/y position
+	//			if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
+	//			{
+	//				pos.x += dx;
+	//			}
+	//			else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
+	//			{
+	//				pos.y += dy;
+	//			}
+	//			else
+	//			{
+	//				pos.z += dz;
+	//			}
+
+	//			// Need to set position and update box component
+	//			SetPosition(pos);
+	//			mBoxComp->OnUpdateWorldTransform();
+	//		}
+	//	}
+	//	Vector3 currentPos = this->GetPosition();
+
+	//	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
+	//	{
+	//		// If the fish collides with any of the walls, the player is no longer reeling it in
+	//		// It either got away or was caught
+
+	//		isCaught = true;
+	//		isOnLine = false;
+	//		GetGame()->StopReeling();
+
+	//	}
+	//}
 }
 
 void BasicFish::SetAngularSpeed(float newSpeed)

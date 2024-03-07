@@ -18,8 +18,6 @@
 #include "AudioComponent.h"
 #include "Math.h"
 #include "BasicFish.h"
-//#include "YellowFish.h"
-//#include "RedFish.h"
 #include "ScreenSaysFishOff.h"
 #include "Hook.h"
 #include "TargetComponent.h"
@@ -116,7 +114,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			{
 				Vector3 fishFacingBobber;
 				fishFacingBobber.x = currentHookPosition.x - fishCurrentPosition.x;
-				fishFacingBobber.y = currentHookPosition.y - fishCurrentPosition.y;
+				fishFacingBobber.y = currentPosition.y - fishCurrentPosition.y;
 				fishFacingBobber.z = currentHookPosition.z - fishCurrentPosition.z;
 				fishFacingBobber.Normalize();
 				currFish->RotateToNewForward(fishFacingBobber);

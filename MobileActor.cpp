@@ -19,9 +19,7 @@ MobileActor::MobileActor(Game* game):
 	mBoxComp->SetObjectBox(myBox);
 	mBoxComp->SetShouldRotate(false);
 }
-void MobileActor::UpdateActor(float deltaTime)
-{
-}
+
 void MobileActor::FixCollisions()
 {
 	// Need to recompute my world transform to update world box
@@ -76,98 +74,98 @@ void MobileActor::FixCollisions()
 	}
 
 
-	auto& invisPlanes = GetGame()->GetInvisiblePlanes();
-	for (auto pa : invisPlanes)
-	{
-		// Do we collide with this PlaneActor?
+	//auto& invisPlanes = GetGame()->GetInvisiblePlanes();
+	//for (auto pa : invisPlanes)
+	//{
+	//	// Do we collide with this PlaneActor?
 
-		const AABB& planeBox = pa->GetBox()->GetWorldBox();
+	//	const AABB& planeBox = pa->GetBox()->GetWorldBox();
 
-		if (Intersect(playerBox, planeBox))
-		{
-			// Calculate all our differences
-			float dx1 = planeBox.mMax.x - playerBox.mMin.x;
-			float dx2 = planeBox.mMin.x - playerBox.mMax.x;
-			float dy1 = planeBox.mMax.y - playerBox.mMin.y;
-			float dy2 = planeBox.mMin.y - playerBox.mMax.y;
-			float dz1 = planeBox.mMax.z - playerBox.mMin.z;
-			float dz2 = planeBox.mMin.z - playerBox.mMax.z;
+	//	if (Intersect(playerBox, planeBox))
+	//	{
+	//		// Calculate all our differences
+	//		float dx1 = planeBox.mMax.x - playerBox.mMin.x;
+	//		float dx2 = planeBox.mMin.x - playerBox.mMax.x;
+	//		float dy1 = planeBox.mMax.y - playerBox.mMin.y;
+	//		float dy2 = planeBox.mMin.y - playerBox.mMax.y;
+	//		float dz1 = planeBox.mMax.z - playerBox.mMin.z;
+	//		float dz2 = planeBox.mMin.z - playerBox.mMax.z;
 
-			// Set dx to whichever of dx1/dx2 have a lower abs
-			float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
-				dx1 : dx2;
-			// Ditto for dy
-			float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
-				dy1 : dy2;
-			// Ditto for dz
-			float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
-				dz1 : dz2;
+	//		// Set dx to whichever of dx1/dx2 have a lower abs
+	//		float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
+	//			dx1 : dx2;
+	//		// Ditto for dy
+	//		float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
+	//			dy1 : dy2;
+	//		// Ditto for dz
+	//		float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
+	//			dz1 : dz2;
 
-			// Whichever is closest, adjust x/y position
-			if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
-			{
-				pos.x += dx;
-			}
-			else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
-			{
-				pos.y += dy;
-			}
-			else
-			{
-				pos.z += dz;
-			}
+	//		// Whichever is closest, adjust x/y position
+	//		if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
+	//		{
+	//			pos.x += dx;
+	//		}
+	//		else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
+	//		{
+	//			pos.y += dy;
+	//		}
+	//		else
+	//		{
+	//			pos.z += dz;
+	//		}
 
-			// Need to set position and update box component
-			SetPosition(pos);
-			mBoxComp->OnUpdateWorldTransform();
-		}
-	}
+	//		// Need to set position and update box component
+	//		SetPosition(pos);
+	//		mBoxComp->OnUpdateWorldTransform();
+	//	}
+	//}
 
-	auto& underPlanes = GetGame()->GetUnderPlanes();
-	for (auto pa : underPlanes)
-	{
-		// Do we collide with this PlaneActor?
-		const AABB& planeBox = pa->GetBox()->GetWorldBox();
+	//auto& underPlanes = GetGame()->GetUnderPlanes();
+	//for (auto pa : underPlanes)
+	//{
+	//	// Do we collide with this PlaneActor?
+	//	const AABB& planeBox = pa->GetBox()->GetWorldBox();
 
-		if (Intersect(playerBox, planeBox))
-		{
-			// Calculate all our differences
-			float dx1 = planeBox.mMax.x - playerBox.mMin.x;
-			float dx2 = planeBox.mMin.x - playerBox.mMax.x;
-			float dy1 = planeBox.mMax.y - playerBox.mMin.y;
-			float dy2 = planeBox.mMin.y - playerBox.mMax.y;
-			float dz1 = planeBox.mMax.z - playerBox.mMin.z;
-			float dz2 = planeBox.mMin.z - playerBox.mMax.z;
+	//	if (Intersect(playerBox, planeBox))
+	//	{
+	//		// Calculate all our differences
+	//		float dx1 = planeBox.mMax.x - playerBox.mMin.x;
+	//		float dx2 = planeBox.mMin.x - playerBox.mMax.x;
+	//		float dy1 = planeBox.mMax.y - playerBox.mMin.y;
+	//		float dy2 = planeBox.mMin.y - playerBox.mMax.y;
+	//		float dz1 = planeBox.mMax.z - playerBox.mMin.z;
+	//		float dz2 = planeBox.mMin.z - playerBox.mMax.z;
 
-			// Set dx to whichever of dx1/dx2 have a lower abs
-			float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
-				dx1 : dx2;
-			// Ditto for dy
-			float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
-				dy1 : dy2;
-			// Ditto for dz
-			float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
-				dz1 : dz2;
+	//		// Set dx to whichever of dx1/dx2 have a lower abs
+	//		float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
+	//			dx1 : dx2;
+	//		// Ditto for dy
+	//		float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
+	//			dy1 : dy2;
+	//		// Ditto for dz
+	//		float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
+	//			dz1 : dz2;
 
-			// Whichever is closest, adjust x/y position
-			if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
-			{
-				pos.x += dx;
-			}
-			else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
-			{
-				pos.y += dy;
-			}
-			else
-			{
-				pos.z += dz;
-			}
+	//		// Whichever is closest, adjust x/y position
+	//		if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
+	//		{
+	//			pos.x += dx;
+	//		}
+	//		else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
+	//		{
+	//			pos.y += dy;
+	//		}
+	//		else
+	//		{
+	//			pos.z += dz;
+	//		}
 
-			// Need to set position and update box component
-			SetPosition(pos);
-			mBoxComp->OnUpdateWorldTransform();
-		}
-	}
+	//		// Need to set position and update box component
+	//		SetPosition(pos);
+	//		mBoxComp->OnUpdateWorldTransform();
+	//	}
+	//}
 }
 
 //void MobileActor::Collisions(Vector3 pos, const AABB& playerBox, const AABB& planeBox)

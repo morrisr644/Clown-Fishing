@@ -5,8 +5,6 @@ class MobileActor :
 {
 public:
     MobileActor(class Game* game);
-    void SetScale(float scale) { mScale = scale;  mRecomputeWorldTransform = true; }
-    void UpdateActor(float deltaTime);
     void FixCollisions();
 
     //void Collisions(Vector3 pos, const AABB& playerBox, const AABB& planeBox);
