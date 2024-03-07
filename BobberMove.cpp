@@ -36,8 +36,8 @@ void BobberMove::Update(float deltaTime)
 	Vector3 end = start + dir * segmentLength;
 	constexpr float LEFTWALL = 1450.0;
 	constexpr float RIGHTWALL = -1450.0;
-	constexpr float FORWARDWALL = 1500.0;
-	constexpr float BACKWALL = -1500.0;
+	constexpr float FORWARDWALL = 1475.0;
+	constexpr float BACKWALL = -1475.0;
 	constexpr float PONDWALL = 250.0;
 	constexpr float WATERLEVEL = -100.0;
 
@@ -50,13 +50,6 @@ void BobberMove::Update(float deltaTime)
 	BobberActor* bobber = mOwner->GetGame()->GetBobber();
 	Vector3 bobberPosition = bobber->GetPosition();
 
-	/*if (bobberPosition.z <= WATERLEVEL && bobberPosition.y < RIGHTWALL
-		&& bobberPosition.y > LEFTWALL && bobberPosition.x < RIGHTWALL && bobberPosition.x > LEFTWALL)
-	{
-		bobber->PutInWater();
-		bobber->HitGround();
-	}*/
-
 	// If the bobber hits something
 	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
 	{
@@ -66,24 +59,11 @@ void BobberMove::Update(float deltaTime)
 		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
 		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
 
-		//InvisiblePlaneActor* invisWall = dynamic_cast<InvisiblePlaneActor*>(info.mActor);
-
-		//if (!invisWall)
-		//{
-		//	if (rFish || yFish)
-		//	{
-		//		//do nothing
-		//	}
-		//	else
-		//	{
-		//		static_cast<BobberActor*>(mOwner)->HitGround();
-		//	}
-		//	
-		//}
-		//WaterPlaneActor* water = dynamic_cast<WaterPlaneActor*>(info.mActor);
+		//Changes to bobber - Rebecca
 
 		RodActor* rod = dynamic_cast<RodActor*>(info.mActor);
 
+		//If it is in the water
 		if (bobberPosition.z <= WATERLEVEL && ((bobberPosition.x >= RIGHTWALL
 			&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
 			&& bobberPosition.y >= PONDWALL)))
@@ -91,39 +71,16 @@ void BobberMove::Update(float deltaTime)
 			bobber->PutInWater();
 			bobber->HitGround();
 		}
+		//If it hits the fence
 		else if (bobberPosition.z > WATERLEVEL && (bobberPosition.y > FORWARDWALL - 25.0f || bobberPosition.y < BACKWALL + 25.0f
 			|| bobberPosition.x > LEFTWALL || bobberPosition.x < RIGHTWALL))
 		{
 			dir = Vector3::Reflect(dir, info.mNormal);
 			bobber->RotateToNewForward(dir);
 		}
-		/*else if (!rod)
-		{
-			//bobber->OutOfWater();
-			bobber->HitGround();
-		}*/
-
-		/*if (water)
-		{
-			bobber->PutInWater();
-			bobber->HitGround();
-		}*/
-		
-
-		//FencePlaneActor* fence = dynamic_cast<FencePlaneActor*>(info.mActor);
-
-		//if (fence)
-		//{
-		//	dir = Vector3::Reflect(dir, info.mNormal);
-		//	bobber->RotateToNewForward(dir);
-		//}
-		//else if (!invisWall && !rod)
-		//{
-		//	//bobber->OutOfWater();
-		//	bobber->HitGround();
-		//}
 
 	}
+	//If it is in the water
 	if (bobberPosition.z <= WATERLEVEL && ((bobberPosition.x >= RIGHTWALL
 		&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
 			&& bobberPosition.y >= PONDWALL)))
@@ -131,6 +88,7 @@ void BobberMove::Update(float deltaTime)
 		bobber->PutInWater();
 		bobber->HitGround();
 	}
+	//If it hits the ground
 	else if (bobberPosition.z <= WATERLEVEL && bobberPosition.y <= PONDWALL)
 	{
 		bobber->HitGround();
