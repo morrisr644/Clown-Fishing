@@ -18,12 +18,6 @@
 #include "FPSActor.h"
 #include "BasicFish.h"
 #include "PlaneActor.h"
-#include "WaterPlaneActor.h"
-#include "FencePlaneActor.h"
-#include "ShorePlaneActor.h"
-#include "GrassPlaneActor.h"
-#include "UnderPlaneActor.h"
-#include "InvisiblePlaneActor.h"
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
@@ -129,72 +123,6 @@ void Game::RemovePlane(PlaneActor* plane)
 {
 	auto iter = std::find(mPlanes.begin(), mPlanes.end(), plane);
 	mPlanes.erase(iter);
-}
-
-void Game::AddGrassPlane(GrassPlaneActor* grass)
-{
-	mGrassPlanes.emplace_back(grass);
-}
-
-void Game::RemoveGrassPlane(GrassPlaneActor* grass)
-{
-	auto iter = std::find(mGrassPlanes.begin(), mGrassPlanes.end(), grass);
-	mGrassPlanes.erase(iter);
-}
-
-void Game::AddFencePlane(FencePlaneActor* plane)
-{
-	mFencePlanes.emplace_back(plane);
-}
-
-void Game::RemoveFencePlane(FencePlaneActor* plane)
-{
-	auto iter = std::find(mFencePlanes.begin(), mFencePlanes.end(), plane);
-	mFencePlanes.erase(iter);
-}
-
-void Game::AddShorePlane(ShorePlaneActor* plane)
-{
-	mShorePlanes.emplace_back(plane);
-}
-
-void Game::RemoveShorePlane(ShorePlaneActor* plane)
-{
-	auto iter = std::find(mShorePlanes.begin(), mShorePlanes.end(), plane);
-	mShorePlanes.erase(iter);
-}
-
-void Game::AddWaterPlane(WaterPlaneActor* water) // Rebecca Morris
-{
-	mWaterPlanes.emplace_back(water);
-}
-
-void Game::RemoveWaterPlane(WaterPlaneActor* water) // Rebecca Morris
-{
-	auto iter = std::find(mWaterPlanes.begin(), mWaterPlanes.end(), water);
-	mWaterPlanes.erase(iter);
-}
-
-void Game::AddUnderPlane(UnderPlaneActor* under) // Rebecca Morris
-{
-	mUnderPlanes.emplace_back(under);
-}
-
-void Game::RemoveUnderPlane(UnderPlaneActor* under) // Rebecca Morris
-{
-	auto iter = std::find(mUnderPlanes.begin(), mUnderPlanes.end(), under);
-	mUnderPlanes.erase(iter);
-}
-
-void Game::AddInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
-{
-	mInvisiblePlanes.emplace_back(invis);
-}
-
-void Game::RemoveInvisiblePlane(InvisiblePlaneActor* invis) // Rebecca Morris
-{
-	auto iter = std::find(mInvisiblePlanes.begin(), mInvisiblePlanes.end(), invis);
-	mInvisiblePlanes.erase(iter);
 }
 
 bool Game::GetAllCaughtFish(int index)

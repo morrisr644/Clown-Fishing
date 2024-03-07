@@ -4,9 +4,6 @@
 #include "Actor.h"
 #include "Game.h"
 #include "PlaneActor.h"
-#include "InvisiblePlaneActor.h"
-#include "FencePlaneActor.h"
-#include "UnderPlaneActor.h"
 
 MobileActor::MobileActor(Game* game):
 	Actor(game)

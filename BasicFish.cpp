@@ -10,8 +10,6 @@
 #include "BoxComponent.h"
 #include "Mesh.h"
 #include "PlaneActor.h"
-#include "UnderPlaneActor.h"
-#include "InvisiblePlaneActor.h"
 #include "MoveComponent.h"
 #include "BobberActor.h"
 #include "PhysWorld.h"
