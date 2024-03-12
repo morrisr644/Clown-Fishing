@@ -45,7 +45,7 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 	{
 		fishDistance = 800.0;
 		fishTimer = 1.0;
-		texture->Load("Assets/models/Redfish.png");
+		texture->Load("Assets/models/RedFish.png");
 		LoadAssimpMeshes(meshes, game, "Assets/models/RedFish.obj", texture);
 	}
 
@@ -53,6 +53,50 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 	{
 		fishDistance = 500.0;
 		texture->Load("Assets/models/YellowFish.jpg");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	if (mColor == 'o')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/OrangeFish.png");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	if (mColor == 'g')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/GreenFish.jpg");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	if (mColor == 'b')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/BlueFish.png");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	if (mColor == 'p')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/PurpleFish.jpg");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	//K is pink because we already have p
+	if (mColor == 'k')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/PinkFish.jpg");
+		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+	}
+
+	//S is for spotted
+	if (mColor == 's')
+	{
+		fishDistance = 500.0;
+		texture->Load("Assets/models/PolkaDotFish.png");
 		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
 	}
 

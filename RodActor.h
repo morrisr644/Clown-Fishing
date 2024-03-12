@@ -20,13 +20,8 @@ private:
 	class BoxComponent* mBoxComp;
 	float angularMovement;
 	float forwardMovement;
-	float fishTimer;
 	class MoveComponent* mMoveComp;
 	class Actor* mPlayer; // Rebecca Morris
-	bool isOnLine;
-	bool isCaught;
 	// here is where I will have to put the movement parts
-	float fishDistance;
-	Vector3 fishOnLineStartPosition;
 	std::vector<MeshComponent*> meshComponents_;
 };

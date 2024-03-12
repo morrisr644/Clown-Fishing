@@ -16,10 +16,11 @@
 UIScreen::UIScreen(Game* game)
 	:mGame(game)
 	,mTitle(nullptr)
+	//Changed after made fullscreen
 	,mBackground(nullptr)
-	,mTitlePos(0.0f, 300.0f)
-	,mNextButtonPos(0.0f, 200.0f)
-	,mBGPos(0.0f, 250.0f)
+	,mTitlePos(-50.0f, 300.0f)
+	,mNextButtonPos(-50.0f, 200.0f)
+	,mBGPos(-50.0f, 250.0f)
 	,mState(EActive)
 {
 	// Add to UI Stack

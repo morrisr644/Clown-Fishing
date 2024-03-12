@@ -66,7 +66,8 @@ void HUD::Draw(Shader* shader)
 	DrawTexture(shader, cross, Vector2::Zero, 2.0f);
 	
 	// Radar
-	const Vector2 cRadarPos(-390.0f, 275.0f);
+	//Changed after screen was turned fullscreen
+	const Vector2 cRadarPos(-600.0f, 275.0f);
 	DrawTexture(shader, mRadar, cRadarPos, 1.0f);
 	// Blips
 	for (Vector2& blip : mBlips)
@@ -84,39 +85,39 @@ void HUD::Draw(Shader* shader)
 	// Tension bars
 	for (Vector2& fullHealth : mTensionBarBlank)
 	{
-		DrawTexture(shader, mBlankTensionBar, Vector2(0, 350.0f));
+		DrawTexture(shader, mBlankTensionBar, Vector2(150, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel1)
 	{
-		DrawTexture(shader, mTensionBar1, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar1, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel2)
 	{
-		DrawTexture(shader, mTensionBar2, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar2, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel3)
 	{
-		DrawTexture(shader, mTensionBar3, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar3, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel4)
 	{
-		DrawTexture(shader, mTensionBar4, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar4, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel5)
 	{
-		DrawTexture(shader, mTensionBar5, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar5, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel6)
 	{
-		DrawTexture(shader, mTensionBar6, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar6, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel7)
 	{
-		DrawTexture(shader, mTensionBar7, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar7, Vector2(-50, 400.0f));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel8)
 	{
-		DrawTexture(shader, mTensionBar8, Vector2(0, 350.0f));
+		DrawTexture(shader, mTensionBar8, Vector2(-50, 400.0f));
 	}
 	
 }

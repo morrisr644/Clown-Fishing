@@ -53,7 +53,8 @@ bool Renderer::Initialize(float screenWidth, float screenHeight)
 	// Force OpenGL to use hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 12)", 100, 100,
+	//Edited to make game fullscreen
+	mWindow = SDL_CreateWindow("Clown-Fishing", 0, 0,
 		static_cast<int>(mScreenWidth), static_cast<int>(mScreenHeight), SDL_WINDOW_OPENGL);
 	if (!mWindow)
 	{

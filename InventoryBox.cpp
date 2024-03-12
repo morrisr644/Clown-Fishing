@@ -27,6 +27,24 @@ InventoryBox::InventoryBox(Game* game, const std::string& text, int fish)
 		case 1:
 			mBackground = mGame->GetRenderer()->GetTexture("Assets/YellowFishDialogBG.png");
 			break;
+		case 2:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/OrangeFishDialogBG.png");
+			break;
+		case 3:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/GreenFishDialogBG.png");
+			break;
+		case 4:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/BlueFishDialogBG.png");
+			break;
+		case 5:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/PurpleFishDialogBG.png");
+			break;
+		case 6:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/PinkFishDialogBG.png");
+			break;
+		case 7:
+			mBackground = mGame->GetRenderer()->GetTexture("Assets/SpottedFishDialogBG.png");
+			break;
 		default:
 			mBackground = mGame->GetRenderer()->GetTexture("Assets/DialogBG.png");
 			break;
