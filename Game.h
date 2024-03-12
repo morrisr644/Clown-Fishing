@@ -168,7 +168,8 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	//class BasicFish* mBasicFish;
 	int mCaughtFishType;
-	bool mAllCaughtFish[7]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	bool mAllCaughtFish[1]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+								//change to 7 when they are all added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;
