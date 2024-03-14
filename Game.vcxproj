@@ -22,7 +22,6 @@
     <ClCompile Include="BoneTransform.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="FencePlaneActor.cpp" />
     <ClCompile Include="MobileActor.cpp" />
     <ClCompile Include="ScreenSaysFishCaught.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -31,7 +30,6 @@
     <ClCompile Include="ScreenSaysFishOn.cpp" />
     <ClCompile Include="FPSActor.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
-    <ClCompile Include="GrassPlaneActor.cpp" />
     <ClCompile Include="Hook.cpp" />
     <ClCompile Include="HookMove.cpp" />
     <ClCompile Include="IcosphereActor.cpp" />
@@ -43,7 +41,6 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InventoryBox.cpp" />
     <ClCompile Include="InventoryMenu.cpp" />
-    <ClCompile Include="InvisiblePlaneActor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -56,7 +53,6 @@
     <ClCompile Include="RodActor.cpp" />
     <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShorePlaneActor.cpp" />
     <ClCompile Include="SkeletalMeshComponent.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -66,9 +62,7 @@
     <ClCompile Include="TargetComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UIScreen.cpp" />
-    <ClCompile Include="UnderPlaneActor.cpp" />
     <ClCompile Include="VertexArray.cpp" />
-    <ClCompile Include="WaterPlaneActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -81,7 +75,6 @@
     <ClInclude Include="BoneTransform.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="FencePlaneActor.h" />
     <ClInclude Include="MobileActor.h" />
     <ClInclude Include="ScreenSaysFishCaught.h" />
     <ClInclude Include="Collision.h" />
@@ -91,7 +84,6 @@
     <ClInclude Include="ScreenSaysFishOn.h" />
     <ClInclude Include="FPSActor.h" />
     <ClInclude Include="FPSCamera.h" />
-    <ClInclude Include="GrassPlaneActor.h" />
     <ClInclude Include="Hook.h" />
     <ClInclude Include="HookMove.h" />
     <ClInclude Include="IcosphereActor.h" />
@@ -102,10 +94,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InventoryBox.h" />
     <ClInclude Include="InventoryMenu.h" />
-    <ClInclude Include="InvisiblePlaneActor.h" />
     <ClInclude Include="RodActor.h" />
     <ClInclude Include="Scenery.h" />
-    <ClInclude Include="ShorePlaneActor.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MatrixPalette.h" />
@@ -126,9 +116,7 @@
     <ClInclude Include="TargetComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UIScreen.h" />
-    <ClInclude Include="UnderPlaneActor.h" />
     <ClInclude Include="VertexArray.h" />
-    <ClInclude Include="WaterPlaneActor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BasicMesh.frag" />

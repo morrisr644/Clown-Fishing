@@ -106,30 +106,6 @@ public:
 	void RemovePlane(class PlaneActor* plane);
 	std::vector<class PlaneActor*>& GetPlanes() { return mPlanes; }
 
-	void AddGrassPlane(class GrassPlaneActor* grass);
-	void RemoveGrassPlane(class GrassPlaneActor* grass);
-	std::vector<class GrassPlaneActor*>& GetGrassPlanes() { return mGrassPlanes; }
-
-	void AddShorePlane(class ShorePlaneActor* shore);
-	void RemoveShorePlane(class ShorePlaneActor* shore);
-	std::vector<class ShorePlaneActor*>& GetShorePlanes() { return mShorePlanes; }
-
-	void AddFencePlane(class FencePlaneActor* fence);
-	void RemoveFencePlane(class FencePlaneActor* fence);
-	std::vector<class FencePlaneActor*>& GetFencePlanes() { return mFencePlanes; }
-
-	void AddWaterPlane(class WaterPlaneActor* water);
-	void RemoveWaterPlane(class WaterPlaneActor* water);
-	std::vector<class WaterPlaneActor*>& GetWaterPlanes() { return mWaterPlanes; }
-
-	void AddUnderPlane(class UnderPlaneActor* under);
-	void RemoveUnderPlane(class UnderPlaneActor* under);
-	std::vector<class UnderPlaneActor*>& GetUnderPlanes() { return mUnderPlanes; }
-
-	void AddInvisiblePlane(class InvisiblePlaneActor* invis);
-	void RemoveInvisiblePlane(class InvisiblePlaneActor* invis);
-	std::vector<class InvisiblePlaneActor*>& GetInvisiblePlanes() { return mInvisiblePlanes; }
-
 	void TurnScreenSaysFishOnOn(){ isScreenSaysFishOnOn = true; }
 
 	void TurnScreenSaysFishOffOn() { isScreenSaysFishOffOn = true; }
@@ -190,15 +166,10 @@ private:
 
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
-	std::vector<class FencePlaneActor*> mFencePlanes;
-	std::vector<class GrassPlaneActor*> mGrassPlanes;
-	std::vector<class WaterPlaneActor*> mWaterPlanes;
-	std::vector<class ShorePlaneActor*> mShorePlanes;
-	std::vector<class UnderPlaneActor*> mUnderPlanes;
-	std::vector<class InvisiblePlaneActor*> mInvisiblePlanes;
 	//class BasicFish* mBasicFish;
 	int mCaughtFishType;
-	bool mAllCaughtFish[2]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	bool mAllCaughtFish[1]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+								//change to 7 when they are all added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;

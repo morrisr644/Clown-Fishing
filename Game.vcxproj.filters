@@ -136,9 +136,6 @@
     <ClCompile Include="ScreenSaysFishOn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GrassPlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -151,19 +148,7 @@
     <ClCompile Include="InventoryMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InvisiblePlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShorePlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnderPlaneActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WaterPlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ScreenSaysFishCaught.cpp">
@@ -176,9 +161,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RodActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FencePlaneActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MobileActor.cpp">
@@ -306,9 +288,6 @@
     <ClInclude Include="FPSCamera.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrassPlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Hook.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -324,16 +303,10 @@
     <ClInclude Include="InventoryMenu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="InvisiblePlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="MatrixPalette.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Scenery.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShorePlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SkeletalMeshComponent.h">
@@ -345,16 +318,7 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="UnderPlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WaterPlaneActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="RodActor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FencePlaneActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="MobileActor.h">

@@ -10,6 +10,7 @@
 #include "Game.h"
 #include "DialogBox.h"
 #include "InventoryMenu.h"
+#include "Renderer.h"
 #include <SDL/SDL.h>
 
 PauseMenu::PauseMenu(Game* game)
@@ -21,9 +22,18 @@ PauseMenu::PauseMenu(Game* game)
 	AddButton("ResumeButton", [this]() {
 		Close();
 	});
+
+	mBackground = game->GetRenderer()->GetTexture("Assets/PauseDialogBG.png");
+	mBGPos = Vector2(-45.0f, 145.0f);
 	/*AddButton("InventoryButton", [this]() {
 		new InventoryMenu(mGame);
 		});*/
+	AddButton("MenuButton", [this]() {
+		//new InventoryMenu(mGame);
+		});
+	AddButton("RestartButton", [this]() {
+		//new InventoryMenu(mGame);
+		});
 	AddButton("QuitButton", [this]() { 
 		new DialogBox(mGame, "QuitText",
 			[this]() {

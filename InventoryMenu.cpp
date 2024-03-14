@@ -28,10 +28,52 @@ InventoryMenu::InventoryMenu(Game* game)
 			});
 	}
 
+	if (game->GetAllCaughtFish(2)) // 2 is Orange Fish
+	{
+		AddButton("OrangeFishItem", [this]() {
+			new InventoryBox(mGame, "OrangeFishText", 2);
+			});
+	}
+
 	if (game->GetAllCaughtFish(1)) // 1 is Yellow Fish
 	{
 		AddButton("YellowFishItem", [this]() {
 			new InventoryBox(mGame, "YellowFishText", 1);
+			});
+	}
+
+	if (game->GetAllCaughtFish(3)) // 3 is Green Fish
+	{
+		AddButton("GreenFishItem", [this]() {
+			new InventoryBox(mGame, "GreenFishText", 3);
+			});
+	}
+
+	if (game->GetAllCaughtFish(4)) // 4 is Blue Fish
+	{
+		AddButton("BlueFishItem", [this]() {
+			new InventoryBox(mGame, "BlueFishText", 4);
+			});
+	}
+
+	if (game->GetAllCaughtFish(5)) // 5 is Purple Fish
+	{
+		AddButton("PurpleFishItem", [this]() {
+			new InventoryBox(mGame, "PurpleFishText", 5);
+			});
+	}
+
+	if (game->GetAllCaughtFish(6)) // 6 is Pink Fish
+	{
+		AddButton("PinkFishItem", [this]() {
+			new InventoryBox(mGame, "PinkFishText", 6);
+			});
+	}
+
+	if (game->GetAllCaughtFish(7)) // 7 is Polka-Dot/Spotted Fish
+	{
+		AddButton("SpottedFishItem", [this]() {
+			new InventoryBox(mGame, "SpottedFishText", 7);
 			});
 	}
 
