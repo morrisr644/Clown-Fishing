@@ -46,10 +46,10 @@ void HookMove::Update(float deltaTime)
 		FPSActor* player = mOwner->GetGame()->GetPlayer();
 		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
 		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
-		const int NUMOFFISH = 2;
-		BasicFish* fishArray[NUMOFFISH] = { yFish, rFish };
-
-		for (BasicFish* fish : fishArray)
+		/*const int NUMOFFISH = 2;
+		BasicFish* fishArray[NUMOFFISH] = { yFish, rFish };*/
+		std::vector<class BasicFish*> otherFishArray = mOwner->GetGame()->GetBasicFishes();
+		for (BasicFish* fish : otherFishArray)
 		{
 			if (fish->GetState() == Actor::EActive)
 			{
@@ -72,7 +72,7 @@ void HookMove::Update(float deltaTime)
 					Vector3 fishOppBobber = bobberPos - fishPos;
 					bobberOppPlayer.Normalize();
 					fishOppBobber.Normalize();
-					bobberOppPlayer.Reverse();
+					bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
 					bobber->RotateToNewForward(bobberOppPlayer);
 					fish->RotateToNewForward(fishOppBobber);
 					if (fish == rFish) // red fish is easer to catch
@@ -84,6 +84,11 @@ void HookMove::Update(float deltaTime)
 					{
 						bobber->SetTensionSpeed(30.0);
 						fish->SetMovementSpeed(-30.0);
+					}
+					else
+					{
+						bobber->SetTensionSpeed(20.0);
+						fish->SetMovementSpeed(-20.0);
 					}
 				}
 			}

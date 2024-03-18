@@ -401,6 +401,48 @@ void Game::HandleKeyPress(int key)
 				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
+			if (mOrangeFish->GetCatchStatus() && (mOrangeFish->GetState() == Actor::EActive))
+			{
+				fishPos = mOrangeFish->GetPosition();
+				caughtFish = mOrangeFish;
+				//mCaughtFishType = 2;
+
+				mAllCaughtFish[2] = true;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new ScreenSaysFishCaught(this);
+				caughtFish->SetCatchStatus(true);
+				caughtFish->SetState(Actor::EDead);
+				//mYellowFish->SetState(Actor::EDead);
+				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+				mSingleBobber->SetPosition(bobberSpawnPoint);
+			}
+			if (mGreenFish->GetCatchStatus() && (mGreenFish->GetState() == Actor::EActive))
+			{
+				fishPos = mGreenFish->GetPosition();
+				caughtFish = mGreenFish;
+				//mCaughtFishType = 2;
+
+				mAllCaughtFish[3] = true;
+
+				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+				caughtFish->SetPosition(newFishPos);
+				Quaternion tPose = Quaternion(newFishPos, 0.0f);
+				caughtFish->SetRotation(tPose);
+				caughtFish->UpdateActor(mCurrentTime);
+
+				new ScreenSaysFishCaught(this);
+				caughtFish->SetCatchStatus(true);
+				caughtFish->SetState(Actor::EDead);
+				//mYellowFish->SetState(Actor::EDead);
+				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+				mSingleBobber->SetPosition(bobberSpawnPoint);
+			}
 			//else
 			//{
 			//	new ScreenSaysFishOff(this); // This technically works but we can make it better
@@ -590,12 +632,16 @@ void Game::LoadData()
 	//mBasicFish = new BasicFish(this, "null", "null"); //possibly change later to have default value - Rebecca
 	mRedFish = new BasicFish(this, 'r', "Assets/models/Redfish.png");
 	mYellowFish = new BasicFish(this, 'y', "Assets/models/fish.jpg");
+	mOrangeFish = new BasicFish(this, 'o', "Assets/models/OrangeFish.png");
+	mGreenFish = new BasicFish(this, 'g', "Assets/models/GreenFish.png");
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	currentHook = new Hook(this);
 	currentHook->SetPosition(Vector3(20000, 20000, 2000));
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -450.0f));
+	mOrangeFish->SetPosition(Vector3(800.0f, 800.0f, -550.0f));
+	mGreenFish->SetPosition(Vector3(1200.0f, 300.0f, -500.0f));
 
 	//For some reason initializing mBasicFish is spawning in a new fish, putting it under the floor for now - Rebecca
 	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?
