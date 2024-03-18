@@ -168,7 +168,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	//class BasicFish* mBasicFish;
 	int mCaughtFishType;
-	bool mAllCaughtFish[1]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	bool mAllCaughtFish[3]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
 								//change to 7 when they are all added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
@@ -179,6 +179,8 @@ private:
 	SoundEvent mReeling;
 	class BasicFish* mYellowFish;
 	class BasicFish* mRedFish;
+	class BasicFish* mOrangeFish;
+	class BasicFish* mGreenFish;
 	class SkyBox* mSkybox;
 	bool isScreenSaysFishOnOn;
 	bool isScreenSaysFishOffOn;

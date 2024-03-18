@@ -60,14 +60,14 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 	{
 		fishDistance = 500.0;
 		texture->Load("Assets/models/OrangeFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+		LoadAssimpMeshes(meshes, game, "Assets/models/OrangeFish.obj", texture);
 	}
 
 	if (mColor == 'g')
 	{
 		fishDistance = 500.0;
-		texture->Load("Assets/models/GreenFish.jpg");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+		texture->Load("Assets/models/GreenFish.png");
+		LoadAssimpMeshes(meshes, game, "Assets/models/GreenFish.obj", texture);
 	}
 
 	if (mColor == 'b')
@@ -152,12 +152,13 @@ void BasicFish::UpdateActor(float deltaTime)
 	Vector3 currPosition = this->GetPosition(); //This works but it stalls at the beginning
 	constexpr float LEFTSIDE = -1400.0;
 	constexpr float RIGHTSIDE = 1400.0;
-	constexpr float FRONT = 300.0;
+	constexpr float FRONT = 320.0;
 	constexpr float BACK = 1200.0;
 	constexpr float BOTTOM = -800.0;
+	constexpr float TOP = -150;
 
 
-	if (currPosition.z <= BOTTOM || currPosition.x >= RIGHTSIDE || currPosition.x <= LEFTSIDE || currPosition.y >= BACK || currPosition.y <= FRONT)
+	if (currPosition.z <= BOTTOM || currPosition.x >= RIGHTSIDE || currPosition.x <= LEFTSIDE || currPosition.y >= BACK || currPosition.y <= FRONT || currPosition.z >= TOP)
 	{
 		//turn around here as well
 		Vector3 turnFishAround = this->GetForward();
@@ -264,8 +265,8 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 	}
 
 	Vector3 currentPos = this->GetPosition();
-
-	if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
+	constexpr float CATCHYPOS = 330.0;
+	if (isOnLine && currentPos.y <= CATCHYPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
 		// It either got away or was caught
@@ -303,6 +304,10 @@ void BasicFish::SetOnLinePosition()
 	if (mColor == 'r')
 		fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
 	else if (mColor == 'y')
+		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
+	else if (mColor == 'o')
+		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
+	else if (mColor == 'g')
 		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
 
 }

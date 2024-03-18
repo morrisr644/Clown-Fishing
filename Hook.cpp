@@ -28,7 +28,7 @@ Hook::Hook(Game* game)
 	mMyMove = new HookMove(this);
 }
 
-void Hook::UpdateActor(float deltaTime)
+/*void Hook::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
-}
+}*/

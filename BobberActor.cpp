@@ -74,26 +74,18 @@ void BobberActor::UpdateActor(float deltaTime)
 		SetPosition(pos);
 	}
 
-	BasicFish* yellowFish = GetGame()->GetYellowFish();
+	/*BasicFish* yellowFish = GetGame()->GetYellowFish();
 	BasicFish* redFish = GetGame()->GetRedFish();
 	const int NUMOFFISH = 2;
-	BasicFish* fishArray[NUMOFFISH] = { yellowFish, redFish };
-	for (BasicFish* fish : fishArray)
+	BasicFish* fishArray[NUMOFFISH] = { yellowFish, redFish };*/
+	std::vector<class BasicFish*> otherFishArray = GetGame()->GetBasicFishes();
+	for (BasicFish* fish : otherFishArray)
 	{
 		if (fish->GetState() != Actor::EDead)
 		{
 			CheckFish(deltaTime, fish); // Note check only if alive
 		}
 	}
-	/*if (GetGame()->GetYellowFish()->GetState() != Actor::EDead)
-	{
-		CheckFish(deltaTime, yellowFish); // Note check only if alive
-	}
-	if (GetGame()->GetRedFish()->GetState() != Actor::EDead)
-	{
-		CheckFish(deltaTime, redFish);
-	}*/
-	
 }
 
 void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
@@ -113,9 +105,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			if (fishTimer <= 0)
 			{
 				Vector3 fishFacingBobber;
-				fishFacingBobber.x = currentHookPosition.x - fishCurrentPosition.x;
-				fishFacingBobber.y = currentHookPosition.y - fishCurrentPosition.y;
-				fishFacingBobber.z = currentHookPosition.z - fishCurrentPosition.z;
+				fishFacingBobber = currentHookPosition - fishCurrentPosition; //  Adam Example of the operator - in use.
 				fishFacingBobber.Normalize();
 				currFish->RotateToNewForward(fishFacingBobber);
 				currFish->SetAngularSpeed(0);
@@ -126,9 +116,8 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			if (currFish->GetFleeingStatus() == false)
 			{
 				Vector3 turnFishAround = currFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
+				Vector3 zeroedVector(0.0, 0.0, 0.0);
+				turnFishAround = zeroedVector - turnFishAround; //  Adam Example of the operator - in use to get an inverse.
 				turnFishAround.Normalize();
 				currFish->RotateToNewForward(turnFishAround);
 				currFish->SetAngularSpeed(0);
@@ -150,12 +139,10 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			if (mTotalDistance > 800.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
 			{ // yellowFish->GetFishDistance()
 				Vector3 turnFishAround = currFish->GetForward();
-				turnFishAround.x = -turnFishAround.x;
-				turnFishAround.y = -turnFishAround.y;
-				turnFishAround.z = -turnFishAround.z;
+				Vector3 zeroedVector(0.0, 0.0, 0.0);
+				turnFishAround = zeroedVector - turnFishAround;
 				turnFishAround.Normalize();
 				currFish->RotateToNewForward(turnFishAround);
-				currFish->SetAngularSpeed(0);
 				currFish->SetFleeingStatus(true);
 				currFish->SetLineStatus(false);
 				Vector3 bobberSpawnPoint(20000, 20000, 0);
