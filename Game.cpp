@@ -399,6 +399,46 @@ void Game::HandleKeyPress(int key)
 
 				mAllCaughtFish[3] = true;
 			}
+			if (mBlueFish->GetCatchStatus() && (mBlueFish->GetState() == Actor::EActive))
+			{
+				fishPos = mBlueFish->GetPosition();
+				caughtFish = mBlueFish;
+				//mCaughtFishType = 2;
+
+				mCaughtFishType = caughtFish->GetColor();
+
+				mAllCaughtFish[4] = true;
+			}
+			if (mPurpleFish->GetCatchStatus() && (mPurpleFish->GetState() == Actor::EActive))
+			{
+				fishPos = mPurpleFish->GetPosition();
+				caughtFish = mPurpleFish;
+				//mCaughtFishType = 2;
+
+				mCaughtFishType = caughtFish->GetColor();
+
+				mAllCaughtFish[5] = true;
+			}
+			if (mPinkFish->GetCatchStatus() && (mPinkFish->GetState() == Actor::EActive))
+			{
+				fishPos = mPinkFish->GetPosition();
+				caughtFish = mPinkFish;
+				//mCaughtFishType = 2;
+
+				mCaughtFishType = caughtFish->GetColor();
+
+				mAllCaughtFish[6] = true;
+			}
+			if (mSpottedFish->GetCatchStatus() && (mSpottedFish->GetState() == Actor::EActive))
+			{
+				fishPos = mSpottedFish->GetPosition();
+				caughtFish = mSpottedFish;
+				//mCaughtFishType = 2;
+
+				mCaughtFishType = caughtFish->GetColor();
+
+				mAllCaughtFish[7] = true;
+			}
 
 			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
 			caughtFish->SetPosition(newFishPos);
@@ -597,10 +637,14 @@ void Game::LoadData()
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
 	//mBasicFish = new BasicFish(this, "null", "null"); //possibly change later to have default value - Rebecca
-	mRedFish = new BasicFish(this, 'r', "Assets/models/Redfish.png");
-	mYellowFish = new BasicFish(this, 'y', "Assets/models/fish.jpg");
-	mOrangeFish = new BasicFish(this, 'o', "Assets/models/OrangeFish.png");
-	mGreenFish = new BasicFish(this, 'g', "Assets/models/GreenFish.png");
+	mRedFish = new BasicFish(this, 'r');
+	mYellowFish = new BasicFish(this, 'y');
+	mOrangeFish = new BasicFish(this, 'o');
+	mGreenFish = new BasicFish(this, 'g');
+	mBlueFish = new BasicFish(this, 'b');
+	mPurpleFish = new BasicFish(this, 'p');
+	mPinkFish = new BasicFish(this, 'k');
+	mSpottedFish = new BasicFish(this, 's');
 	mSingleBobber = new BobberActor(this);
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	currentHook = new Hook(this);
@@ -608,7 +652,11 @@ void Game::LoadData()
 	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f)); // why does the fish float?
 	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -450.0f));
 	mOrangeFish->SetPosition(Vector3(800.0f, 800.0f, -550.0f));
-	mGreenFish->SetPosition(Vector3(1200.0f, 300.0f, -500.0f));
+	mGreenFish->SetPosition(Vector3(1200.0f, 400.0f, -500.0f));
+	mBlueFish->SetPosition(Vector3(400.0f, 700.0f, -500.0f));
+	mPurpleFish->SetPosition(Vector3(200.0f, 400.0f, -500.0f));
+	mPinkFish->SetPosition(Vector3(0.0f, 800.0f, -500.0f));
+	mSpottedFish->SetPosition(Vector3(-200.0f, 400.0f, -500.0f));
 
 	//For some reason initializing mBasicFish is spawning in a new fish, putting it under the floor for now - Rebecca
 	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?

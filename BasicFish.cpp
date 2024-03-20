@@ -22,12 +22,11 @@
 #include "TargetComponent.h"
 
 
-BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
+BasicFish::BasicFish(Game* game, char color)
 	:Actor(game)
 	, fishDistance(900.0) // Rebecca you can edit this value as you see fit. Yellow fish has one too.
 	, fishOnLineStartPosition(0.0, 0.0, 0.0)
 	, mColor(color)
-	, mTexture(textureFileName)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
@@ -78,22 +77,22 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 		{
 			fishDistance = 500.0;
 			texture->Load("Assets/models/BlueFish.png");
-			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			LoadAssimpMeshes(meshes, game, "Assets/models/BlueFish.obj", texture);
 			break;
 		}
 		case 'p':
 		{
 			fishDistance = 500.0;
-			texture->Load("Assets/models/PurpleFish.jpg");
-			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			texture->Load("Assets/models/PurpleFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/PurpleFish.obj", texture);
 			break;
 		}
 		//K is pink because we already have p
 		case 'k':
 		{
 			fishDistance = 500.0;
-			texture->Load("Assets/models/PinkFish.jpg");
-			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			texture->Load("Assets/models/Pinkfish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/PinkFish.obj", texture);
 			break;
 		}
 		//S is for spotted
@@ -101,7 +100,7 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 		{
 			fishDistance = 500.0;
 			texture->Load("Assets/models/PolkaDotFish.png");
-			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			LoadAssimpMeshes(meshes, game, "Assets/models/PolkaDotFish.obj", texture);
 			break;
 		}
 	}
@@ -310,13 +309,34 @@ void BasicFish::SetOnLinePosition()
 	//cant use switch statement because mColor is not an int
 	//Yes you can i was dumb, change later
 
-	if (mColor == 'r')
-		fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
-	else if (mColor == 'y')
-		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
-	else if (mColor == 'o')
-		fishOnLineStartPosition = GetGame()->GetOrangeFish()->GetPosition();
-	else if (mColor == 'g')
-		fishOnLineStartPosition = GetGame()->GetGreenFish()->GetPosition();
+	switch (mColor)
+	{
+		case 'r':
+			fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
+			break;
+		case 'o':
+			fishOnLineStartPosition = GetGame()->GetOrangeFish()->GetPosition();
+			break;
+		case 'y':
+			fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
+			break;
+		case 'g':
+			fishOnLineStartPosition = GetGame()->GetGreenFish()->GetPosition();
+			break;
+		case 'b':
+			fishOnLineStartPosition = GetGame()->GetBlueFish()->GetPosition();
+			break;
+		case 'p':
+			fishOnLineStartPosition = GetGame()->GetPurpleFish()->GetPosition();
+			break;
+		case 'k':
+			fishOnLineStartPosition = GetGame()->GetPinkFish()->GetPosition();
+			break;
+		case 's':
+			fishOnLineStartPosition = GetGame()->GetSpottedFish()->GetPosition();
+			break;
+	}
 
 }
+
+

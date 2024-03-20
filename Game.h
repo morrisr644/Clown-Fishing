@@ -68,6 +68,18 @@ public:
 	class BasicFish* GetGreenFish() {
 		return mGreenFish;
 	}
+	class BasicFish* GetBlueFish() {
+		return mBlueFish;
+	}
+	class BasicFish* GetPurpleFish() {
+		return mPurpleFish;
+	}
+	class BasicFish* GetPinkFish() {
+		return mPinkFish;
+	}
+	class BasicFish* GetSpottedFish() {
+		return mSpottedFish;
+	}
 	std::vector<class BasicFish*> GetBasicFishes()
 	{
 		return mBasicFishes;
@@ -176,7 +188,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	//class BasicFish* mBasicFish;
 	char mCaughtFishType;
-	bool mAllCaughtFish[7]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	bool mAllCaughtFish[8]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
 								//change to 7 when they are all added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
@@ -189,6 +201,10 @@ private:
 	class BasicFish* mRedFish;
 	class BasicFish* mOrangeFish;
 	class BasicFish* mGreenFish;
+	class BasicFish* mBlueFish;
+	class BasicFish* mPurpleFish;
+	class BasicFish* mPinkFish;
+	class BasicFish* mSpottedFish;
 	class SkyBox* mSkybox;
 	bool isScreenSaysFishOnOn;
 	bool isScreenSaysFishOffOn;
