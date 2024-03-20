@@ -107,6 +107,7 @@ bool Game::Initialize()
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
+	didJustCatchFish = false;
 	
 	return true;
 }
@@ -346,39 +347,27 @@ void Game::HandleKeyPress(int key)
 			hookedFish->SetFishDistance(25.0);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
-		else
+		else if(didJustCatchFish)
 		{
+			didJustCatchFish = false;
+
 			mReeling.SetPaused(true);
 
 			Vector3 playerPos = mFPSActor->GetPosition();
 
-			BasicFish* caughtFish;
+			BasicFish* caughtFish{};
 
 			Vector3 fishPos;
 
-			
-			
 
 			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
 				fishPos = mRedFish->GetPosition();
 				caughtFish = mRedFish;
-				//mCaughtFishType = 1;
+
+				mCaughtFishType = caughtFish->GetColor(); //This must be inside the if statement to work
 
 				mAllCaughtFish[0] = true;
-
-				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
-				caughtFish->SetPosition(newFishPos);
-				Quaternion tPose = Quaternion(newFishPos, 0.0f);
-				caughtFish->SetRotation(tPose);
-				caughtFish->UpdateActor(mCurrentTime);
-
-				new ScreenSaysFishCaught(this);
-				caughtFish->SetCatchStatus(true);
-				caughtFish->SetState(Actor::EDead);
-				//mRedFish->SetState(Actor::EDead);
-				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
-				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
 			if (mYellowFish->GetCatchStatus() && (mYellowFish->GetState() == Actor::EActive))
 			{
@@ -386,20 +375,9 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mYellowFish;
 				//mCaughtFishType = 2;
 
+				mCaughtFishType = caughtFish->GetColor();
+
 				mAllCaughtFish[1] = true;
-
-				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
-				caughtFish->SetPosition(newFishPos);
-				Quaternion tPose = Quaternion(newFishPos, 0.0f);
-				caughtFish->SetRotation(tPose);
-				caughtFish->UpdateActor(mCurrentTime);
-
-				new ScreenSaysFishCaught(this);
- 				caughtFish->SetCatchStatus(true);
-				caughtFish->SetState(Actor::EDead);
-				//mYellowFish->SetState(Actor::EDead);
-				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
-				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
 			if (mOrangeFish->GetCatchStatus() && (mOrangeFish->GetState() == Actor::EActive))
 			{
@@ -407,20 +385,9 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mOrangeFish;
 				//mCaughtFishType = 2;
 
+				mCaughtFishType = caughtFish->GetColor();
+
 				mAllCaughtFish[2] = true;
-
-				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
-				caughtFish->SetPosition(newFishPos);
-				Quaternion tPose = Quaternion(newFishPos, 0.0f);
-				caughtFish->SetRotation(tPose);
-				caughtFish->UpdateActor(mCurrentTime);
-
-				new ScreenSaysFishCaught(this);
-				caughtFish->SetCatchStatus(true);
-				caughtFish->SetState(Actor::EDead);
-				//mYellowFish->SetState(Actor::EDead);
-				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
-				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
 			if (mGreenFish->GetCatchStatus() && (mGreenFish->GetState() == Actor::EActive))
 			{
@@ -428,25 +395,25 @@ void Game::HandleKeyPress(int key)
 				caughtFish = mGreenFish;
 				//mCaughtFishType = 2;
 
+				mCaughtFishType = caughtFish->GetColor();
+
 				mAllCaughtFish[3] = true;
-
-				Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
-				caughtFish->SetPosition(newFishPos);
-				Quaternion tPose = Quaternion(newFishPos, 0.0f);
-				caughtFish->SetRotation(tPose);
-				caughtFish->UpdateActor(mCurrentTime);
-
-				new ScreenSaysFishCaught(this);
-				caughtFish->SetCatchStatus(true);
-				caughtFish->SetState(Actor::EDead);
-				//mYellowFish->SetState(Actor::EDead);
-				Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
-				mSingleBobber->SetPosition(bobberSpawnPoint);
 			}
-			//else
-			//{
-			//	new ScreenSaysFishOff(this); // This technically works but we can make it better
-			//}
+
+			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+			caughtFish->SetPosition(newFishPos);
+			Quaternion tPose = Quaternion(newFishPos, 0.0f);
+			caughtFish->SetRotation(tPose);
+			caughtFish->UpdateActor(mCurrentTime);
+
+			new ScreenSaysFishCaught(this);
+			caughtFish->SetCatchStatus(true);
+			caughtFish->SetState(Actor::EDead);
+			//mYellowFish->SetState(Actor::EDead);
+			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+			mSingleBobber->SetPosition(bobberSpawnPoint);
+
+
 
 		}
 

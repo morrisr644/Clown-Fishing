@@ -129,6 +129,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
 		{
 			Vector3 startPos = this->GetPosition();
+			//startPos = GetGame()->GetHook()->GetPosition();
 			Vector3 currPos = currFish->GetPosition();
 			Vector3 difference;
 			difference.x = abs(currPos.x - startPos.x);
@@ -137,20 +138,23 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			mTotalDistance = difference.x + difference.y + difference.z;
 			GetGame()->SetFishHookDistance(mTotalDistance);
 			if (mTotalDistance > 800.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
-			{ // yellowFish->GetFishDistance()
+			{ 
+
 				Vector3 turnFishAround = currFish->GetForward();
 				Vector3 zeroedVector(0.0, 0.0, 0.0);
 				turnFishAround = zeroedVector - turnFishAround;
 				turnFishAround.Normalize();
 				currFish->RotateToNewForward(turnFishAround);
 				currFish->SetFleeingStatus(true);
-				currFish->SetLineStatus(false);
+ 				currFish->SetLineStatus(false); //Is this where the game glitches?
 				Vector3 bobberSpawnPoint(20000, 20000, 0);
 				currentBobber->SetPosition(bobberSpawnPoint);
 				currFish->SetFishTimer(1.0);
 				currFish->SetMovementSpeed(200);
 				currFish->SetAngularSpeed(0.2);
 				GetGame()->isReelingIn = false;
+
+				this->isFishOn = false;
 
 				mLose.SetPaused(false);
 				mLose.Restart();
