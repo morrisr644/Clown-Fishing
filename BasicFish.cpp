@@ -41,63 +41,69 @@ BasicFish::BasicFish(Game* game, char color, const char* textureFileName)
 
 	std::vector<Mesh*> meshes;
 
-	if (mColor == 'r')
+	switch (mColor)
 	{
-		fishDistance = 800.0;
-		fishTimer = 1.0;
-		texture->Load("Assets/models/RedFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/RedFish.obj", texture);
-	}
+		case 'r':
+		{
+			fishDistance = 800.0;
+			fishTimer = 1.0;
+			texture->Load("Assets/models/RedFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/RedFish.obj", texture);
+			break; 
+		}
+		case 'y':
+		{
+			fishDistance = 500.0;
+			texture->Load("Assets/models/YellowFish.jpg");
+			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			break; 
+		}
+		case 'o':
+		{
 
-	if (mColor == 'y')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/YellowFish.jpg");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
-	}
+			fishDistance = 500.0;
+			texture->Load("Assets/models/OrangeFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/OrangeFish.obj", texture); 
+			break; 
+		}
+		case 'g':
+		{
 
-	if (mColor == 'o')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/OrangeFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/OrangeFish.obj", texture);
-	}
-
-	if (mColor == 'g')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/GreenFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/GreenFish.obj", texture);
-	}
-
-	if (mColor == 'b')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/BlueFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
-	}
-
-	if (mColor == 'p')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/PurpleFish.jpg");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
-	}
-
-	//K is pink because we already have p
-	if (mColor == 'k')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/PinkFish.jpg");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
-	}
-
-	//S is for spotted
-	if (mColor == 's')
-	{
-		fishDistance = 500.0;
-		texture->Load("Assets/models/PolkaDotFish.png");
-		LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			fishDistance = 500.0;
+			texture->Load("Assets/models/GreenFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/GreenFish.obj", texture);
+			break;
+		}
+		case 'b':
+		{
+			fishDistance = 500.0;
+			texture->Load("Assets/models/BlueFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			break;
+		}
+		case 'p':
+		{
+			fishDistance = 500.0;
+			texture->Load("Assets/models/PurpleFish.jpg");
+			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			break;
+		}
+		//K is pink because we already have p
+		case 'k':
+		{
+			fishDistance = 500.0;
+			texture->Load("Assets/models/PinkFish.jpg");
+			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			break;
+		}
+		//S is for spotted
+		case 's':
+		{
+			fishDistance = 500.0;
+			texture->Load("Assets/models/PolkaDotFish.png");
+			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			break;
+		}
 	}
 
 	//Texture* texture = new Texture; texture->Load("Assets/models/Redfish.png");
@@ -250,7 +256,7 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 
 			Vector3 currentPos = this->GetPosition();
 
-			if (isOnLine && currentPos.y <= 300.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
+			if (isOnLine && currentPos.y <= 330.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
 			{
 				// If the fish collides with any of the walls, the player is no longer reeling it in
 				// It either got away or was caught
@@ -258,6 +264,7 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 				isCaught = true;
 				isOnLine = false;
 				GetGame()->StopReeling();
+				GetGame()->JustCaughtFish();
 
 			}
 
@@ -274,6 +281,7 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 		isCaught = true;
 		isOnLine = false;
 		GetGame()->StopReeling();
+		GetGame()->JustCaughtFish();
 
 	}
 
@@ -300,14 +308,15 @@ void BasicFish::SetFishTimer(float newTimer)
 void BasicFish::SetOnLinePosition()
 {
 	//cant use switch statement because mColor is not an int
+	//Yes you can i was dumb, change later
 
 	if (mColor == 'r')
 		fishOnLineStartPosition = GetGame()->GetRedFish()->GetPosition();
 	else if (mColor == 'y')
 		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
 	else if (mColor == 'o')
-		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
+		fishOnLineStartPosition = GetGame()->GetOrangeFish()->GetPosition();
 	else if (mColor == 'g')
-		fishOnLineStartPosition = GetGame()->GetYellowFish()->GetPosition();
+		fishOnLineStartPosition = GetGame()->GetGreenFish()->GetPosition();
 
 }

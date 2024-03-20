@@ -17,15 +17,33 @@ ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
 
-	int caughtFishType = mGame->GetCaughtFishType();
+	char caughtFishType = mGame->GetCaughtFishType();
 
 	switch (caughtFishType)
 	{
-		case 1:
+		case 'r':
 			SetTitle("RedFishTitle");
 			break;
-		case 2:
+		case 'o':
+			SetTitle("OrangeFishTitle");
+			break;
+		case 'y':
 			SetTitle("YellowFishTitle");
+			break;
+		case 'g':
+			SetTitle("GreenFishTitle");
+			break;
+		case 'b':
+			SetTitle("BlueFishTitle");
+			break;
+		case 'p':
+			SetTitle("PurpleFishTitle");
+			break;
+		case 'k':
+			SetTitle("PinkFishTitle");
+			break;
+		case 's':
+			SetTitle("SpottedFishTitle");
 			break;
 		default:
 			SetTitle("CatchTitle");

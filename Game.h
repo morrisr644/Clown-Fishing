@@ -53,7 +53,7 @@ public:
 	/*class BasicFish* GetBasicFish() {
 		return mBasicFish;
 	}*/
-	int GetCaughtFishType() {
+	char GetCaughtFishType() {
 		return mCaughtFishType;
 	}
 	class BasicFish* GetYellowFish() {
@@ -61,6 +61,12 @@ public:
 	}
 	class BasicFish* GetRedFish() {
 		return mRedFish;
+	}
+	class BasicFish* GetOrangeFish() {
+		return mOrangeFish;
+	}
+	class BasicFish* GetGreenFish() {
+		return mGreenFish;
 	}
 	std::vector<class BasicFish*> GetBasicFishes()
 	{
@@ -122,6 +128,8 @@ public:
 
 	float GetCurrentFishDistance() { return mCurrentFishDistance; }
 
+	void JustCaughtFish() { didJustCatchFish = true; }
+
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
@@ -167,8 +175,8 @@ private:
 	// Game-specific code
 	std::vector<class PlaneActor*> mPlanes;
 	//class BasicFish* mBasicFish;
-	int mCaughtFishType;
-	bool mAllCaughtFish[3]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
+	char mCaughtFishType;
+	bool mAllCaughtFish[7]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
 								//change to 7 when they are all added
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
@@ -190,4 +198,5 @@ private:
 	class BasicFish* mCurrentFish;
 	char CurrentFishType;
 	float mCurrentFishDistance;
+	bool didJustCatchFish;
 };

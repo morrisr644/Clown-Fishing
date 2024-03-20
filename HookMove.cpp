@@ -46,12 +46,15 @@ void HookMove::Update(float deltaTime)
 		FPSActor* player = mOwner->GetGame()->GetPlayer();
 		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
 		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
+		BasicFish* oFish = mOwner->GetGame()->GetOrangeFish();
+		BasicFish* gFish = mOwner->GetGame()->GetGreenFish();
+
 		/*const int NUMOFFISH = 2;
 		BasicFish* fishArray[NUMOFFISH] = { yFish, rFish };*/
 		std::vector<class BasicFish*> otherFishArray = mOwner->GetGame()->GetBasicFishes();
 		for (BasicFish* fish : otherFishArray)
 		{
-			if (fish->GetState() == Actor::EActive)
+			if (fish->GetState() == Actor::EActive && fish == info.mActor)
 			{
 				if (fish && !bobber->GetFishOnStatus())
 				{
