@@ -10,7 +10,7 @@ class MeshComponent;
 class BasicFish : public Actor
 {
 public:
-	BasicFish(class Game* game, char color, const char* textureFileName);
+	BasicFish(class Game* game, char color);
 
 	void UpdateActor(float deltaTime) override;
 	void GetOnLine(); // Rebecca Morris
@@ -34,6 +34,12 @@ public:
 	Vector3 GetOnLinePosition() { return fishOnLineStartPosition; }
 
 	char GetColor() { return mColor; }
+	
+	const Quaternion& BasicFish::GetRotationForDisplay() const override
+	{
+		//Makes fish swim in the right direction
+		return Quaternion::Concatenate(GetRotation(), Quaternion(Vector3::UnitZ, 210.5));
+	}
 
 private:
 	class BoxComponent* mBoxComp;
@@ -48,7 +54,6 @@ private:
 	float fishDistance;
 	Vector3 fishOnLineStartPosition;
 	char mColor;
-	const char* mTexture;
 
 	bool isFleeing;
 	std::vector<MeshComponent*> meshComponents_;
