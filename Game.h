@@ -19,6 +19,7 @@ class Game
 public:
 	Game();
 	bool Initialize();
+	bool Restart();
 	void RunLoop();
 	void Shutdown();
 
