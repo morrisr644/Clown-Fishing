@@ -35,7 +35,7 @@
 		"ResumeButton": "Resume",
 		"QuitButton": "Quit",
 		"QuitText": "Do you want to quit?",
-		"RestartText": "Are you sure you want to restart?",
+		"RestartText": "Do you want to restart?",
 		"OKButton": "OK",
 		"CancelButton": "Cancel"
 	}

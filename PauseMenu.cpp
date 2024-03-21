@@ -32,7 +32,18 @@ PauseMenu::PauseMenu(Game* game)
 		//new InventoryMenu(mGame);
 		});
 	AddButton("RestartButton", [this]() {
-		//new InventoryMenu(mGame);
+		new DialogBox(mGame, "RestartText",
+		[this]() {
+				//mGame->Shutdown();
+				//mGame->Initialize();
+				//mGame->SetState(Game::EQuit);
+				//mGame->RunLoop();
+				bool success = mGame->Restart();
+				/*if (success)
+				{
+					mGame->RunLoop();
+				}*/
+			});
 		});
 	AddButton("QuitButton", [this]() { 
 		new DialogBox(mGame, "QuitText",

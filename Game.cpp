@@ -112,6 +112,50 @@ bool Game::Initialize()
 	return true;
 }
 
+bool Game::Restart()
+{
+	UnloadData();
+
+	if (mAudioSystem)
+	{
+		mAudioSystem->Shutdown();
+	}
+
+	mAudioSystem = new AudioSystem(this);
+	if (!mAudioSystem->Initialize())
+	{
+		SDL_Log("Failed to initialize audio system");
+		mAudioSystem->Shutdown();
+		delete mAudioSystem;
+		mAudioSystem = nullptr;
+		return false;
+	}
+
+	LoadData();
+
+	isReelingIn = false;
+
+	mTicksCount = SDL_GetTicks();
+
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(true);
+
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling.SetPaused(true);
+
+	isScreenSaysFishOnOn = false;
+	isScreenSaysFishOffOn = false;
+	didFishGetAway = false;
+	didJustCatchFish = false;
+
+	for(int i = 0; i < 8; i++)
+	{
+		mAllCaughtFish[i] = false;
+	}
+
+	return true;
+}
+
 void Game::RunLoop()
 {
 	while (mGameState != EQuit)
