@@ -115,10 +115,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 		{
 			if (currFish->GetFleeingStatus() == false)
 			{
-				Vector3 turnFishAround = currFish->GetForward();
-				Vector3 zeroedVector(0.0, 0.0, 0.0);
-				turnFishAround = zeroedVector - turnFishAround; //  Adam Example of the operator - in use to get an inverse.
-				turnFishAround.Normalize();
+				Vector3 turnFishAround = -currFish->GetForward(); // the use of the new -operator with Dr. Briggs help
 				currFish->RotateToNewForward(turnFishAround);
 				currFish->SetAngularSpeed(0);
 				currFish->SetFleeingStatus(true);

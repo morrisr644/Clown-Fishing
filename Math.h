@@ -293,6 +293,18 @@ public:
 		return Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
+	bool operator== (const Vector3& other) const //WSB 2024-03-18
+	{
+		return x == other.x && y == other.y && z == other.z;
+	}
+
+	Vector3 operator-() const  //WSB 2024-03-18
+	{
+		return Vector3(-x, -y, -z);
+	}
+
+
+
 	// Component-wise multiplication
 	friend Vector3 operator*(const Vector3& left, const Vector3& right)
 	{
