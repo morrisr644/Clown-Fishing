@@ -21,131 +21,64 @@ HookMove::HookMove(Actor* owner) :MoveComponent(owner)
 
 void HookMove::Update(float deltaTime)
 {
-	// Construct segment in direction of travel
-	const float segmentLength = 30.0f;
-	Vector3 start = mOwner->GetPosition();
-	Vector3 dir = mOwner->GetForward();
-	Vector3 end = start + dir * segmentLength;
-
-	// Create line segment
-	LineSegment l(start, end);
-
+	
+	
 
 	// Test segment vs world
-
 	PhysWorld* phys = mOwner->GetGame()->GetPhysWorld();
 	PhysWorld::CollisionInfo info;
 	Hook* hook = mOwner->GetGame()->GetHook();
 	BobberActor* bobber = mOwner->GetGame()->GetBobber();
 	Vector3 bobberPosition = bobber->GetPosition();
 
-	if (phys->SegmentCast(l, info) && info.mActor != mPlayer)
+	std::vector<class BasicFish*> otherFishArray = mOwner->GetGame()->GetBasicFishes();
+	for (BasicFish* fish : otherFishArray)
 	{
-		//BasicFish* yellowFish = dynamic_cast<BasicFish*>(info.mActor); //Same comment, do we need both or just one? -Rebecca
-		//BasicFish* redFish = dynamic_cast<BasicFish*>(info.mActor);
-		FPSActor* player = mOwner->GetGame()->GetPlayer();
-		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
-		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
-		BasicFish* oFish = mOwner->GetGame()->GetOrangeFish();
-		BasicFish* gFish = mOwner->GetGame()->GetGreenFish();
+		// Construct segment in direction of travel
+		const float segmentLength = 30.0f;
+		Vector3 start = fish->GetPosition();
+		Vector3 dir = fish->GetForward();
+		Vector3 end = start + dir * segmentLength;
 
-		/*const int NUMOFFISH = 2;
-		BasicFish* fishArray[NUMOFFISH] = { yFish, rFish };*/
-		std::vector<class BasicFish*> otherFishArray = mOwner->GetGame()->GetBasicFishes();
-		for (BasicFish* fish : otherFishArray)
+		// Create line segment
+		LineSegment l(start, end);
+
+		//Maybe make the hook a box and see if the fish box and the hook box intersect? WSB 2024-03-25
+		if (phys->SegmentCast(l, info) && info.mActor == hook)
 		{
-			if (fish->GetState() == Actor::EActive && fish == info.mActor)
+			//Can we verify that if bobber think's there's a fish on, at least/exactly one fish thinks it's caught?
+			//typeid(*fish) == typeid(BasicFish) && 
+			if (fish->GetState() == Actor::EActive && !bobber->GetFishOnStatus())
 			{
-				if (fish && !bobber->GetFishOnStatus())
-				{
-					fish->GetOnLine();
-					bobber->FishOn();
-					Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-					bobber->SetPosition(newBobberPosition);
-				}
-
-				if (fish->GetLineStatus() && fish->GetState() == Actor::EActive) // this handles the fishes tension
-				{
-					// make the fish face bobber instead of the player.
-					// get fish to reflect off of wall.
-					Vector3 playerPos = player->GetPosition();
-					Vector3 bobberPos = bobber->GetPosition();
-					Vector3 fishPos = fish->GetPosition();
-					Vector3 bobberOppPlayer = playerPos - bobberPos;
-					Vector3 fishOppBobber = bobberPos - fishPos;
-					bobberOppPlayer.Normalize();
-					fishOppBobber.Normalize();
-					bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
-					bobber->RotateToNewForward(bobberOppPlayer);
-					fish->RotateToNewForward(fishOppBobber);
-					if (fish == rFish) // red fish is easer to catch
-					{
-						bobber->SetTensionSpeed(20.0);
-						rFish->SetMovementSpeed(-20.0);
-					}
-					else if (fish == yFish)
-					{
-						bobber->SetTensionSpeed(30.0);
-						fish->SetMovementSpeed(-30.0);
-					}
-					else
-					{
-						bobber->SetTensionSpeed(20.0);
-						fish->SetMovementSpeed(-20.0);
-					}
-				}
+				fish->GetOnLine();
+				bobber->FishOn(); //WSB 2024-03-25 What's this "20.0f"?
+				Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
+				bobber->SetPosition(newBobberPosition);
 			}
-			
 		}
+	}
+
+	BasicFish* caughtFish = mOwner->GetGame()->GetCurrentFish();
+	if (caughtFish && caughtFish->GetLineStatus() && caughtFish->GetState() == Actor::EActive) // this handles the fishes tension
+	{
+		// make the fish face bobber instead of the player.
+		// get fish to reflect off of wall.
+		Vector3 bobberPos = bobber->GetPosition();
+		Vector3 bobberOppPlayer = mOwner->GetGame()->GetPlayer()->GetPosition() - bobberPos;
+		Vector3 fishOppBobber = bobberPos - caughtFish->GetPosition();
+		bobberOppPlayer.Normalize();
+		fishOppBobber.Normalize();
+		bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
+		bobber->RotateToNewForward(bobberOppPlayer);
+		caughtFish->RotateToNewForward(fishOppBobber);
+
+		bobber->SetTensionSpeed(20.0);
+		caughtFish->SetMovementSpeed(-20.0); //WSB 2024-03-25 make this fish->iAmHookedSpeed
 	}
 }
 
-/*
-		if (yFish && !bobber->GetFishOnStatus())
-		{
-			yFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
-		}
+void HookMove::CreateHookBox()
+{
+	Vector3 hookPos = mOwner->GetGame()->GetHook()->GetPosition();
+}
 
-		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive) // this handles the fishes tension
-		{
-			// make the fish face bobber instead of the player.
-			// get fish to reflect off of wall.
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = yFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppBobber = bobberPos - fishPos;
-			bobberOppPlayer.Normalize();
-			fishOppBobber.Normalize();
-			bobberOppPlayer.Reverse();
-			bobber->RotateToNewForward(bobberOppPlayer);
-			yFish->RotateToNewForward(fishOppBobber);
-			bobber->SetTensionSpeed(30.0);
-			yFish->SetMovementSpeed(-30.0);
-		}
-		if (rFish && !bobber->GetFishOnStatus())
-		{
-			rFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
-		}
-
-		if (rFish->GetLineStatus() && rFish->GetState() == Actor::EActive) // this handles the fishes tension
-		{
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = rFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppBobber = bobberPos - fishPos; // i want the fish to face the bobber not the player
-			bobberOppPlayer.Normalize();
-			fishOppBobber.Normalize();
-			bobberOppPlayer.Reverse();
-			bobber->RotateToNewForward(bobberOppPlayer);
-			rFish->RotateToNewForward(fishOppBobber);
-			bobber->SetTensionSpeed(20.0);
-			rFish->SetMovementSpeed(-20.0);
-		}*/
