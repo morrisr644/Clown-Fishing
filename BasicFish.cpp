@@ -30,6 +30,7 @@ BasicFish::BasicFish(Game* game, char color)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
+	, hookedSpeed(-20.0)
 {
 	SetScale(5.0f);
 
@@ -55,6 +56,7 @@ BasicFish::BasicFish(Game* game, char color)
 			fishDistance = 500.0;
 			texture->Load("Assets/models/YellowFish.jpg");
 			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
+			hookedSpeed = -30.0f;
 			break; 
 		}
 		case 'o':
@@ -101,6 +103,7 @@ BasicFish::BasicFish(Game* game, char color)
 			fishDistance = 500.0;
 			texture->Load("Assets/models/PolkaDotFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/PolkaDotFish.obj", texture);
+			hookedSpeed = -50.0;
 			break;
 		}
 	}
@@ -268,6 +271,7 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 			}
 
 		}
+
 	}
 
 	Vector3 currentPos = this->GetPosition();
@@ -281,6 +285,18 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 		isOnLine = false;
 		GetGame()->StopReeling();
 		GetGame()->JustCaughtFish();
+
+	}
+
+	if (isOnLine && currentPos.z <= -700.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
+	{
+		// If the fish collides with any of the walls, the player is no longer reeling it in
+		// It either got away or was caught
+
+		isCaught = false;
+		isOnLine = false;
+
+		this->GetGame()->GetBobber()->FishOff(this);
 
 	}
 

@@ -155,7 +155,8 @@ void FPSActor::Shoot()
 		// Spawn a ball
 		BobberActor* ball = GetGame()->GetBobber(); // This line
 		//this->GetGame()->AddBobber(ball); // Adds bobber to list of bobbers - Rebecca Morris
-		ball->FishOff(); // this resets the isFishOn variable to false.
+		//ball->FishOff(); // this resets the isFishOn variable to false.
+		ball->setBobberFishOn(false);
 		ball->SetPlayer(this);
 		ball->SetPosition(start + dir * 20.0f);
 		// Rotate the ball to face new direction

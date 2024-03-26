@@ -25,8 +25,8 @@ public:
 	void PutInWater();
 	void OutOfWater();
 	void FishOn();
-	void Splash();
-	void FishOff();
+	//void Splash();
+	void FishOff(BasicFish* currFish);
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
 	void SetForwardVelocity(Vector3 newVelocity) { mForwardVelocity = newVelocity; }
@@ -36,6 +36,7 @@ public:
 	void CheckFish(float deltaTime, BasicFish* currFish);
 	void SetTensionSpeed(float tensionSpeed);
 	float getTotalDistance() { return mTotalDistance; };
+	void setBobberFishOn(bool fishOn) { isFishOn = fishOn; }
 	//void CheckFish(float deltaTime, BasicFish* currFish);
 private:
 	class AudioComponent* mAudioComp;

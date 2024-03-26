@@ -188,12 +188,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 		char fishType = mGame->GetCurrentFishType();
 
-		currentFish = mGame->GetRedFish();
-
-		if (fishType == 'r')
-			currentFish = mGame->GetRedFish();
-		if (fishType == 'y')
-			currentFish = mGame->GetYellowFish();
+		currentFish = mGame->GetCurrentFish();
 
 
 
@@ -209,7 +204,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 		//The more space is pressed = the smaller the percent becomes
 		//The longer space is not pressed = the larger the value gets
-		float percent = (totalDistance/fishDistance) * 10;  
+		float percent = (totalDistance/600.0) * 10;  
 
 
 		if (percent >= 8.5f)

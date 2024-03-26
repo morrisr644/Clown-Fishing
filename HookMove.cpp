@@ -78,74 +78,30 @@ void HookMove::Update(float deltaTime)
 					bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
 					bobber->RotateToNewForward(bobberOppPlayer);
 					fish->RotateToNewForward(fishOppBobber);
-					if (fish == rFish) // red fish is easer to catch
-					{
-						bobber->SetTensionSpeed(20.0);
-						rFish->SetMovementSpeed(-20.0);
-					}
-					else if (fish == yFish)
-					{
-						bobber->SetTensionSpeed(30.0);
-						fish->SetMovementSpeed(-30.0);
-					}
-					else
-					{
-						bobber->SetTensionSpeed(20.0);
-						fish->SetMovementSpeed(-20.0);
-					}
+
+					float fishHookedSpeed = fish->getHookedSpeed();
+					
+					fish->SetMovementSpeed(fishHookedSpeed);
+					bobber->SetTensionSpeed(-fishHookedSpeed);
+
+					//if (fish == rFish) // red fish is easer to catch
+					//{
+					//	bobber->SetTensionSpeed(20.0);
+					//	rFish->SetMovementSpeed(-20.0);
+					//}
+					//else if (fish == yFish)
+					//{
+					//	bobber->SetTensionSpeed(30.0);
+					//	fish->SetMovementSpeed(-30.0);
+					//}
+					//else
+					//{
+					//	bobber->SetTensionSpeed(20.0);
+					//	fish->SetMovementSpeed(-20.0);
+					//}
 				}
 			}
 			
 		}
 	}
 }
-
-/*
-		if (yFish && !bobber->GetFishOnStatus())
-		{
-			yFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
-		}
-
-		if (yFish->GetLineStatus() && yFish->GetState() == Actor::EActive) // this handles the fishes tension
-		{
-			// make the fish face bobber instead of the player.
-			// get fish to reflect off of wall.
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = yFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppBobber = bobberPos - fishPos;
-			bobberOppPlayer.Normalize();
-			fishOppBobber.Normalize();
-			bobberOppPlayer.Reverse();
-			bobber->RotateToNewForward(bobberOppPlayer);
-			yFish->RotateToNewForward(fishOppBobber);
-			bobber->SetTensionSpeed(30.0);
-			yFish->SetMovementSpeed(-30.0);
-		}
-		if (rFish && !bobber->GetFishOnStatus())
-		{
-			rFish->GetOnLine();
-			bobber->FishOn();
-			Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-			bobber->SetPosition(newBobberPosition);
-		}
-
-		if (rFish->GetLineStatus() && rFish->GetState() == Actor::EActive) // this handles the fishes tension
-		{
-			Vector3 playerPos = player->GetPosition();
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 fishPos = rFish->GetPosition();
-			Vector3 bobberOppPlayer = playerPos - bobberPos;
-			Vector3 fishOppBobber = bobberPos - fishPos; // i want the fish to face the bobber not the player
-			bobberOppPlayer.Normalize();
-			fishOppBobber.Normalize();
-			bobberOppPlayer.Reverse();
-			bobber->RotateToNewForward(bobberOppPlayer);
-			rFish->RotateToNewForward(fishOppBobber);
-			bobber->SetTensionSpeed(20.0);
-			rFish->SetMovementSpeed(-20.0);
-		}*/
