@@ -10,6 +10,7 @@ public:
 
 	void SetPlayer(Actor* player) { mPlayer = player; }
 	void Update(float deltaTime) override;
+	void CreateHookBox();
 protected:
 	class Actor* mPlayer;
 };

@@ -16,6 +16,7 @@
 #include "PhysWorld.h"
 #include "FPSActor.h"
 #include "HookMove.h"
+#include "BoxComponent.h"
 
 
 Hook::Hook(Game* game)
@@ -24,11 +25,9 @@ Hook::Hook(Game* game)
 {
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/HookSphere.gpmesh"); // just a placeholder for testing currently
+	BoxComponent* bc = new BoxComponent(this);
+	bc->SetObjectBox(mesh->GetBox());
 	mc->SetMesh(mesh);
 	mMyMove = new HookMove(this);
 }
 
-/*void Hook::UpdateActor(float deltaTime)
-{
-	Actor::UpdateActor(deltaTime);
-}*/
