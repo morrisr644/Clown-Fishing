@@ -254,6 +254,13 @@ void Game::HandleKeyPress(int key)
 		// Create pause menu
 		new PauseMenu(this);
 		break;
+	case SDLK_m:
+		// Mute the background music
+		if (!mMusicEvent.GetPaused())
+			mMusicEvent.SetPaused(true);
+		else
+			mMusicEvent.SetPaused(false);
+		break;
 	case '-':
 	{
 		// Reduce master volume
@@ -669,7 +676,7 @@ void Game::LoadData()
 	mHUD = new HUD(this);
 	
 	// Start music
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
 	//mMusicEvent.SetPaused(false);
 	mMusicEvent.Restart();
 

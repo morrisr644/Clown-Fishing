@@ -48,15 +48,51 @@ void HookMove::Update(float deltaTime)
 		{
 			//Can we verify that if bobber think's there's a fish on, at least/exactly one fish thinks it's caught?
 			//typeid(*fish) == typeid(BasicFish) && 
-			if (fish->GetState() == Actor::EActive && !bobber->GetFishOnStatus())
+			if (fish && !bobber->GetFishOnStatus())
 			{
 				fish->GetOnLine();
 				bobber->FishOn(); //WSB 2024-03-25 What's this "20.0f"?
 				Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
 				bobber->SetPosition(newBobberPosition);
 			}
-		}
-	}
+
+				if (fish->GetLineStatus() && fish->GetState() == Actor::EActive) // this handles the fishes tension
+				{
+					// make the fish face bobber instead of the player.
+					// get fish to reflect off of wall.
+					Vector3 playerPos = player->GetPosition();
+					Vector3 bobberPos = bobber->GetPosition();
+					Vector3 fishPos = fish->GetPosition();
+					Vector3 bobberOppPlayer = playerPos - bobberPos;
+					Vector3 fishOppBobber = bobberPos - fishPos;
+					bobberOppPlayer.Normalize();
+					fishOppBobber.Normalize();
+					bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
+					bobber->RotateToNewForward(bobberOppPlayer);
+					fish->RotateToNewForward(fishOppBobber);
+
+					float fishHookedSpeed = fish->getHookedSpeed();
+					
+					fish->SetMovementSpeed(fishHookedSpeed);
+					bobber->SetTensionSpeed(-fishHookedSpeed);
+
+					//if (fish == rFish) // red fish is easer to catch
+					//{
+					//	bobber->SetTensionSpeed(20.0);
+					//	rFish->SetMovementSpeed(-20.0);
+					//}
+					//else if (fish == yFish)
+					//{
+					//	bobber->SetTensionSpeed(30.0);
+					//	fish->SetMovementSpeed(-30.0);
+					//}
+					//else
+					//{
+					//	bobber->SetTensionSpeed(20.0);
+					//	fish->SetMovementSpeed(-20.0);
+					//}
+				}
+			}
 
 	BasicFish* caughtFish = mOwner->GetGame()->GetCurrentFish();
 	if (caughtFish && caughtFish->GetLineStatus() && caughtFish->GetState() == Actor::EActive) // this handles the fishes tension

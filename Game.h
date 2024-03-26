@@ -45,15 +45,8 @@ public:
 	class FPSActor* GetPlayer() { return mFPSActor; }
 	class BobberActor* GetBobber() {
 		return mSingleBobber;
-		/*if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
-		{
-			return mBobbers[0];
-		}*/
 	}
 	class Hook* GetHook() { return currentHook; }
-	/*class BasicFish* GetBasicFish() {
-		return mBasicFish;
-	}*/
 	char GetCaughtFishType() {
 		return mCaughtFishType;
 	}
@@ -85,10 +78,6 @@ public:
 	{
 		return mBasicFishes;
 	}
-	/*std::vector<class YellowFish*> GetYellowFishes()
-	{
-		return mYellowFishes;
-	}*/
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
