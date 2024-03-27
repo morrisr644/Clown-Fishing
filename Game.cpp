@@ -664,6 +664,15 @@ void Game::LoadData()
 		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			//Replaced UnderPlane
+			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
+		}
+	}
 
 	// Setup lights
 	mRenderer->SetAmbientLight(Vector3(0.8f, 0.8f, 0.8f));
@@ -715,12 +724,6 @@ void Game::LoadData()
 	// Setup floor
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
-		{
-			//Replaced UnderPlane
-			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
-			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
-		}
 		for (int j = 0; j < 4; j++)
 		{
 			//Replaced GrassPlane
