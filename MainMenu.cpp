@@ -6,32 +6,28 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+#include "MainMenu.h"
 #include "PauseMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
 #include "InventoryMenu.h"
-#include "MainMenu.h"
 #include "Renderer.h"
 #include <SDL/SDL.h>
 
-PauseMenu::PauseMenu(Game* game)
+MainMenu::MainMenu(Game* game)
 	:UIScreen(game)
 {
+	mState = EActive();
+	this->mNextButtonPos.Set(300.0f, 150.0f);
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
-	SetTitle("PauseTitle");
-	AddButton("ResumeButton", [this]() {
-		Close();
-	});
+	//SetTitle("PauseTitle");
 
-	mBackground = game->GetRenderer()->GetTexture("Assets/PauseDialogBG.png");
-	mBGPos = Vector2(-45.0f, 145.0f);
-	/*AddButton("InventoryButton", [this]() {
-		new InventoryMenu(mGame);
-		});*/
-	AddButton("MenuButton", [this]() {
-		mGame->PopUI(this);
-		new MainMenu(mGame);
+	mGame->PauseMusic();
+	mBackground = game->GetRenderer()->GetTexture("Assets/SmallMainMenu.jpg");
+	mBGPos = Vector2(0.0f, 0.0f);
+	AddButton("StartOrResumeButton", [this]() {
+		Close();
 		});
 	AddButton("RestartButton", [this]() {
 		new DialogBox(mGame, "RestartText",
@@ -55,13 +51,14 @@ PauseMenu::PauseMenu(Game* game)
 	});
 }
 
-PauseMenu::~PauseMenu()
+MainMenu::~MainMenu()
 {
+	mGame->PauseMusic();
 	SetRelativeMouseMode(true);
 	mGame->SetState(Game::EGameplay);
 }
 
-void PauseMenu::HandleKeyPress(int key)
+void MainMenu::HandleKeyPress(int key)
 {
 	UIScreen::HandleKeyPress(key);
 	

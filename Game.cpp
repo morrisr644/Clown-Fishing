@@ -27,6 +27,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "MainMenu.h"
 #include "InventoryMenu.h"
 #include "ScreenSaysFishOn.h"
 #include "ScreenSaysFishOff.h"
@@ -109,6 +110,8 @@ bool Game::Initialize()
 	didFishGetAway = false;
 	didJustCatchFish = false;
 	
+	new MainMenu(this);
+
 	return true;
 }
 
@@ -153,6 +156,8 @@ bool Game::Restart()
 		mAllCaughtFish[i] = false;
 	}
 
+	new MainMenu(this);
+
 	return true;
 }
 
@@ -186,6 +191,14 @@ bool Game::GetAllCaughtFish(int index)
 void Game::SetCurrentFish(BasicFish* fish)
 {
 	mCurrentFish = fish;
+}
+
+void Game::PauseMusic()
+{
+	if(!mAudioSystem->GetBusPaused("bus:/"))
+		mAudioSystem->SetBusPaused("bus:/", true);
+	else
+		mAudioSystem->SetBusPaused("bus:/", false);
 }
 
 void Game::ProcessInput()
@@ -942,6 +955,12 @@ void Game::RemoveBasicFish(BasicFish* fish)
 void Game::PushUI(UIScreen* screen)
 {
 	mUIStack.emplace_back(screen);
+}
+
+void Game::PopUI(UIScreen* screen)
+{
+	mUIStack.pop_back();
+	//mUIStack.emplace_back(screen);
 }
 
 Font* Game::GetFont(const std::string& fileName)

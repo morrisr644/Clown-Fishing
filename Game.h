@@ -41,6 +41,7 @@ public:
 	// Manage UI stack
 	const std::vector<class UIScreen*>& GetUIStack() { return mUIStack; }
 	void PushUI(class UIScreen* screen);
+	void PopUI(class UIScreen* screen);
 	
 	class FPSActor* GetPlayer() { return mFPSActor; }
 	class BobberActor* GetBobber() {
@@ -131,6 +132,8 @@ public:
 	float GetCurrentFishDistance() { return mCurrentFishDistance; }
 
 	void JustCaughtFish() { didJustCatchFish = true; }
+
+	void PauseMusic();
 
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
