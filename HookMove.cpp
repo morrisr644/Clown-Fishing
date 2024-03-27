@@ -46,7 +46,7 @@ void HookMove::Update(float deltaTime)
 		{
 			//Can we verify that if bobber think's there's a fish on, at least/exactly one fish thinks it's caught?
 			//typeid(*fish) == typeid(BasicFish) && 
-			if (fish && !bobber->GetFishOnStatus())
+			if (fish->GetState() == Actor::EActive && !bobber->GetFishOnStatus())
 			{
 				fish->GetOnLine();
 				mOwner->GetGame()->SetCurrentFish(fish);
@@ -70,9 +70,9 @@ void HookMove::Update(float deltaTime)
 			bobber->RotateToNewForward(bobberOppPlayer);
 			caughtFish->RotateToNewForward(fishOppBobber);
 
-			float fishHookedSpeed = fish->getHookedSpeed();
+			float fishHookedSpeed = caughtFish->getHookedSpeed();
 
-			fish->SetMovementSpeed(fishHookedSpeed);
+			caughtFish->SetMovementSpeed(fishHookedSpeed);
 			bobber->SetTensionSpeed(-fishHookedSpeed);
 
 			//bobber->SetTensionSpeed(20.0);

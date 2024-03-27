@@ -32,15 +32,7 @@ MainMenu::MainMenu(Game* game)
 	AddButton("RestartButton", [this]() {
 		new DialogBox(mGame, "RestartText",
 		[this]() {
-				//mGame->Shutdown();
-				//mGame->Initialize();
-				//mGame->SetState(Game::EQuit);
-				//mGame->RunLoop();
 				bool success = mGame->Restart();
-				/*if (success)
-				{
-					mGame->RunLoop();
-				}*/
 			});
 		});
 	AddButton("QuitButton", [this]() { 
