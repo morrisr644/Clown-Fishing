@@ -41,19 +41,13 @@ public:
 	// Manage UI stack
 	const std::vector<class UIScreen*>& GetUIStack() { return mUIStack; }
 	void PushUI(class UIScreen* screen);
+	void PopUI(class UIScreen* screen);
 	
 	class FPSActor* GetPlayer() { return mFPSActor; }
 	class BobberActor* GetBobber() {
 		return mSingleBobber;
-		/*if (mBobbers.size() == 1) // If there is already a bobber, remove it - Rebecca Morris
-		{
-			return mBobbers[0];
-		}*/
 	}
 	class Hook* GetHook() { return currentHook; }
-	/*class BasicFish* GetBasicFish() {
-		return mBasicFish;
-	}*/
 	char GetCaughtFishType() {
 		return mCaughtFishType;
 	}
@@ -85,10 +79,6 @@ public:
 	{
 		return mBasicFishes;
 	}
-	/*std::vector<class YellowFish*> GetYellowFishes()
-	{
-		return mYellowFishes;
-	}*/
 	
 	std::vector<class BobberActor*> GetBobberCount()
 	{
@@ -142,6 +132,8 @@ public:
 	float GetCurrentFishDistance() { return mCurrentFishDistance; }
 
 	void JustCaughtFish() { didJustCatchFish = true; }
+
+	void PauseMusic();
 
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	

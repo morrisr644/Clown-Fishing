@@ -10,6 +10,7 @@
 #include "Game.h"
 #include "DialogBox.h"
 #include "InventoryMenu.h"
+#include "MainMenu.h"
 #include "Renderer.h"
 #include <SDL/SDL.h>
 
@@ -29,7 +30,8 @@ PauseMenu::PauseMenu(Game* game)
 		new InventoryMenu(mGame);
 		});*/
 	AddButton("MenuButton", [this]() {
-		//new InventoryMenu(mGame);
+		mGame->PopUI(this);
+		new MainMenu(mGame);
 		});
 	AddButton("RestartButton", [this]() {
 		new DialogBox(mGame, "RestartText",

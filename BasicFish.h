@@ -33,6 +33,8 @@ public:
 	void SetOnLinePosition();
 	Vector3 GetOnLinePosition() { return fishOnLineStartPosition; }
 
+	float getHookedSpeed() { return hookedSpeed; }
+
 	char GetColor() { return mColor; }
 	
 	const Quaternion& BasicFish::GetRotationForDisplay() const override
@@ -54,6 +56,7 @@ private:
 	float fishDistance;
 	Vector3 fishOnLineStartPosition;
 	char mColor;
+	float hookedSpeed;
 
 	bool isFleeing;
 	std::vector<MeshComponent*> meshComponents_;

@@ -27,6 +27,7 @@
 #include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
+#include "MainMenu.h"
 #include "InventoryMenu.h"
 #include "ScreenSaysFishOn.h"
 #include "ScreenSaysFishOff.h"
@@ -109,6 +110,8 @@ bool Game::Initialize()
 	didFishGetAway = false;
 	didJustCatchFish = false;
 	
+	new MainMenu(this);
+
 	return true;
 }
 
@@ -153,6 +156,8 @@ bool Game::Restart()
 		mAllCaughtFish[i] = false;
 	}
 
+	new MainMenu(this);
+
 	return true;
 }
 
@@ -186,6 +191,14 @@ bool Game::GetAllCaughtFish(int index)
 void Game::SetCurrentFish(BasicFish* fish)
 {
 	mCurrentFish = fish;
+}
+
+void Game::PauseMusic()
+{
+	if(!mAudioSystem->GetBusPaused("bus:/"))
+		mAudioSystem->SetBusPaused("bus:/", true);
+	else
+		mAudioSystem->SetBusPaused("bus:/", false);
 }
 
 void Game::ProcessInput()
@@ -253,6 +266,13 @@ void Game::HandleKeyPress(int key)
 	case SDLK_ESCAPE:
 		// Create pause menu
 		new PauseMenu(this);
+		break;
+	case SDLK_m:
+		// Mute the background music
+		if (!mMusicEvent.GetPaused())
+			mMusicEvent.SetPaused(true);
+		else
+			mMusicEvent.SetPaused(false);
 		break;
 	case '-':
 	{
@@ -371,14 +391,24 @@ void Game::HandleKeyPress(int key)
 			
 			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
-				if (bobberPos.z > -110.0 || fishPos.z > -170.0) // if the bobber is coming out of the water, or the fish
+				if (bobberPos.z > -110.0) // if the bobber is coming out of the water, or the fish
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
-					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
+					//newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
 				}
 				else
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
+					//newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z + offsetFromReel.z);
+				}
+				if (fishPos.z > -170.0) // if the bobber is coming out of the water, or the fish
+				{
+					//newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
+					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
+				}
+				else
+				{
+					//newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z + offsetFromReel.z);
 				}
 
@@ -657,6 +687,15 @@ void Game::LoadData()
 		a->SetPosition(Vector3(-start + size, start + i * size, -600.0f));
 		a->SetRotation(q);
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			//Replaced UnderPlane
+			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
+		}
+	}
 
 	// Setup lights
 	mRenderer->SetAmbientLight(Vector3(0.8f, 0.8f, 0.8f));
@@ -669,7 +708,7 @@ void Game::LoadData()
 	mHUD = new HUD(this);
 	
 	// Start music
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
 	//mMusicEvent.SetPaused(false);
 	mMusicEvent.Restart();
 
@@ -708,12 +747,6 @@ void Game::LoadData()
 	// Setup floor
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
-		{
-			//Replaced UnderPlane
-			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
-			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
-		}
 		for (int j = 0; j < 4; j++)
 		{
 			//Replaced GrassPlane
@@ -932,6 +965,12 @@ void Game::RemoveBasicFish(BasicFish* fish)
 void Game::PushUI(UIScreen* screen)
 {
 	mUIStack.emplace_back(screen);
+}
+
+void Game::PopUI(UIScreen* screen)
+{
+	mUIStack.pop_back();
+	//mUIStack.emplace_back(screen);
 }
 
 Font* Game::GetFont(const std::string& fileName)

@@ -37,6 +37,7 @@
 		"QuitText": "Do you want to quit?",
 		"RestartText": "Do you want to restart?",
 		"OKButton": "OK",
-		"CancelButton": "Cancel"
+		"CancelButton": "Cancel",
+		"StartOrResumeButton": "Start/Resume"
 	}
 }
