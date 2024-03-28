@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{17b809cd-c117-4ce3-a8f2-c9af24d3636e}">
+        <property name="assetPath">
+            <value>ChildrenYayShort.mp3</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>3.030204081632653</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{42c69396-62b1-4c58-9e1d-bb7b2e182935}</destination>
+        </relationship>
+    </object>
+</objects>

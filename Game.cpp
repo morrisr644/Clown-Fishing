@@ -105,6 +105,9 @@ bool Game::Initialize()
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
 
+	mWin = mAudioSystem->PlayEvent("event:/Win");
+	mWin.SetPaused(true);
+
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
@@ -150,6 +153,8 @@ bool Game::Restart()
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
 	didJustCatchFish = false;
+
+	SetCurrentFish(nullptr);
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -521,9 +526,11 @@ void Game::HandleKeyPress(int key)
 			caughtFish->UpdateActor(mCurrentTime);
 
 			new ScreenSaysFishCaught(this);
+			mWin.Restart();
+			mWin.SetPaused(false);
+
 			caughtFish->SetCatchStatus(true);
 			caughtFish->SetState(Actor::EDead);
-			//mYellowFish->SetState(Actor::EDead);
 			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 			mSingleBobber->SetPosition(bobberSpawnPoint);
 

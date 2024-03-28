@@ -9,6 +9,7 @@
 #pragma once
 #include "UIScreen.h"
 #include "BasicFish.h"
+#include "AudioComponent.h"
 
 class ScreenSaysFishCaught : public UIScreen
 {
