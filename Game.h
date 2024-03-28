@@ -190,6 +190,7 @@ private:
 	class SpriteComponent* mCrosshair;
 	SoundEvent mMusicEvent;
 	SoundEvent mReeling;
+	SoundEvent mWin;
 	class BasicFish* mYellowFish;
 	class BasicFish* mRedFish;
 	class BasicFish* mOrangeFish;
