@@ -32,7 +32,7 @@ public:
 	void SetFleeingStatus(bool fleeingStatus) { isFleeing = fleeingStatus; }
 	void SetOnLinePosition();
 	Vector3 GetOnLinePosition() { return fishOnLineStartPosition; }
-
+	float SetHookedSpeed(float newSpeed) { hookedSpeed = newSpeed; }
 	float getHookedSpeed() { return hookedSpeed; }
 
 	char GetColor() { return mColor; }
