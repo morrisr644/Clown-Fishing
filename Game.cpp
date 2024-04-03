@@ -216,6 +216,27 @@ void Game::PauseMusic()
 		mAudioSystem->SetBusPaused("bus:/", false);
 }
 
+bool Game::CheckIfAllFishCaught()
+{
+	bool allFishCaught = true;
+	for (bool fish : mAllCaughtFish)
+	{
+		if (fish == false)
+		{
+			allFishCaught = false;
+		}
+	}
+
+	return allFishCaught;
+}
+
+void Game::NewMainMenu()
+{
+	new MainMenu(this);
+}
+
+
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -544,8 +565,6 @@ void Game::HandleKeyPress(int key)
 			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 			mSingleBobber->SetPosition(bobberSpawnPoint);
 
-
-
 		}
 
 		break;
@@ -656,6 +675,7 @@ void Game::UpdateGame()
 	{
 		currentHook->SetPosition(Vector3(20000, 20000, 20000));
 	}
+
 }
 
 void Game::GenerateOutput()
@@ -749,7 +769,8 @@ void Game::LoadData()
 	mSingleBobber->SetPosition(Vector3(20000, 20000, 0));
 	currentHook = new Hook(this);
 	currentHook->SetPosition(Vector3(20000, 20000, 2000));
-	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f)); // why does the fish float?
+	// Tweak start speed and rotation for each fish individually Adam
+	mRedFish->SetPosition(Vector3(1000.0f, 400.0f, -450.0f));
 	mYellowFish->SetPosition(Vector3(600.0f, 700.0f, -450.0f));
 	mOrangeFish->SetPosition(Vector3(800.0f, 800.0f, -550.0f));
 	mGreenFish->SetPosition(Vector3(1200.0f, 400.0f, -500.0f));
@@ -781,6 +802,13 @@ void Game::LoadData()
 			//Replaced WaterPlane
 			a = new PlaneActor(this, "Assets/WaterPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+
+		for (int j = 5; j < 10; j++) // Rebecca Morris
+		{
+			//Replaced WaterPlane
+			a = new PlaneActor(this, "Assets/InvisiblePlane.gpmesh");
+			a->SetPosition(Vector3(start + i * size, start + j * size, -200.0f));
 		}
 		for (int j = 4; j < 5; j++)
 		{
@@ -834,24 +862,6 @@ void Game::LoadData()
 		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
 		a->SetRotation(q);
 	}
-
-	// Draw the invisible wall
-	//This might disappear
-	//q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-	//	a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -300.0f));
-	//	a->SetRotation(q);
-	//}
-
-	//q = Quaternion(Vector3::UnitX, Math::PiOver2);
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	a = new InvisiblePlaneActor(this); //Invisible Wall starts at -1250, 250, -300 and ends at 1250, 250, -300
-	//	a->SetPosition(Vector3(start + i * size, start - (size - 1600.0f), -300.0f)); // Added this wall to keep the player back off of the shore
-	//	a->SetRotation(q);
-	//}
 
 }
 

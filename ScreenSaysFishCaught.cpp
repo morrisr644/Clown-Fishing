@@ -49,17 +49,40 @@ ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 			SetTitle("CatchTitle");
 	}
 
-	//SetTitle("CatchTitle");
-
-	AddButton("ResumeButton", [this]() {
-		Close();
-	});
-	AddButton("QuitButton", [this]() { 
-		new DialogBox(mGame, "QuitText",
+	if (mGame->CheckIfAllFishCaught())
+	{
+		SetTitle("AllFishCaught");
+		AddButton("ResumeButton", [this]() {
+			Close();
+			});
+		AddButton("RestartButton", [this]() {
+			new DialogBox(mGame, "RestartText",
 			[this]() {
-				mGame->SetState(Game::EQuit);
-		});
-	});
+					bool success = mGame->Restart();
+				});
+			});
+		AddButton("QuitButton", [this]() {
+			new DialogBox(mGame, "QuitText",
+			[this]() {
+					mGame->SetState(Game::EQuit);
+				});
+			});
+	}
+
+	//SetTitle("CatchTitle");
+	else
+	{
+		AddButton("ResumeButton", [this]() {
+			Close();
+			});
+		AddButton("QuitButton", [this]() {
+			new DialogBox(mGame, "QuitText",
+			[this]() {
+					mGame->SetState(Game::EQuit);
+				});
+			});
+	}
+	
 }
 
 ScreenSaysFishCaught::~ScreenSaysFishCaught()

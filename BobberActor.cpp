@@ -134,7 +134,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			difference.z = abs(currPos.z - startPos.z);
 			mTotalDistance = difference.x + difference.y + difference.z;
 			GetGame()->SetFishHookDistance(mTotalDistance);
-			if (mTotalDistance > 600.0 && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
+			if (mTotalDistance > currFish->GetFishDistance() && mTotalDistance != 0) // The case of mTotalDistance being zero must be added so the fish can be caught
 			{ 
 				
 				FishOff(currFish);
@@ -142,6 +142,8 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				mTotalDistance = 0;
 
 			}
+			// Tweak start speed and rotation for each fish individually Adam
+			// when each fish gets off the line, check what fish it is and reset its original move speed and rotation.
 
 		}
 		// if the fish is on the line, grab the position of the fish when it first gets on the line.

@@ -34,7 +34,6 @@ BasicFish::BasicFish(Game* game, char color)
 
 	new TargetComponent(this);
 
-
 	Texture* texture = new Texture;
 
 	std::vector<Mesh*> meshes;
@@ -47,11 +46,12 @@ BasicFish::BasicFish(Game* game, char color)
 			fishTimer = 1.0;
 			texture->Load("Assets/models/RedFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/RedFish.obj", texture);
+			hookedSpeed = -10.0f;
 			break; 
 		}
 		case 'y':
 		{
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/YellowFish.jpg");
 			LoadAssimpMeshes(meshes, game, "Assets/models/YellowFish.obj", texture);
 			hookedSpeed = -30.0f;
@@ -60,37 +60,40 @@ BasicFish::BasicFish(Game* game, char color)
 		case 'o':
 		{
 
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/OrangeFish.png");
-			LoadAssimpMeshes(meshes, game, "Assets/models/OrangeFish.obj", texture); 
+			LoadAssimpMeshes(meshes, game, "Assets/models/OrangeFish.obj", texture);
+			hookedSpeed = -30.0f;
 			break; 
 		}
 		case 'g':
 		{
 
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/GreenFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/GreenFish.obj", texture);
+			hookedSpeed = -30.0f;
 			break;
 		}
 		case 'b':
 		{
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/BlueFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/BlueFish.obj", texture);
 			break;
 		}
 		case 'p':
 		{
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/PurpleFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/PurpleFish.obj", texture);
+			hookedSpeed = -40.0f;
 			break;
 		}
 		//K is pink because we already have p
 		case 'k':
 		{
-			fishDistance = 500.0;
+			fishDistance = 600.0;
 			texture->Load("Assets/models/Pinkfish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/PinkFish.obj", texture);
 			break;
@@ -101,7 +104,7 @@ BasicFish::BasicFish(Game* game, char color)
 			fishDistance = 500.0;
 			texture->Load("Assets/models/PolkaDotFish.png");
 			LoadAssimpMeshes(meshes, game, "Assets/models/PolkaDotFish.obj", texture);
-			hookedSpeed = -50.0;
+			hookedSpeed = -60.0;
 			break;
 		}
 	}
@@ -135,53 +138,37 @@ void BasicFish::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
 	//FixFishCollisions();
-
-	// Construct segment in direction of travel
-	const float segmentLength = 30.0f;
-	Vector3 start = this->GetPosition();
-	Vector3 dir = this->GetForward();
-	Vector3 end = start + dir * segmentLength;
-
-	// Create line segment
-	LineSegment l(start, end);
-
-	// Test segment vs world
-	PhysWorld* phys = this->GetGame()->GetPhysWorld();
-	PhysWorld::CollisionInfo info;
-
-	if (phys->SegmentCast(l, info))
+	Vector3 currentPos = this->GetPosition();
+	constexpr float CATCHYPOS = 330.0;
+	if (isOnLine && currentPos.y <= CATCHYPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(dir);
+		// If the fish collides with any of the walls, the player is no longer reeling it in
+		// It either got away or was caught
+
+		isCaught = true;
+		isOnLine = false;
+		GetGame()->StopReeling();
+		GetGame()->JustCaughtFish();
+
 	}
 
-	Vector3 currPosition = this->GetPosition(); //This works but it stalls at the beginning
-	constexpr float LEFTSIDE = -1400.0;
-	constexpr float RIGHTSIDE = 1400.0;
-	constexpr float FRONT = 320.0;
-	constexpr float BACK = 1200.0;
-	constexpr float BOTTOM = -800.0;
-	constexpr float TOP = -150;
-
-
-	if (currPosition.z <= BOTTOM || currPosition.x >= RIGHTSIDE || currPosition.x <= LEFTSIDE || currPosition.y >= BACK || currPosition.y <= FRONT || currPosition.z >= TOP)
+	constexpr float LOSEZPOS = -700.0;
+	if (isOnLine && currentPos.z <= LOSEZPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
-		//turn around here as well
-		Vector3 turnFishAround = this->GetForward();
-		turnFishAround.x = -turnFishAround.x;
-		turnFishAround.y = -turnFishAround.y;
-		turnFishAround.z = -turnFishAround.z;
-		turnFishAround.Normalize();
-		Vector3 dir = this->GetForward();
-		dir = Vector3::Reflect(dir, info.mNormal);
-		this->RotateToNewForward(turnFishAround);
-		//this->RotateToNewForward(dir);
+		// If the fish collides with any of the walls, the player is no longer reeling it in
+		// It either got away or was caught
+
+		isCaught = false;
+		isOnLine = false;
+
+		GetGame()->StopReeling();
+		GetGame()->GetBobber()->FishOff(this);
+
 	}
+	
+
 }
 
-//void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
-//{
-//}
 
 void BasicFish::GetOnLine() // Rebecca Morris
 {
@@ -218,88 +205,26 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 		const AABB& planeBox = pa->GetBox()->GetWorldBox();
 		if (Intersect(playerBox, planeBox))
 		{
-			// Calculate all our differences
-			float dx1 = planeBox.mMax.x - playerBox.mMin.x;
-			float dx2 = planeBox.mMin.x - playerBox.mMax.x;
-			float dy1 = planeBox.mMax.y - playerBox.mMin.y;
-			float dy2 = planeBox.mMin.y - playerBox.mMax.y;
-			float dz1 = planeBox.mMax.z - playerBox.mMin.z;
-			float dz2 = planeBox.mMin.z - playerBox.mMax.z;
+			// Construct segment in direction of travel
+			const float segmentLength = 30.0f;
+			Vector3 start = this->GetPosition();
+			Vector3 dir = this->GetForward();
+			Vector3 end = start + dir * segmentLength;
 
-			// Set dx to whichever of dx1/dx2 have a lower abs
-			float dx = Math::Abs(dx1) < Math::Abs(dx2) ?
-				dx1 : dx2;
-			// Ditto for dy
-			float dy = Math::Abs(dy1) < Math::Abs(dy2) ?
-				dy1 : dy2;
-			// Ditto for dz
-			float dz = Math::Abs(dz1) < Math::Abs(dz2) ?
-				dz1 : dz2;
+			// Create line segment
+			LineSegment l(start, end);
 
-			// Whichever is closest, adjust x/y position
-			if (Math::Abs(dx) <= Math::Abs(dy) && Math::Abs(dx) <= Math::Abs(dz))
+			// Test segment vs world
+			PhysWorld* phys = this->GetGame()->GetPhysWorld();
+			PhysWorld::CollisionInfo info;
+
+			if (phys->SegmentCast(l, info))
 			{
-				pos.x += dx;
+				dir = Vector3::Reflect(dir, info.mNormal);
+				this->RotateToNewForward(dir);
 			}
-			else if (Math::Abs(dy) <= Math::Abs(dx) && Math::Abs(dy) <= Math::Abs(dz))
-			{
-				pos.y += dy;
-			}
-			else
-			{
-				pos.z += dz;
-			}
-
-			// Need to set position and update box component
-			SetPosition(pos);
-			mBoxComp->OnUpdateWorldTransform();
-
-			Vector3 currentPos = this->GetPosition();
-
-			if (isOnLine && currentPos.y <= 330.0) // This is here so the fish get caught a bit earlier than intersecting with the wall
-			{
-				// If the fish collides with any of the walls, the player is no longer reeling it in
-				// It either got away or was caught
-
-				isCaught = true;
-				isOnLine = false;
-				GetGame()->StopReeling();
-				GetGame()->JustCaughtFish();
-
-			}
-
 		}
-
 	}
-
-	Vector3 currentPos = this->GetPosition();
-	constexpr float CATCHYPOS = 330.0;
-	if (isOnLine && currentPos.y <= CATCHYPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
-	{
-		// If the fish collides with any of the walls, the player is no longer reeling it in
-		// It either got away or was caught
-
-		isCaught = true;
-		isOnLine = false;
-		GetGame()->StopReeling();
-		GetGame()->JustCaughtFish();
-
-	}
-
-	constexpr float LOSEZPOS = -700.0;
-	if (isOnLine && currentPos.z <= LOSEZPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
-	{
-		// If the fish collides with any of the walls, the player is no longer reeling it in
-		// It either got away or was caught
-
-		isCaught = false;
-		isOnLine = false;
-
-		GetGame()->StopReeling();
-		GetGame()->GetBobber()->FishOff(this);
-
-	}
-
 }
 
 void BasicFish::SetAngularSpeed(float newSpeed)

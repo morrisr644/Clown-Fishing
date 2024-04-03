@@ -135,6 +135,10 @@ public:
 
 	void PauseMusic();
 
+	bool CheckIfAllFishCaught();
+
+	void NewMainMenu();
+
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
