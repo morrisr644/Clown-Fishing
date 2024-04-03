@@ -22,6 +22,7 @@
     <ClCompile Include="BoneTransform.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="ControlsMenu.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MobileActor.cpp" />
     <ClCompile Include="ScreenSaysFishCaught.cpp" />
@@ -59,7 +60,6 @@
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SoundEvent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="TargetActor.cpp" />
     <ClCompile Include="TargetComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UIScreen.cpp" />
@@ -76,6 +76,7 @@
     <ClInclude Include="BoneTransform.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="ControlsMenu.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MobileActor.h" />
     <ClInclude Include="ScreenSaysFishCaught.h" />
@@ -114,7 +115,6 @@
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SoundEvent.h" />
     <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="TargetActor.h" />
     <ClInclude Include="TargetComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UIScreen.h" />

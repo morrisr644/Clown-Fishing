@@ -73,9 +73,6 @@
     <ClCompile Include="PhysWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TargetActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DialogBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -169,6 +166,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ControlsMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -229,9 +229,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysWorld.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetActor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DialogBox.h">
@@ -328,6 +325,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlsMenu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
