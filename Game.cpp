@@ -206,6 +206,27 @@ void Game::PauseMusic()
 		mAudioSystem->SetBusPaused("bus:/", false);
 }
 
+bool Game::CheckIfAllFishCaught()
+{
+	bool allFishCaught = true;
+	for (bool fish : mAllCaughtFish)
+	{
+		if (fish == false)
+		{
+			allFishCaught = false;
+		}
+	}
+
+	return allFishCaught;
+}
+
+void Game::NewMainMenu()
+{
+	new MainMenu(this);
+}
+
+
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -534,8 +555,6 @@ void Game::HandleKeyPress(int key)
 			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
 			mSingleBobber->SetPosition(bobberSpawnPoint);
 
-
-
 		}
 
 		break;
@@ -646,6 +665,7 @@ void Game::UpdateGame()
 	{
 		currentHook->SetPosition(Vector3(20000, 20000, 20000));
 	}
+
 }
 
 void Game::GenerateOutput()

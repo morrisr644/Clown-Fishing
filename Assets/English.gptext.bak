@@ -38,7 +38,6 @@
 		"RestartText": "Do you want to restart?",
 		"OKButton": "OK",
 		"CancelButton": "Cancel",
-		"StartOrResumeButton": "Start/Resume",
-		"AllFishCaught": "All Fish Caught!"
+		"StartOrResumeButton": "Start/Resume"
 	}
 }
