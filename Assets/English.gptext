@@ -38,6 +38,7 @@
 		"RestartText": "Do you want to restart?",
 		"OKButton": "OK",
 		"CancelButton": "Cancel",
-		"StartOrResumeButton": "Start/Resume"
+		"StartOrResumeButton": "Start/Resume",
+		"ControlText": "Controls"
 	}
 }
