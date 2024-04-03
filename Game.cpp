@@ -57,6 +57,7 @@ bool Game::Initialize()
 	// Create the renderer
 	mRenderer = new Renderer(this);
 	// Changed to make game full screen
+
 	if (!mRenderer->Initialize(1600.0f, 880.0f))
 	{
 		SDL_Log("Failed to initialize renderer");
@@ -113,18 +114,20 @@ bool Game::Initialize()
 
 bool Game::Restart()
 {
-	//Delete existing Actors
-	while (!mActors.empty())
-	{
-		delete mActors.back();
-	}
+	UnloadData();
 
-	// Clear the UI stack
-	while (!mUIStack.empty())
-	{
-		delete mUIStack.back();
-		mUIStack.pop_back();
-	}
+	////Delete existing Actors
+	//while (!mActors.empty())
+	//{
+	//	delete mActors.back();
+	//}
+
+	//// Clear the UI stack
+	//while (!mUIStack.empty())
+	//{
+	//	delete mUIStack.back();
+	//	mUIStack.pop_back();
+	//}
 
 	//Bring those actors and UIs back
 	LoadData();
