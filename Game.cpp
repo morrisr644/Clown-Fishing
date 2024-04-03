@@ -129,10 +129,34 @@ bool Game::Restart()
 	//	mUIStack.pop_back();
 	//}
 
+	if (mAudioSystem)
+	{
+		mAudioSystem->Shutdown();
+	}
+
+	mAudioSystem = new AudioSystem(this);
+	if (!mAudioSystem->Initialize())
+	{
+		SDL_Log("Failed to initialize audio system");
+		mAudioSystem->Shutdown();
+		delete mAudioSystem;
+		mAudioSystem = nullptr;
+		return false;
+	}
+
 	//Bring those actors and UIs back
 	LoadData();
 
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	//mMusicEvent.SetPaused(true);
+
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling.SetPaused(true);
+
+	mTicksCount = SDL_GetTicks();
+
 	//Reset Bools
+	isReelingIn = false;
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
