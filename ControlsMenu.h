@@ -7,14 +7,11 @@
 // ----------------------------------------------------------------
 
 #pragma once
-#include "Actor.h"
+#include "UIScreen.h"
 
-class UnderPlaneActor : public Actor
+class ControlsMenu : public UIScreen
 {
 public:
-	UnderPlaneActor(class Game* game);
-	~UnderPlaneActor();
-	class BoxComponent* GetBox() { return mBox; }
-private:
-	class BoxComponent* mBox;
+	ControlsMenu(class Game* game);
+	~ControlsMenu();
 };

@@ -8,6 +8,7 @@
 
 #include "MainMenu.h"
 #include "PauseMenu.h"
+#include "ControlsMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
 #include "InventoryMenu.h"
@@ -34,6 +35,9 @@ MainMenu::MainMenu(Game* game)
 		[this]() {
 				bool success = mGame->Restart();
 			});
+		});
+	AddButton("ControlText", [this]() {
+		new ControlsMenu(mGame);
 		});
 	AddButton("QuitButton", [this]() { 
 		new DialogBox(mGame, "QuitText",

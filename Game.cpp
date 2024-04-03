@@ -18,13 +18,6 @@
 #include "FPSActor.h"
 #include "BasicFish.h"
 #include "PlaneActor.h"
-#include "WaterPlaneActor.h"
-#include "FencePlaneActor.h"
-#include "ShorePlaneActor.h"
-#include "GrassPlaneActor.h"
-#include "UnderPlaneActor.h"
-#include "InvisiblePlaneActor.h"
-#include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
 #include "MainMenu.h"
@@ -120,35 +113,23 @@ bool Game::Initialize()
 
 bool Game::Restart()
 {
-	UnloadData();
-
-	if (mAudioSystem)
+	//Delete existing Actors
+	while (!mActors.empty())
 	{
-		mAudioSystem->Shutdown();
+		delete mActors.back();
 	}
 
-	mAudioSystem = new AudioSystem(this);
-	if (!mAudioSystem->Initialize())
+	// Clear the UI stack
+	while (!mUIStack.empty())
 	{
-		SDL_Log("Failed to initialize audio system");
-		mAudioSystem->Shutdown();
-		delete mAudioSystem;
-		mAudioSystem = nullptr;
-		return false;
+		delete mUIStack.back();
+		mUIStack.pop_back();
 	}
 
+	//Bring those actors and UIs back
 	LoadData();
 
-	isReelingIn = false;
-
-	mTicksCount = SDL_GetTicks();
-
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
-	//mMusicEvent.SetPaused(true);
-
-	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
-	mReeling.SetPaused(true);
-
+	//Reset Bools
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
@@ -156,11 +137,13 @@ bool Game::Restart()
 
 	SetCurrentFish(nullptr);
 
+	//Empty inventory
 	for(int i = 0; i < 8; i++)
 	{
 		mAllCaughtFish[i] = false;
 	}
 
+	//Take you back to the menu
 	new MainMenu(this);
 
 	return true;
@@ -301,12 +284,12 @@ void Game::HandleKeyPress(int key)
 		LoadText("Assets/English.gptext");
 		break;
 	}
-	case '2':
-	{
-		// Load Russian text
-		LoadText("Assets/Russian.gptext");
-		break;
-	}
+	//case '2':
+	//{
+	//	// Load Russian text
+	//	LoadText("Assets/Russian.gptext");
+	//	break;
+	//}
 	case SDL_BUTTON_LEFT:
 	{
 		// Fire weapon
