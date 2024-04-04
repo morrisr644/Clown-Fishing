@@ -16,8 +16,6 @@
 #include <algorithm>
 #include "TargetComponent.h"
 #include "BasicFish.h"
-//#include "RedFish.h"
-//#include "YellowFish.h"
 #include "BobberActor.h"
 #include <string.h>
 
@@ -27,6 +25,9 @@ HUD::HUD(Game* game)
 	,mRadarRadius(92.0f)
 	,mTargetEnemy(false)
 {
+	float height = mGame->GetWindowHeight();
+	mRadarRadius = (height * 23) / 220;
+
 	Renderer* r = mGame->GetRenderer();
 	mBlankTensionBar = r->GetTexture("Assets/BlankBar.png");
 	mTensionBar1 = r->GetTexture("Assets/HealthBar.png");
@@ -67,7 +68,11 @@ void HUD::Draw(Shader* shader)
 	
 	// Radar
 	//Changed after screen was turned fullscreen
-	const Vector2 cRadarPos(-600.0f, 275.0f);
+
+	float width = mGame->GetWindowWidth();
+	float height = mGame->GetWindowHeight();
+
+	const Vector2 cRadarPos(-((width * 3) / 8), ((height * 5) / 16));
 	DrawTexture(shader, mRadar, cRadarPos, 1.0f);
 	// Blips
 	for (Vector2& blip : mBlips)
@@ -85,39 +90,39 @@ void HUD::Draw(Shader* shader)
 	// Tension bars
 	for (Vector2& fullHealth : mTensionBarBlank)
 	{
-		DrawTexture(shader, mBlankTensionBar, Vector2(150, 400.0f));
+		DrawTexture(shader, mBlankTensionBar, Vector2(150, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel1)
 	{
-		DrawTexture(shader, mTensionBar1, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar1, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel2)
 	{
-		DrawTexture(shader, mTensionBar2, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar2, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel3)
 	{
-		DrawTexture(shader, mTensionBar3, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar3, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel4)
 	{
-		DrawTexture(shader, mTensionBar4, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar4, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel5)
 	{
-		DrawTexture(shader, mTensionBar5, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar5, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel6)
 	{
-		DrawTexture(shader, mTensionBar6, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar6, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel7)
 	{
-		DrawTexture(shader, mTensionBar7, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar7, Vector2(-50, ((height * 5) / 11)));
 	}
 	for (Vector2& fullHealth : mTensionBarLevel8)
 	{
-		DrawTexture(shader, mTensionBar8, Vector2(-50, 400.0f));
+		DrawTexture(shader, mTensionBar8, Vector2(-50, ((height * 5) / 11)));
 	}
 	
 }
@@ -173,6 +178,10 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 	Renderer* r = mGame->GetRenderer();
 
+	//Adjusting for screen size
+	float width = mGame->GetWindowWidth();
+	float height = mGame->GetWindowHeight();
+
 	if (mGame->isReelingIn)
 	{
 		// Tension bar
@@ -207,6 +216,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 		float percent = (totalDistance/600.0) * 10;  
 
 
+
 		if (percent >= 8.5f)
 		{
 			TensionLevel = 8;
@@ -239,38 +249,37 @@ void HUD::UpdateTensionBar(float deltaTime)
 		{
 			TensionLevel = 1;
 		}
-
 		
 		switch (TensionLevel)
 		{
 		case 1:
-			mTensionBarLevel1.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel1.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 2:
-			mTensionBarLevel2.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel2.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 3:
-			mTensionBarLevel3.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel3.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 4:
-			mTensionBarLevel4.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel4.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 5:
-			mTensionBarLevel5.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel5.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 6:
-			mTensionBarLevel6.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel6.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 7:
-			mTensionBarLevel7.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel7.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		case 8:
-			mTensionBarLevel8.emplace_back(Vector2(0, 350.0f));
+			mTensionBarLevel8.emplace_back(Vector2(0, ((height * 35) / 88)));
 			break;
 		}
 	}
 	else
-		mTensionBarBlank.emplace_back(Vector2(0, 350.0f));
+		mTensionBarBlank.emplace_back(Vector2(0, ((height * 35) / 88)));
 
 }
 

@@ -23,6 +23,18 @@ UIScreen::UIScreen(Game* game)
 	,mBGPos(-50.0f, 250.0f)
 	,mState(EActive)
 {
+	float width = mGame->GetWindowWidth();
+	float height = mGame->GetWindowHeight();
+	//Adjusting for window size
+	mTitlePos.x = -(width / 32);
+	mTitlePos.y = (height * 15) / 44;
+
+	mNextButtonPos.x = -(width / 32);
+	mNextButtonPos.y = (height * 5) / 22;
+
+	mBGPos.x = -(width / 32);
+	mBGPos.y = (height * 25) / 88;
+
 	// Add to UI Stack
 	mGame->PushUI(this);
 	mFont = mGame->GetFont("Assets/Carlito-Regular.ttf");

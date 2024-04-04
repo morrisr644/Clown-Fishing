@@ -24,8 +24,11 @@ PauseMenu::PauseMenu(Game* game)
 		Close();
 	});
 
+	float width = mGame->GetWindowWidth();
+	float height = mGame->GetWindowHeight();
+
 	mBackground = game->GetRenderer()->GetTexture("Assets/PauseDialogBG.png");
-	mBGPos = Vector2(-45.0f, 145.0f);
+	mBGPos = Vector2(-((width * 9) / 320), ((height * 29) / 176));
 	/*AddButton("InventoryButton", [this]() {
 		new InventoryMenu(mGame);
 		});*/

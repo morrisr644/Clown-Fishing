@@ -19,7 +19,12 @@ MainMenu::MainMenu(Game* game)
 	:UIScreen(game)
 {
 	mState = EActive();
-	this->mNextButtonPos.Set(300.0f, 150.0f);
+	float width = mGame->GetWindowWidth();
+	float height = mGame->GetWindowHeight();
+	//Change for screen size
+	width = (width * 3) / 16;
+	height = (height * 15) / 88;
+	this->mNextButtonPos.Set(width, height);
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
 	//SetTitle("PauseTitle");

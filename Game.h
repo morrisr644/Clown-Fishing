@@ -139,6 +139,9 @@ public:
 
 	void NewMainMenu();
 
+	int GetWindowWidth() { return mWindowWidth; }
+	int GetWindowHeight() { return mWindowHeight; }
+
 	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
@@ -213,4 +216,6 @@ private:
 	char CurrentFishType;
 	float mCurrentFishDistance;
 	bool didJustCatchFish;
+	int mWindowWidth;
+	int mWindowHeight;
 };

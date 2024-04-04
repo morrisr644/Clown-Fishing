@@ -14,10 +14,13 @@
 InventoryBox::InventoryBox(Game* game, const std::string& text, int fish)
 	:UIScreen(game)
 {
+	//Adjust for screen size
+	float height = mGame->GetWindowHeight();
+
 	// Adjust positions for dialog box
 	mBGPos = Vector2(0.0f, 0.0f);
-	mTitlePos = Vector2(0.0f, 100.0f);
-	mNextButtonPos = Vector2(0.0f, -100.0f);
+	mTitlePos = Vector2(0.0f, ((height * 5) / 44));
+	mNextButtonPos = Vector2(0.0f, -((height * 5) / 44));
 
 	switch (fish)
 	{

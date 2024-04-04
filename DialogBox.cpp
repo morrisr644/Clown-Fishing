@@ -15,9 +15,12 @@ DialogBox::DialogBox(Game* game, const std::string& text,
 	std::function<void()> onOK)
 	:UIScreen(game)
 {
+	//Adjust for screen size
+	float height = mGame->GetWindowHeight();
+
 	// Adjust positions for dialog box
 	mBGPos = Vector2(0.0f, 0.0f);
-	mTitlePos = Vector2(0.0f, 100.0f);
+	mTitlePos = Vector2(0.0f, height / 16);
 	mNextButtonPos = Vector2(0.0f, 0.0f);
 
 	mBackground = mGame->GetRenderer()->GetTexture("Assets/DialogBG.png");
