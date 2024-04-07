@@ -55,7 +55,7 @@ BobberActor::BobberActor(Game* game)
 void BobberActor::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
-	float gravity = 98.1;
+	float gravity = 208.1;
 
 	//mLifeSpan -= deltaTime;
 
