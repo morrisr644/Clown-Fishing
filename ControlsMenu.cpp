@@ -20,9 +20,12 @@ ControlsMenu::ControlsMenu(Game* game)
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
 
+	//Adjust for screen size
+	float height = mGame->GetWindowHeight();
+
 	mBGPos = Vector2(0.0f, 0.0f);
-	mTitlePos = Vector2(0.0f, 155.0f);
-	mNextButtonPos = Vector2(0.0f, -175.0f);
+	mTitlePos = Vector2(0.0f, -((height * 31) / 176));
+	mNextButtonPos = Vector2(0.0f, -((height * 35) / 880));
 
 	SetTitle("ControlText", Color::Black, 40);
 	AddButton("OKButton", [this]()

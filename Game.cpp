@@ -58,7 +58,23 @@ bool Game::Initialize()
 	mRenderer = new Renderer(this);
 	// Changed to make game full screen
 
-	if (!mRenderer->Initialize(1600.0f, 880.0f))
+	//Rebecca fullscreen = 1600, 880
+
+	int displayIndex = 0;
+
+	SDL_Rect window;
+
+	//Gets the size of the user's computer screen
+	SDL_GetDisplayBounds(displayIndex, &window);
+
+	mWindowWidth = window.w;
+	mWindowHeight = window.h;
+
+
+	//SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &mWindowWidth, &mWindowHeight);
+
+
+	if (!mRenderer->Initialize((float)mWindowWidth, (float)mWindowHeight))
 	{
 		SDL_Log("Failed to initialize renderer");
 		delete mRenderer;
@@ -152,6 +168,9 @@ bool Game::Restart()
 
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
+
+	mWin = mAudioSystem->PlayEvent("event:/Win");
+	mWin.SetPaused(true);
 
 	mTicksCount = SDL_GetTicks();
 
