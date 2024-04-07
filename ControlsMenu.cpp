@@ -24,8 +24,10 @@ ControlsMenu::ControlsMenu(Game* game)
 	float height = mGame->GetWindowHeight();
 
 	mBGPos = Vector2(0.0f, 0.0f);
-	mTitlePos = Vector2(0.0f, -((height * 31) / 176));
-	mNextButtonPos = Vector2(0.0f, -((height * 35) / 880));
+	//mTitlePos = Vector2(0.0f, -((height * 31) / 176));
+	//mNextButtonPos = Vector2(0.0f, -((height * 35) / 880));
+	mTitlePos = Vector2(0.0f, ((height * 2) / 11));
+	mNextButtonPos = Vector2(0.0f, -((height * 165) / 880));
 
 	SetTitle("ControlText", Color::Black, 40);
 	AddButton("OKButton", [this]()
