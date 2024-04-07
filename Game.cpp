@@ -18,13 +18,6 @@
 #include "FPSActor.h"
 #include "BasicFish.h"
 #include "PlaneActor.h"
-#include "WaterPlaneActor.h"
-#include "FencePlaneActor.h"
-#include "ShorePlaneActor.h"
-#include "GrassPlaneActor.h"
-#include "UnderPlaneActor.h"
-#include "InvisiblePlaneActor.h"
-#include "TargetActor.h"
 #include "BobberActor.h"
 #include "PauseMenu.h"
 #include "MainMenu.h"
@@ -64,6 +57,7 @@ bool Game::Initialize()
 	// Create the renderer
 	mRenderer = new Renderer(this);
 	// Changed to make game full screen
+
 	if (!mRenderer->Initialize(1600.0f, 880.0f))
 	{
 		SDL_Log("Failed to initialize renderer");
@@ -122,6 +116,19 @@ bool Game::Restart()
 {
 	UnloadData();
 
+	////Delete existing Actors
+	//while (!mActors.empty())
+	//{
+	//	delete mActors.back();
+	//}
+
+	//// Clear the UI stack
+	//while (!mUIStack.empty())
+	//{
+	//	delete mUIStack.back();
+	//	mUIStack.pop_back();
+	//}
+
 	if (mAudioSystem)
 	{
 		mAudioSystem->Shutdown();
@@ -137,11 +144,8 @@ bool Game::Restart()
 		return false;
 	}
 
+	//Bring those actors and UIs back
 	LoadData();
-
-	isReelingIn = false;
-
-	mTicksCount = SDL_GetTicks();
 
 	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
 	//mMusicEvent.SetPaused(true);
@@ -149,6 +153,10 @@ bool Game::Restart()
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
 
+	mTicksCount = SDL_GetTicks();
+
+	//Reset Bools
+	isReelingIn = false;
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
@@ -156,11 +164,13 @@ bool Game::Restart()
 
 	SetCurrentFish(nullptr);
 
+	//Empty inventory
 	for(int i = 0; i < 8; i++)
 	{
 		mAllCaughtFish[i] = false;
 	}
 
+	//Take you back to the menu
 	new MainMenu(this);
 
 	return true;
@@ -322,12 +332,12 @@ void Game::HandleKeyPress(int key)
 		LoadText("Assets/English.gptext");
 		break;
 	}
-	case '2':
-	{
-		// Load Russian text
-		LoadText("Assets/Russian.gptext");
-		break;
-	}
+	//case '2':
+	//{
+	//	// Load Russian text
+	//	LoadText("Assets/Russian.gptext");
+	//	break;
+	//}
 	case SDL_BUTTON_LEFT:
 	{
 		// Fire weapon

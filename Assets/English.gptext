@@ -39,6 +39,7 @@
 		"OKButton": "OK",
 		"CancelButton": "Cancel",
 		"StartOrResumeButton": "Start/Resume",
-		"AllFishCaught": "All Fish Caught!"
+		"AllFishCaught": "All Fish Caught!",
+		"ControlText": "Controls"
 	}
 }

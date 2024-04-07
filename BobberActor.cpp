@@ -183,16 +183,6 @@ void BobberActor::PutInWater()
 		hasAlreadySplashed = true;
 	}
 }
-//void BobberActor::Splash()
-//{
-//	/*isInWater = true;
-//	if (!hasAlreadySplashed)
-//	{
-//		mSplash.SetPaused(false);
-//		mSplash.Restart();
-//		hasAlreadySplashed = true;
-//	}*/
-//}
 
 void BobberActor::OutOfWater()
 {

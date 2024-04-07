@@ -13,12 +13,8 @@
 #include "Actor.h"
 #include "Game.h"
 #include "PhysWorld.h"
-#include "TargetActor.h"
 #include "BobberActor.h"
 #include "BasicFish.h"
-#include "WaterPlaneActor.h"
-#include "FencePlaneActor.h"
-#include "InvisiblePlaneActor.h"
 #include "FPSActor.h"
 #include "RodActor.h"
 
