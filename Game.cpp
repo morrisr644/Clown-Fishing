@@ -130,20 +130,13 @@ bool Game::Initialize()
 
 bool Game::Restart()
 {
+
+	/*for each (BasicFish * fish in mBasicFishes)
+	{
+		RemoveBasicFish(fish);
+	}*/
+
 	UnloadData();
-
-	////Delete existing Actors
-	//while (!mActors.empty())
-	//{
-	//	delete mActors.back();
-	//}
-
-	//// Clear the UI stack
-	//while (!mUIStack.empty())
-	//{
-	//	delete mUIStack.back();
-	//	mUIStack.pop_back();
-	//}
 
 	if (mAudioSystem)
 	{
@@ -160,8 +153,11 @@ bool Game::Restart()
 		return false;
 	}
 
-	//Bring those actors and UIs back
 	LoadData();
+
+	isReelingIn = false;
+
+	mTicksCount = SDL_GetTicks();
 
 	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
 	//mMusicEvent.SetPaused(true);
@@ -169,27 +165,18 @@ bool Game::Restart()
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
 
-	mWin = mAudioSystem->PlayEvent("event:/Win");
-	mWin.SetPaused(true);
-
-	mTicksCount = SDL_GetTicks();
-
-	//Reset Bools
-	isReelingIn = false;
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
 	didJustCatchFish = false;
 
-	SetCurrentFish(nullptr);
+	mCurrentFish = nullptr;
 
-	//Empty inventory
-	for(int i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		mAllCaughtFish[i] = false;
 	}
 
-	//Take you back to the menu
 	new MainMenu(this);
 
 	return true;
