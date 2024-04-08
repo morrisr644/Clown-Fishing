@@ -165,6 +165,9 @@ bool Game::Restart()
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
 
+	mWin = mAudioSystem->PlayEvent("event:/Win");
+	mWin.SetPaused(true);
+
 	isScreenSaysFishOnOn = false;
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
