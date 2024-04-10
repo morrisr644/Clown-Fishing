@@ -3,7 +3,7 @@
 	"vertexformat":"PosNormTex",
 	"shader":"BasicMesh",
 	"textures":[
-		"Assets/UseThisShore.png"
+		"Assets/UseThisBetterShore.png"
 	],
 	"specularPower":100.0,
 	"vertices":[

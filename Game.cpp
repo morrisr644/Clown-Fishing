@@ -708,10 +708,10 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		//Replaced Underplane
-		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
-		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
-		a->SetRotation(q);
+		////Replaced Underplane
+		//a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
+		//a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
+		//a->SetRotation(q);
 
 		//Replaced Underplane
 		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600
@@ -792,6 +792,14 @@ void Game::LoadData()
 	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?
 	
 	// Setup floor
+	
+
+	//const float largerSize = 500.0f;
+
+	mSkybox = new SkyBox(this);
+
+	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - RCM
+
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -831,13 +839,7 @@ void Game::LoadData()
 			a = new PlaneActor(this, "Assets/GrassPlane.gpmesh");
 			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
-	} 
-
-	//const float largerSize = 500.0f;
-
-	mSkybox = new SkyBox(this);
-
-	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - RCM
+	}
 
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
@@ -855,6 +857,15 @@ void Game::LoadData()
 		a = new PlaneActor(this, "Assets/FencePlane.gpmesh");
 		a->SetPosition(Vector3((start + 300.0f) + i * size, -start + size, 0.0f));
 		a->SetRotation(q);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		//Replaced Underplane
+		a = new PlaneActor(this, "Assets/InvisiblePlane.gpmesh"); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
+		a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
+		a->SetRotation(q);
+
 	}
 
 	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));

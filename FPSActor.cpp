@@ -184,9 +184,9 @@ void FPSActor::SetVisible(bool visible)
 void FPSActor::FixFPSCollisions() //Adam this is where we collide with the pond
 {
 	Vector3 pos = GetPosition();
-	if (pos.y >= 175.0f)
+	if (pos.y >= 150.0f)
 	{
-		pos.y = 174.9f;
+		pos.y = 149.9f;
 		SetPosition(pos);
 	}
 }
