@@ -672,7 +672,7 @@ void Game::UpdateGame()
 		//currentHook = new Hook(this);
 		Vector3 hooksSunkenPosition = mSingleBobber->GetPosition();
 		// this is where we spawn the hook in for the game.
-		hooksSunkenPosition.z = hooksSunkenPosition.z - 300;
+		hooksSunkenPosition.z = hooksSunkenPosition.z - 200;
 
 		currentHook->SetPosition(hooksSunkenPosition);
 	}
