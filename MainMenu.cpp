@@ -30,7 +30,7 @@ MainMenu::MainMenu(Game* game)
 	//SetTitle("PauseTitle");
 
 	mGame->PauseMusic();
-	mBackground = game->GetRenderer()->GetTexture("Assets/SmallMainMenu.jpg");
+	mBackground = game->GetRenderer()->GetTexture("Assets/EvenLargerMainMenu.jpg");
 	mBGPos = Vector2(0.0f, 0.0f);
 	AddButton("StartOrResumeButton", [this]() {
 		Close();
