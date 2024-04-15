@@ -131,10 +131,7 @@ bool Game::Initialize()
 bool Game::Restart()
 {
 
-	/*for each (BasicFish * fish in mBasicFishes)
-	{
-		RemoveBasicFish(fish);
-	}*/
+	mBasicFishes.clear();
 
 	UnloadData();
 
@@ -173,7 +170,7 @@ bool Game::Restart()
 	didFishGetAway = false;
 	didJustCatchFish = false;
 
-	mCurrentFish = nullptr;
+	//mCurrentFish = nullptr;
 
 	for (int i = 0; i < 8; i++)
 	{
