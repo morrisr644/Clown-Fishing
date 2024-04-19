@@ -26,6 +26,9 @@ BobberMove::BobberMove(Actor* owner)
 void BobberMove::Update(float deltaTime)
 {
 	// Construct segment in direction of travel
+	// This class is here to handle the bobbers position and how that position affects the game
+	// If the the bobber is in the water, we call the function PutInWater, if it hits the walls we bounce it off the walls
+	// If the bobber hits the grass we stop it.  Adam Caligiuri
 	const float segmentLength = 30.0f;
 	Vector3 start = mOwner->GetPosition();
 	Vector3 dir = mOwner->GetForward();

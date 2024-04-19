@@ -62,7 +62,7 @@ void BobberActor::UpdateActor(float deltaTime)
 	
 	if (mMyMove->GetForwardSpeed() != 0 && !isFishOn)
 	{
-
+		// Below is the math done to create gravity on the bobber after it is shot out. Adam Caligiuri
 		Vector3 pos = GetPosition();
 		Vector3 velocity = mForwardVelocity;
 		Vector3 acceleration(0, 0, -gravity);
@@ -74,10 +74,6 @@ void BobberActor::UpdateActor(float deltaTime)
 		SetPosition(pos);
 	}
 
-	/*BasicFish* yellowFish = GetGame()->GetYellowFish();
-	BasicFish* redFish = GetGame()->GetRedFish();
-	const int NUMOFFISH = 2;
-	BasicFish* fishArray[NUMOFFISH] = { yellowFish, redFish };*/
 	std::vector<class BasicFish*> otherFishArray = GetGame()->GetBasicFishes();
 	for (BasicFish* fish : otherFishArray)
 	{
@@ -99,7 +95,7 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 		float fishTimer = currFish->GetFishTimer();
 		Vector3 fishCurrentPosition = currFish->GetPosition();
 		if ((currentBobber->GetFishOnStatus() == false) && ((abs(currentHookPosition.x - fishCurrentPosition.x) < 100.0) || (abs(currentHookPosition.y - fishCurrentPosition.y) < 100.0)))
-		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook.
+		{ // if there is no fish on the line, and the yellow fish is within range of the hook on the x and y axis, move toward the hook. Adam Caligiuri
 			fishTimer -= deltaTime;
 			currFish->SetFishTimer(fishTimer);
 			if (fishTimer <= 0)
@@ -110,9 +106,9 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 				currFish->RotateToNewForward(fishFacingBobber);
 				currFish->SetAngularSpeed(0);
 			}
-		} //&& ((abs(currentPosition.x - redFishCurrentPosition.x) < 100.0) || (abs(currentPosition.y - redFishCurrentPosition.y) < 100.0))
-		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == false) // add an and this fish is not on the line here
-		{
+		} 
+		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == false) // This handles if the fish is in range, but another fish gets on the line
+		{ // before the current one, turn the current fish around as if it is scared.  Adam Caligiuri
 			if (currFish->GetFleeingStatus() == false)
 			{
 				Vector3 turnFishAround = -currFish->GetForward(); // the use of the new -operator with Dr. Briggs help
@@ -123,10 +119,9 @@ void BobberActor::CheckFish(float deltaTime, BasicFish* currFish)
 			}
 
 		}
-		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == true) // if the current fish on is the yellow fish, then do this
-		{
+		else if (currentBobber->GetFishOnStatus() == true && currFish->GetLineStatus() == true) 
+		{ // this handles the fish on the line moving backward slowly as it is on the line. Adam Caligiuri
 			Vector3 startPos = this->GetPosition();
-			//startPos = GetGame()->GetHook()->GetPosition();
 			Vector3 currPos = currFish->GetPosition();
 			Vector3 difference;
 			difference.x = abs(currPos.x - startPos.x);
@@ -168,12 +163,12 @@ void BobberActor::SetPlayer(Actor* player)
 	
 }
 
-void BobberActor::HitGround()
+void BobberActor::HitGround() // if the bobber hits the ground, it stops moving
 {
 	mMyMove->SetForwardSpeed(0.0f);
 }
 
-void BobberActor::PutInWater()
+void BobberActor::PutInWater() // If the bobber is in the water, play the splash sound and let the game know the bobber is in the water
 {
 	isInWater = true;
 	if (!hasAlreadySplashed)
@@ -184,22 +179,22 @@ void BobberActor::PutInWater()
 	}
 }
 
-void BobberActor::OutOfWater()
+void BobberActor::OutOfWater() // used if the bobber is taken out of the water for whatever reason
 {
 	isInWater = false;
 	mSplash.SetPaused(true);
 	hasAlreadySplashed = false;
 }
 
-void BobberActor::FishOn()
+void BobberActor::FishOn() // handles if the fish is put on the line, lets the game know a fish is on the line.
 {
 	isFishOn = true;
 	mBubbles.SetPaused(false);
 	mBubbles.Restart();
 }
 
-void BobberActor::FishOff(BasicFish* currFish)
-{
+void BobberActor::FishOff(BasicFish* currFish) // This handles when the fish breaks the line, the fish turns away from th ebobber and starts moving
+{// we move the bobber back to its spawn point and we reset all of the variables letting the game know the fish is off Adam Caligiuri
 	BobberActor* currentBobber = GetGame()->GetBobber();
 
 	Vector3 turnFishAround = currFish->GetForward();
@@ -208,7 +203,7 @@ void BobberActor::FishOff(BasicFish* currFish)
 	turnFishAround.Normalize();
 	currFish->RotateToNewForward(turnFishAround);
 	currFish->SetFleeingStatus(true);
-	currFish->SetLineStatus(false); //Is this where the game glitches?
+	currFish->SetLineStatus(false); 
 	Vector3 bobberSpawnPoint(20000, 20000, 0);
 	currentBobber->SetPosition(bobberSpawnPoint);
 	currFish->SetFishTimer(1.0);

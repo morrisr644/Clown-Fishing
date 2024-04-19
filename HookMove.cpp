@@ -38,7 +38,8 @@ void HookMove::Update(float deltaTime)
 		// Create line segment
 		LineSegment l(start, end);
 
-		//Maybe make the hook a box and see if the fish box and the hook box intersect? WSB 2024-03-25
+		//This was the big bug we had, I changed it so that the fish was the thing moving, and the hook was the "box" Adam Caligiuri
+		// when a fish moves through or past the hook it is considered a collision and it then gets hooked
 		if (phys->SegmentCast(l, info) && info.mActor == hook)
 		{
 			//Can we verify that if bobber think's there's a fish on, at least/exactly one fish thinks it's caught?
@@ -57,7 +58,7 @@ void HookMove::Update(float deltaTime)
 		if (caughtFish && caughtFish->GetLineStatus() && caughtFish->GetState() == Actor::EActive) // this handles the fishes tension
 		{
 			// make the fish face bobber instead of the player.
-			// get fish to reflect off of wall.
+			// Once the fish is on the line we have it face away from teh bobber as if its trying to break free. Adam Caligiuri
 			Vector3 bobberPos = bobber->GetPosition();
 			Vector3 bobberOppPlayer = mOwner->GetGame()->GetPlayer()->GetPosition() - bobberPos;
 			Vector3 fishOppBobber = bobberPos - caughtFish->GetPosition();

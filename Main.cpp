@@ -19,3 +19,6 @@ int main(int argc, char** argv)
 	game.Shutdown();
 	return 0;
 }
+
+// For Dr. Briggs, I tried to comment everything that didn't have a comment and put my name next to it for the sake of being able to 
+// easily search for it. Adam Caligiuri

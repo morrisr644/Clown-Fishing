@@ -21,7 +21,7 @@
 
 Hook::Hook(Game* game)
 	:Actor(game)
-	
+	// This just handles building the textures of the bobber and loading it into the game. Adam Caligiuri
 {
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/HookSphere.gpmesh"); // just a placeholder for testing currently
