@@ -28,7 +28,7 @@ BasicFish::BasicFish(Game* game, char color)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
-	, hookedSpeed(-20.0)
+	, hookedSpeed(-20.0) // This is a member variable now that can be changed as we create the fish
 {
 	SetScale(5.0f);
 
@@ -137,13 +137,12 @@ void BasicFish::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	FixCollisions();
-	//FixFishCollisions();
 	Vector3 currentPos = this->GetPosition();
 	constexpr float CATCHYPOS = 330.0;
 	if (isOnLine && currentPos.y <= CATCHYPOS) // This is here so the fish get caught a bit earlier than intersecting with the wall
 	{
 		// If the fish collides with any of the walls, the player is no longer reeling it in
-		// It either got away or was caught
+		// It either got away or was caught Adam Caligiuri
 
 		isCaught = true;
 		isOnLine = false;

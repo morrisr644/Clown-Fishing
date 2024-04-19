@@ -361,6 +361,9 @@ void Game::HandleKeyPress(int key)
 	}
 	case SDLK_SPACE:
 	{
+		// Below is the code that handles what happens when we actually catcht the fish.  It moves the fish in front of the player
+		// and then it resets all of the variables that let the game know that a fish is on the line.  It also handles how much
+		// closer the fish gets to the player every time the player hits the space bar.  This was built by both Rebecca and Adam.
 		if (isReelingIn)
 		{
 			mReeling.SetPaused(false);
@@ -380,14 +383,7 @@ void Game::HandleKeyPress(int key)
 			{
 				if (fish->GetLineStatus() && fish->GetState() == Actor::EActive)
 				{
-					//fishPos = fish->GetPosition();
-					//fish->SetPosition(playerPos);
-
-					//SetCurrentFish(fish);
-
 					hookedFish = fish;
-					//mSingleBobber->SetPosition(playerPos);
-					//mCurrentFishDistance = fish->GetFishDistance();
 				}
 			}
 
@@ -413,12 +409,7 @@ void Game::HandleKeyPress(int key)
 			offsetFromReel.y = bobberFacePlayer.y * offsetFloat;
 			offsetFromReel.z = bobberFacePlayer.z * offsetFloat;
 
-			Vector3 newBobberPos;// = Vector3(playerPos.x, playerPos.y + 25.0f, playerPos.z);
-			//newBobberPos.x = bobberPos.x + offsetFromReel.x;
-			//newBobberPos.y = bobberPos.y + offsetFromReel.y;
-			//newBobberPos.z = bobberPos.z + offsetFromReel.z;
-
-
+			Vector3 newBobberPos;
 
 			Vector3 fishFacePlayer = playerPos - fishPos;
 			fishFacePlayer.Normalize();
