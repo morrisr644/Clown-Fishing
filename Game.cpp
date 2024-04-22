@@ -365,7 +365,7 @@ void Game::HandleKeyPress(int key)
 		// closer the fish gets to the player every time the player hits the space bar.  This was built by both Rebecca and Adam.
 		if (isReelingIn)
 		{
-			mReeling.SetPaused(false);
+			mReeling.SetPaused(false); // this is the audio of the reeling noise
 			mReeling.Restart();
 
 			Vector3 bobberPos = mSingleBobber->GetPosition();
@@ -374,7 +374,7 @@ void Game::HandleKeyPress(int key)
 
 			float offsetFloat = 25.0f;
 
-			BasicFish* hookedFish = mYellowFish; //set as default, please work
+			BasicFish* hookedFish = mYellowFish; //set as default, please ignore
 			
 			Vector3 fishPos;
 			// Find out which fish was hooked
@@ -386,11 +386,11 @@ void Game::HandleKeyPress(int key)
 				}
 			}
 
-			fishPos = hookedFish->GetPosition();
+			fishPos = hookedFish->GetPosition(); // get the fishes position
 
-			CurrentFishType = hookedFish->GetColor();
+			CurrentFishType = hookedFish->GetColor(); // grab the fishes color, which lets us know what kind of fish
 
-			SetCurrentFish(hookedFish);
+			SetCurrentFish(hookedFish); // set teh current hooked fish to the fish we have hooked
 			mCurrentFish = hookedFish;
 
 
@@ -400,9 +400,12 @@ void Game::HandleKeyPress(int key)
 			//Still needs some refactoring - Rebecca 
 
 
-			Vector3 bobberFacePlayer = playerPos - bobberPos;
+			Vector3 bobberFacePlayer = playerPos - bobberPos; // the direction of the bobber facing the player
 			bobberFacePlayer.Normalize();
 
+			// what we are doing below is taking the fish position and bobber position, and everytime a player presses space bar to reel things in
+			// we move the bobber and the fish 25 units towards the player. the code below makes sure it moves directly towards the player and doesnt pull
+			// things out of the water.
 			Vector3 offsetFromReel;
 			offsetFromReel.x = bobberFacePlayer.x * offsetFloat;
 			offsetFromReel.y = bobberFacePlayer.y * offsetFloat;
@@ -424,7 +427,7 @@ void Game::HandleKeyPress(int key)
 			if (!(hookedFish->GetCatchStatus())) // If the fish is not caught, bring the fish closer
 			{
 				if (bobberPos.z > -110.0) // if the bobber is coming out of the water, or the fish
-				{
+				{// this keeps the bobber from coming up out of the water and looking like its floatin
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 				}
 				else
@@ -432,7 +435,7 @@ void Game::HandleKeyPress(int key)
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
 				}
 				if (fishPos.z > -170.0) // if the bobber is coming out of the water, or the fish
-				{
+				{ // this keeps the fish in the water so that it doesnt break the surface when spamming the reel in button
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
 				}
 				else

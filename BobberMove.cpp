@@ -67,8 +67,8 @@ void BobberMove::Update(float deltaTime)
 			&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
 			&& bobberPosition.y >= PONDWALL)))
 		{
-			bobber->PutInWater();
-			bobber->HitGround();
+			bobber->PutInWater(); // put the bobber in the water, and spawn the hook
+			bobber->HitGround(); // this function stops the bobber from moving, we use it when it hits the ground and the surface of the water
 		}
 		//If it hits the fence
 		// 
@@ -77,7 +77,7 @@ void BobberMove::Update(float deltaTime)
 			|| bobberPosition.x > LEFTWALL || bobberPosition.x < RIGHTWALL))
 		{
 			dir = Vector3::Reflect(dir, info.mNormal);
-			bobber->RotateToNewForward(dir);
+			bobber->RotateToNewForward(dir); // this is us reflecting the bobber
 		}
 
 	}
@@ -86,7 +86,7 @@ void BobberMove::Update(float deltaTime)
 		&& bobberPosition.x < LEFTWALL) && (bobberPosition.y < FORWARDWALL
 			&& bobberPosition.y >= PONDWALL)))
 	{
-		bobber->PutInWater();
+		bobber->PutInWater(); // this is the same as above
 		bobber->HitGround();
 	}
 	//If it hits the ground
