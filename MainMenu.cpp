@@ -6,6 +6,9 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// UI screen which displays the main menu of the game,
+// giving the player options to see the controls, restart, resume, or quit - Rebecca Morris
+
 #include "MainMenu.h"
 #include "PauseMenu.h"
 #include "ControlsMenu.h"
@@ -27,7 +30,6 @@ MainMenu::MainMenu(Game* game)
 	this->mNextButtonPos.Set(width, height);
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
-	//SetTitle("PauseTitle");
 
 	mGame->PauseMusic();
 	mBackground = game->GetRenderer()->GetTexture("Assets/EvenLargerMainMenu.jpg");

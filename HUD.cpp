@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Handles the elements that appear on the screen without pausing gameplay - Rebecca Morris
+
 #include "HUD.h"
 #include "Texture.h"
 #include "Shader.h"
@@ -29,7 +31,7 @@ HUD::HUD(Game* game)
 	mRadarRadius = (height * 23) / 220;
 
 	Renderer* r = mGame->GetRenderer();
-	mBlankTensionBar = r->GetTexture("Assets/BlankBar.png");
+	mBlankTensionBar = r->GetTexture("Assets/BlankBar.png"); // All of the different levels for the tension bar - Rebecca Morris
 	mTensionBar1 = r->GetTexture("Assets/HealthBar.png");
 	mTensionBar2 = r->GetTexture("Assets/TensionLevel2.png");
 	mTensionBar3 = r->GetTexture("Assets/TensionLevel3.png");
@@ -67,7 +69,12 @@ void HUD::Draw(Shader* shader)
 	DrawTexture(shader, cross, Vector2::Zero, 2.0f);
 	
 	// Radar
-	//Changed after screen was turned fullscreen
+	//Changed after screen was turned fullscreen - Rebecca Morris
+	// 
+	// The numbers that are not constants were found by taking my original
+	// screen size as well as the original sizes of the elements on my screen
+	// and taking the ratio of the size to screen to hopefully get it working
+	// for all screen sizes.
 
 	float width = mGame->GetWindowWidth();
 	float height = mGame->GetWindowHeight();
@@ -166,7 +173,7 @@ void HUD::UpdateCrosshair(float deltaTime)
 
 void HUD::UpdateTensionBar(float deltaTime)
 {
-	mTensionBarBlank.clear(); // these need tobe here or we just get a ton of health bars
+	mTensionBarBlank.clear(); // these need to be here or we just get a ton of tension bars - Rebecca Morris
 	mTensionBarLevel1.clear();
 	mTensionBarLevel2.clear();
 	mTensionBarLevel3.clear();
@@ -184,15 +191,10 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 	if (mGame->isReelingIn)
 	{
-		// Tension bar
-		//DrawTexture(shader, mTensionBar, Vector2(-350.0f, -350.0f));
-		//mTensionBar = r->GetTexture("Assets/HealthBar.png");
-
 
 		// BasicFish
 		int TensionLevel = 1; // This is set to 1 as a default
 
-		//auto* currentFish = mGame->GetBasicFish();
 		BasicFish* currentFish;
 
 		char fishType = mGame->GetCurrentFishType();
@@ -202,16 +204,10 @@ void HUD::UpdateTensionBar(float deltaTime)
 
 
 		BobberActor* bobber = mGame->GetBobber();
-		// this is 500 on second catch, that should not be a thing.
-		// this is simply not working right at all, the total distance is not getting reset, fishDistance should never change no matter waht is pressed
-		// everytime a fihs is hooked it should compare current distance with the bobber position and the fish position.
-		float totalDistance = mGame->GetFishHookDistance(); //Gets smaller as space is pressed and larger as space is not pressed
-		float fishDistance = currentFish->GetFishDistance(); //Gets larger as spaced is pressed (should it get smaller?)
-		//float fishDistance = mGame->GetCurrentFishDistance(); //This would only update when space is pressed
+		float totalDistance = mGame->GetFishHookDistance(); //Gets smaller as space is pressed and larger as space is not pressed - Rebecca Morris 
+		float fishDistance = currentFish->GetFishDistance(); //Gets larger as spaced is pressed (should it get smaller?) - Rebecca Morris
 
-		//This needs to be, the closer (totalDistance/fishDistance) is to 0, the 
-
-		//The more space is pressed = the smaller the percent becomes
+		//The more space is pressed = the smaller the percent becomes - Rebecca Morris
 		//The longer space is not pressed = the larger the value gets
 		float percent = (totalDistance/600.0) * 10;  
 

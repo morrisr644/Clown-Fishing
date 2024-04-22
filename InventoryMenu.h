@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Header File for the Inventory Menu - Rebecca Morris
+
 #pragma once
 #include "UIScreen.h"
 

@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// UI Menu which displays the caught fish and displays their dialogue boxes when clicked - Rebecca Morris
+
 #include "InventoryMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
@@ -18,8 +20,6 @@ InventoryMenu::InventoryMenu(Game* game)
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
 	SetTitle("InventoryTitle");
-
-	//const int FISHTYPES = 2; // This will change as fish are added
 
 	if (game->GetAllCaughtFish(0)) // 0 is Red Fish
 	{

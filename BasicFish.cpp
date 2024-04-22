@@ -28,7 +28,7 @@ BasicFish::BasicFish(Game* game, char color)
 	, angularMovement(0.3)
 	, forwardMovement(100)
 	, fishTimer(2.0)
-	, hookedSpeed(-20.0) // This is a member variable now that can be changed as we create the fish
+	, hookedSpeed(-20.0) // This is a member variable now that can be changed as we create the fish - Rebecca Morris
 {
 	SetScale(5.0f);
 
@@ -109,8 +109,6 @@ BasicFish::BasicFish(Game* game, char color)
 		}
 	}
 
-	//Texture* texture = new Texture; texture->Load("Assets/models/Redfish.png");
-	//Texture* texture = new Texture; texture->Load(textureFileName);
 	setSpecular(meshes, 30000.0);
 
 	for (auto&& mesh : meshes)
@@ -173,17 +171,15 @@ void BasicFish::GetOnLine() // Rebecca Morris
 {
 	// When the fish is hit then stop moving (Caught)
 	SetMovementSpeed(0.0f);
-	//SetAngularSpeed(0.0f);
 	this->GetGame()->StartReeling();
 	isOnLine = true;
-	// here maybe drop z by 10???
 	Vector3 currPos = this->GetPosition();
 	Vector3 currPosZDown = currPos;
 	currPosZDown.z = currPosZDown.z - 10;
 	this->SetPosition(currPosZDown);
 	SetOnLinePosition();
 
-	fishDistance = 800.0f; //Made the game too hard :(
+	fishDistance = 800.0f;
 
 	new ScreenSaysFishOn(this->GetGame());
 	this->GetGame()->TurnScreenSaysFishOnOn();
@@ -228,13 +224,11 @@ void BasicFish::FixCollisions() // uses the collisions not present in the regula
 
 void BasicFish::SetAngularSpeed(float newSpeed)
 {
-	//angularMovement = newSpeed;
 	mMoveComp->SetAngularSpeed(newSpeed);
 }
 
 void BasicFish::SetMovementSpeed(float newMovementSpeed)
 {
-	//forwardMovement = newMovementSpeed;
 	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }
 
@@ -246,8 +240,6 @@ void BasicFish::SetFishTimer(float newTimer)
 
 void BasicFish::SetOnLinePosition()
 {
-	//cant use switch statement because mColor is not an int
-	//Yes you can i was dumb, change later
 
 	switch (mColor)
 	{

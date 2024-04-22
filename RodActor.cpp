@@ -1,5 +1,3 @@
-//Start of the basic fish for the game.
-//We are starting by making the basic fish a car model for the time being.
 
 #include "RodActor.h"
 #include "Game.h"
@@ -17,18 +15,15 @@
 #include "AssimpLoad.h"
 #include "Mesh.h"
 
+// The actor for the fishing rod model in the game,
+// it is used by the fps actor
+// I made it its own class due to complications changing the
+// fps actor's model in that class - Rebecca Morris
 
 RodActor::RodActor(Game* game)
 	:Actor(game)
 {
 	SetScale(0.5f);
-	//MeshComponent* mc = new MeshComponent(this);
-	//Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/RacingCar.gpmesh");
-	//mc->SetMesh(mesh);
-
-	//Adding a collision box for the fish
-	//BoxComponent* bc = new BoxComponent(this);
-	//bc->SetObjectBox(mesh->GetBox());
 
 	Texture* texture = new Texture; texture->Load("Assets/models/rod.png");
 	std::vector<Mesh*> meshes; LoadAssimpMeshes(meshes, game, "Assets/models/rod.fbx", texture);
@@ -62,9 +57,8 @@ void RodActor::UpdateActor(float deltaTime)
 	FixCollisions();
 }
 
-//void BasicFish::SetPlayer(Actor* player) // why is this here what is this used for
-//{
-//}
+// I see now that this funtion may not need to be here, but will not remove
+// due to not wanting to make any functional changes to the code in case of adding bugs - Rebecca Morris
 
 void RodActor::FixCollisions() // pulled from Madhav FPSActor
 {

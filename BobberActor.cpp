@@ -31,19 +31,18 @@ BobberActor::BobberActor(Game* game)
 
 	new TargetComponent(this);
 
-	//SetScale(10.0f);
 	MeshComponent* mc = new MeshComponent(this);
-	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh"); // Sphere has been recolored to look more like a bobber (RCM)
+	Mesh* mesh = GetGame()->GetRenderer()->GetMesh("Assets/Sphere.gpmesh"); // Sphere has been recolored to look more like a bobber - Rebecca Morris
 	mc->SetMesh(mesh);
 	mMyMove = new BobberMove(this);
 	mMyMove->SetForwardSpeed(1000.0f);
 	mAudioComp = new AudioComponent(this);
 
-	mSplash = mAudioComp->PlayEvent("event:/Splash");
+	mSplash = mAudioComp->PlayEvent("event:/Splash"); // Sound effect for bobber going in water - Rebecca Morris
 	mSplash.SetPaused(true);
-	mBubbles = mAudioComp->PlayEvent("event:/Bubbles");
+	mBubbles = mAudioComp->PlayEvent("event:/Bubbles"); // Sound effect for fish getting on the line - Rebecca Morris
 	mBubbles.SetPaused(true);
-	mLose = mAudioComp->PlayEvent("event:/Lose");
+	mLose = mAudioComp->PlayEvent("event:/Lose"); // Sound effect for player not catching the fish in time - Rebecca Morris
 	mLose.SetPaused(true);
 	isInWater = false;
 	isFishOn = false;
@@ -56,8 +55,6 @@ void BobberActor::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 	float gravity = 208.1;
-
-	//mLifeSpan -= deltaTime;
 
 	
 	if (mMyMove->GetForwardSpeed() != 0 && !isFishOn)

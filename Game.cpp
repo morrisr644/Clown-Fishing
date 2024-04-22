@@ -6,6 +6,9 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Class with all of the functions relating to the gameplay
+// Is called by main - Rebecca Morris
+
 #include "Game.h"
 #include <algorithm>
 #include "Renderer.h"
@@ -64,14 +67,12 @@ bool Game::Initialize()
 
 	SDL_Rect window;
 
-	//Gets the size of the user's computer screen
+	//Gets the size of the user's computer screen - Rebecca Morris
 	SDL_GetDisplayBounds(displayIndex, &window);
 
 	mWindowWidth = window.w;
 	mWindowHeight = window.h;
 
-
-	//SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &mWindowWidth, &mWindowHeight);
 
 
 	if (!mRenderer->Initialize((float)mWindowWidth, (float)mWindowHeight))
@@ -110,7 +111,6 @@ bool Game::Initialize()
 	mTicksCount = SDL_GetTicks();
 
 	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
-	//mMusicEvent.SetPaused(true);
 
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
@@ -128,6 +128,8 @@ bool Game::Initialize()
 	return true;
 }
 
+// Function which restarts the game by unloading and reloading the assets,
+// as well as clearing all arrays and reseting booleans as well as spawning the menu - Rebecca Morris
 bool Game::Restart()
 {
 
@@ -157,7 +159,6 @@ bool Game::Restart()
 	mTicksCount = SDL_GetTicks();
 
 	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
-	//mMusicEvent.SetPaused(true);
 
 	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
 	mReeling.SetPaused(true);
@@ -169,8 +170,6 @@ bool Game::Restart()
 	isScreenSaysFishOffOn = false;
 	didFishGetAway = false;
 	didJustCatchFish = false;
-
-	//mCurrentFish = nullptr;
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -203,17 +202,20 @@ void Game::RemovePlane(PlaneActor* plane)
 	mPlanes.erase(iter);
 }
 
-
+//An array of booleans which are set to true when that fish has been caught - Rebecca Morris
 bool Game::GetAllCaughtFish(int index)
 {
 	return mAllCaughtFish[index];
 }
 
+//Sets the value of mCurrentFish, which is used by some functions
+// to know what fish is currently on the line - Rebecca Morris
 void Game::SetCurrentFish(BasicFish* fish)
 {
 	mCurrentFish = fish;
 }
 
+//A function which pauses the music so it does not need to be completely restarted every time - Rebecca Morris
 void Game::PauseMusic()
 {
 	if(!mAudioSystem->GetBusPaused("bus:/"))
@@ -222,6 +224,7 @@ void Game::PauseMusic()
 		mAudioSystem->SetBusPaused("bus:/", false);
 }
 
+//A function which returns true when all of the fish in the game have been caught - Rebecca Morris
 bool Game::CheckIfAllFishCaught()
 {
 	bool allFishCaught = true;
@@ -236,6 +239,8 @@ bool Game::CheckIfAllFishCaught()
 	return allFishCaught;
 }
 
+//An unused function which would have been used to spawn in a
+// new main menu from other classes than the game class - Rebecca Morris
 void Game::NewMainMenu()
 {
 	new MainMenu(this);
@@ -338,12 +343,6 @@ void Game::HandleKeyPress(int key)
 		LoadText("Assets/English.gptext");
 		break;
 	}
-	//case '2':
-	//{
-	//	// Load Russian text
-	//	LoadText("Assets/Russian.gptext");
-	//	break;
-	//}
 	case SDL_BUTTON_LEFT:
 	{
 		// Fire weapon
@@ -427,30 +426,23 @@ void Game::HandleKeyPress(int key)
 				if (bobberPos.z > -110.0) // if the bobber is coming out of the water, or the fish
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
-					//newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
 				}
 				else
 				{
 					newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
-					//newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z + offsetFromReel.z);
 				}
 				if (fishPos.z > -170.0) // if the bobber is coming out of the water, or the fish
 				{
-					//newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z);
 				}
 				else
 				{
-					//newBobberPos = Vector3(bobberPos.x + offsetFromReel.x, bobberPos.y + offsetFromReel.y, bobberPos.z + offsetFromReel.z);
 					newFishPos = Vector3(fishPos.x + fishOffsetFromReel.x, fishPos.y + fishOffsetFromReel.y, fishPos.z + offsetFromReel.z);
 				}
 
-
-
-				//StopReeling();
 			}
 			hookedFish->SetPosition(newFishPos);
-			//Experiment with increasing the fish distance, this definitely gives closer to desired effect
+			//Experiment with increasing the fish distance, this definitely gives closer to desired effect - Rebecca Morris
 			hookedFish->SetFishDistance(25.0);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
@@ -466,13 +458,15 @@ void Game::HandleKeyPress(int key)
 
 			Vector3 fishPos;
 
-
+			// If statements must be used here instead of a switch statement
+			// due to needing to check the catch status and the state of the fish,
+			// though it could be refactored since this code is repeated - Rebecca Morris
 			if (mRedFish->GetCatchStatus() && (mRedFish->GetState() == Actor::EActive))
 			{
 				fishPos = mRedFish->GetPosition();
 				caughtFish = mRedFish;
 
-				mCaughtFishType = caughtFish->GetColor(); //This must be inside the if statement to work
+				mCaughtFishType = caughtFish->GetColor(); //This must be inside the if statement to work - Rebecca Morris
 
 				mAllCaughtFish[0] = true;
 			}
@@ -480,7 +474,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mYellowFish->GetPosition();
 				caughtFish = mYellowFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -490,7 +483,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mOrangeFish->GetPosition();
 				caughtFish = mOrangeFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -500,7 +492,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mGreenFish->GetPosition();
 				caughtFish = mGreenFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -510,7 +501,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mBlueFish->GetPosition();
 				caughtFish = mBlueFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -520,7 +510,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mPurpleFish->GetPosition();
 				caughtFish = mPurpleFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -530,7 +519,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mPinkFish->GetPosition();
 				caughtFish = mPinkFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -540,7 +528,6 @@ void Game::HandleKeyPress(int key)
 			{
 				fishPos = mSpottedFish->GetPosition();
 				caughtFish = mSpottedFish;
-				//mCaughtFishType = 2;
 
 				mCaughtFishType = caughtFish->GetColor();
 
@@ -570,7 +557,7 @@ void Game::HandleKeyPress(int key)
 	case SDLK_e:
 	{
 		if (!isReelingIn && GetState() == GameState::EGameplay) // Probably shouldn't open the inventory while reeling in a fish
-		{														// or while there is another menu open
+		{														// or while there is another menu open - Rebecca Morris
 			new InventoryMenu(this);
 		}
 
@@ -660,9 +647,8 @@ void Game::UpdateGame()
 
 	if(mSingleBobber->GetInWaterStatus() == true)
 	{
-		//currentHook = new Hook(this);
 		Vector3 hooksSunkenPosition = mSingleBobber->GetPosition();
-		// this is where we spawn the hook in for the game.
+		// this is where we spawn the hook in for the game. - Adam Caligiuri
 		hooksSunkenPosition.z = hooksSunkenPosition.z - 200;
 
 		currentHook->SetPosition(hooksSunkenPosition);
@@ -696,13 +682,8 @@ void Game::LoadData()
 	q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		////Replaced Underplane
-		//a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane left starts at -1250, 250, -600 and ends at 1250, 250, -600
-		//a->SetPosition(Vector3(start + i * size, start - (size - 1750.0f), -600.0f));
-		//a->SetRotation(q);
-
 		//Replaced Underplane
-		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600
+		a = new PlaneActor(this, "Assets/UnderPlane.gpmesh"); //Underplane right starts at -1250, -1000, -600 and ends at 1250, -1000, -600 -Rebecca Morris
 		a->SetPosition(Vector3(start + i * size, -start + size, -600.0f));
 		a->SetRotation(q);
 	}
@@ -735,15 +716,11 @@ void Game::LoadData()
 	mRenderer->SetAmbientLight(Vector3(0.8f, 0.8f, 0.8f));
 	DirectionalLight& dir = mRenderer->GetDirectionalLight();
 	dir.mDirection = Vector3(0.0f, -0.707f, -0.707f);
-	//dir.mDiffuseColor = Vector3(0.78f, 0.88f, 1.0f);
-	//dir.mSpecColor = Vector3(0.8f, 0.8f, 0.8f);
 
 	// UI elements
 	mHUD = new HUD(this);
 	
 	// Start music
-	//mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
-	//mMusicEvent.SetPaused(false);
 	mMusicEvent.Restart();
 
 	// Enable relative mouse mode for camera look
@@ -753,7 +730,6 @@ void Game::LoadData()
 
 	// Different camera actors
 	mFPSActor = new FPSActor(this);
-	//mBasicFish = new BasicFish(this, "null", "null"); //possibly change later to have default value - Rebecca
 	mRedFish = new BasicFish(this, 'r');
 	mYellowFish = new BasicFish(this, 'y');
 	mOrangeFish = new BasicFish(this, 'o');
@@ -775,18 +751,12 @@ void Game::LoadData()
 	mPurpleFish->SetPosition(Vector3(200.0f, 400.0f, -500.0f));
 	mPinkFish->SetPosition(Vector3(0.0f, 800.0f, -500.0f));
 	mSpottedFish->SetPosition(Vector3(-200.0f, 400.0f, -500.0f));
-
-	//For some reason initializing mBasicFish is spawning in a new fish, putting it under the floor for now - Rebecca
-	//mBasicFish->SetPosition(Vector3(0.0f, 0.0f, -250.0f)); // why does the fish float?
 	
 	// Setup floor
-	
-
-	//const float largerSize = 500.0f;
 
 	mSkybox = new SkyBox(this);
 
-	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - RCM
+	// Everything invisible must be drawn after the skybox so it knows what the rest of the world should look like - Rebecca Morris
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -836,10 +806,6 @@ void Game::LoadData()
 		a = new PlaneActor(this, "Assets/FencePlane.gpmesh"); //Wall starts at 1000, 1500, 400 and ends at ...
 		a->SetPosition(Vector3((start + 300.0f) + i * size, start - size, 0.0f));
 		a->SetRotation(q);
-
-		/*a = new PlaneActor(this);
-		a->SetPosition(Vector3((start + 250.0f) + i * size, start - size, -400.0f)); // What is this? -R
-		a->SetRotation(q);*/
 
 		//Replaced FencePlane
 		a = new PlaneActor(this, "Assets/FencePlane.gpmesh");

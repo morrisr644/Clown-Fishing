@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// A UI Screen which is just text which says that the fish has gotten off the line - Rebecca Morris
+
 #include "ScreenSaysFishOff.h"
 #include "Game.h"
 #include "DialogBox.h"
@@ -15,9 +17,6 @@
 ScreenSaysFishOff::ScreenSaysFishOff(Game* game)
 	:UIScreen(game)
 {
-	//mGame->SetState(Game::EPaused);
-	//SetRelativeMouseMode(false);
-	//startTime = game->GetTime();
 	TimePassed = 0;
 	SetTitle("FishOffTitle");
 }
@@ -25,7 +24,6 @@ ScreenSaysFishOff::ScreenSaysFishOff(Game* game)
 ScreenSaysFishOff::~ScreenSaysFishOff()
 {
 	SetRelativeMouseMode(true);
-	//mGame->SetState(Game::EGameplay);
 }
 
 void ScreenSaysFishOff::Update(float deltaTime)

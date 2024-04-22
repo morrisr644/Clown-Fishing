@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Header file for main menu - Rebecca Morris
+
 #pragma once
 #include "UIScreen.h"
 

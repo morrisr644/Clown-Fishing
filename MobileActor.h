@@ -1,13 +1,14 @@
 #pragma once
 #include "Actor.h"
+
+// Header file for Mobile Actor class - Rebecca Morris
+
 class MobileActor :
     public Actor
 {
 public:
     MobileActor(class Game* game);
     void FixCollisions();
-
-    //void Collisions(Vector3 pos, const AABB& playerBox, const AABB& planeBox);
 
 private:
 

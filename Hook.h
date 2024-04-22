@@ -9,7 +9,6 @@ class Hook : public Actor
 {
 public:
 	Hook(class Game* game);
-	//void UpdateActor(float deltaTime) override;
 	void SetCurrPosition(Vector3 newPosition) { currentPosition = newPosition; }
 	Vector3 GetCurrPosition() { return currentPosition; }
 	void SetPlayer(Actor* player) { mPlayer = player; }

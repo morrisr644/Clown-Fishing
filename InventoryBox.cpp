@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// UI Screen which displays the dialogue boxes for the different fish - Rebecca Morris
+
 #include "InventoryBox.h"
 #include "Game.h"
 #include "Renderer.h"

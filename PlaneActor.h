@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Header file for the plane actor - Rebecca Morris
+
 #pragma once
 #include "Actor.h"
 #include <string>

@@ -25,7 +25,6 @@ public:
 	void PutInWater();
 	void OutOfWater();
 	void FishOn();
-	//void Splash();
 	void FishOff(BasicFish* currFish);
 	void SetLaunchAngle(float newAngle);
 	void SetMyMoveSpeed();
@@ -37,7 +36,6 @@ public:
 	void SetTensionSpeed(float tensionSpeed);
 	float getTotalDistance() { return mTotalDistance; };
 	void setBobberFishOn(bool fishOn) { isFishOn = fishOn; }
-	//void CheckFish(float deltaTime, BasicFish* currFish);
 private:
 	class AudioComponent* mAudioComp;
 	class BobberMove* mMyMove;
@@ -48,8 +46,8 @@ private:
 	float moveAwayTimer;
 	Vector3 mForwardVelocity;
 	bool hasAlreadySplashed;
-	SoundEvent mSplash;
-	SoundEvent mBubbles;
-	SoundEvent mLose; // For when you lose the fish
+	SoundEvent mSplash;		//Sound effects for the bobber entering water,
+	SoundEvent mBubbles;	// fish getting hooked
+	SoundEvent mLose;		// and player losing the fish - Rebecca Morris
 	float mTotalDistance;
 };

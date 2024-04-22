@@ -6,6 +6,9 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// UI screen which appears when the game is paused
+// Gives the player the option to resume, restart, or quit the game - Rebecca Morris
+
 #include "PauseMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
@@ -29,9 +32,6 @@ PauseMenu::PauseMenu(Game* game)
 
 	mBackground = game->GetRenderer()->GetTexture("Assets/PauseDialogBG.png");
 	mBGPos = Vector2(-((width * 9) / 320), ((height * 29) / 176));
-	/*AddButton("InventoryButton", [this]() {
-		new InventoryMenu(mGame);
-		});*/
 	AddButton("MenuButton", [this]() {
 		mGame->PopUI(this);
 		new MainMenu(mGame);
@@ -39,15 +39,7 @@ PauseMenu::PauseMenu(Game* game)
 	AddButton("RestartButton", [this]() {
 		new DialogBox(mGame, "RestartText",
 		[this]() {
-				//mGame->Shutdown();
-				//mGame->Initialize();
-				//mGame->SetState(Game::EQuit);
-				//mGame->RunLoop();
 				bool success = mGame->Restart();
-				/*if (success)
-				{
-					mGame->RunLoop();
-				}*/
 			});
 		});
 	AddButton("QuitButton", [this]() { 

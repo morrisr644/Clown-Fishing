@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "PlaneActor.h"
 
+// A class containing a function that every actor that moves requires (FixCollisions) - Rebecca Morris
+
 MobileActor::MobileActor(Game* game):
 	Actor(game)
 	, mScale(1.0f)

@@ -1,4 +1,4 @@
-// Header for the Rod
+// Header for the Rod - Rebecca Morris
 
 #pragma once
 #include "Actor.h"

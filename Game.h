@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+//Header file for the game class - Rebecca Morris
+
 #pragma once
 #include <unordered_map>
 #include <string>
@@ -141,8 +143,6 @@ public:
 
 	int GetWindowWidth() { return mWindowWidth; }
 	int GetWindowHeight() { return mWindowHeight; }
-
-	//int GetAmountOfFishTypes() { return 2; } //Increase as new types are added 
 	
 private:
 	void ProcessInput();
@@ -154,7 +154,6 @@ private:
 	
 	// All the actors in the game
 	std::vector<class BasicFish*> mBasicFishes;
-	//std::vector<class YellowFish*> mYellowFishes;
 	std::vector<class Actor*> mActors;
 	std::vector<class BobberActor*> mBobbers; //Rebecca Morris
 	std::vector<class UIScreen*> mUIStack;
@@ -188,8 +187,7 @@ private:
 	std::vector<class PlaneActor*> mPlanes;
 	//class BasicFish* mBasicFish;
 	char mCaughtFishType;
-	bool mAllCaughtFish[8]{}; //The 2 is the number of all different types of fish, it must be updated as more are added
-								//change to 7 when they are all added
+	bool mAllCaughtFish[8]{}; //8 is the number of all different types of fish - Rebecca Morris
 	float mCurrentTime;
 	class FPSActor* mFPSActor;
 	class RodActor* mRodActor;

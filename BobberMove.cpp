@@ -58,7 +58,7 @@ void BobberMove::Update(float deltaTime)
 		BasicFish* yFish = mOwner->GetGame()->GetYellowFish();
 		BasicFish* rFish = mOwner->GetGame()->GetRedFish();
 
-		//Changes to bobber - Rebecca
+		//Changes to bobber - Rebecca Morris
 
 		RodActor* rod = dynamic_cast<RodActor*>(info.mActor);
 
@@ -71,6 +71,8 @@ void BobberMove::Update(float deltaTime)
 			bobber->HitGround();
 		}
 		//If it hits the fence
+		// 
+		// 25.0f is an adjustment made to the y axis because the walls were not perfectly lined up - Rebecca Morris
 		else if (bobberPosition.z > WATERLEVEL && (bobberPosition.y > FORWARDWALL - 25.0f || bobberPosition.y < BACKWALL + 25.0f
 			|| bobberPosition.x > LEFTWALL || bobberPosition.x < RIGHTWALL))
 		{

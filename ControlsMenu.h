@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// Header file fot the controls menu
+
 #pragma once
 #include "UIScreen.h"
 

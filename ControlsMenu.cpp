@@ -6,6 +6,8 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// UI Screen that pops up for showing controls - Rebecca Morris
+
 #include "ControlsMenu.h"
 #include "Game.h"
 #include "DialogBox.h"
@@ -24,8 +26,6 @@ ControlsMenu::ControlsMenu(Game* game)
 	float height = mGame->GetWindowHeight();
 
 	mBGPos = Vector2(0.0f, 0.0f);
-	//mTitlePos = Vector2(0.0f, -((height * 31) / 176));
-	//mNextButtonPos = Vector2(0.0f, -((height * 35) / 880));
 	mTitlePos = Vector2(0.0f, ((height * 2) / 11));
 	mNextButtonPos = Vector2(0.0f, -((height * 165) / 880));
 
@@ -36,7 +36,6 @@ ControlsMenu::ControlsMenu(Game* game)
 		});
 
 	mBackground = game->GetRenderer()->GetTexture("Assets/ControlsBG.png");
-	//mBGPos = Vector2(-45.0f, 145.0f);
 }
 
 ControlsMenu::~ControlsMenu()

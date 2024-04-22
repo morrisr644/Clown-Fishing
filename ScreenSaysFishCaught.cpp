@@ -6,6 +6,10 @@
 // See LICENSE in root directory for full details.
 // ----------------------------------------------------------------
 
+// A UI screen which is just text that pops up when a fish is caught
+// The title changes depending om which fish was caught and whether
+// or not all of the other fish have been caught - Rebecca Morris
+
 #include "ScreenSaysFishCaught.h"
 #include "Game.h"
 #include "DialogBox.h"
@@ -69,7 +73,6 @@ ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 			});
 	}
 
-	//SetTitle("CatchTitle");
 	else
 	{
 		AddButton("ResumeButton", [this]() {
