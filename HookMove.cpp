@@ -48,9 +48,10 @@ void HookMove::Update(float deltaTime)
 			{
 				fish->GetOnLine();
 				mOwner->GetGame()->SetCurrentFish(fish);
-				bobber->FishOn(); //WSB 2024-03-25 What's this "20.0f"?
+				bobber->FishOn(); // let the game know a fish is on the bobber
 				Vector3 newBobberPosition = Vector3(bobberPosition.x, bobberPosition.y, bobberPosition.z - 20.0f);
-				bobber->SetPosition(newBobberPosition);
+				// the minus 20.0f is just an arbitrary number, we use it to move the bobber under water so it makes it seem like the fish pulled the bobber under
+				bobber->SetPosition(newBobberPosition); // sets the bobbers position to under the water
 			}
 		}
 
@@ -59,22 +60,19 @@ void HookMove::Update(float deltaTime)
 		{
 			// make the fish face bobber instead of the player.
 			// Once the fish is on the line we have it face away from teh bobber as if its trying to break free. Adam Caligiuri
-			Vector3 bobberPos = bobber->GetPosition();
-			Vector3 bobberOppPlayer = mOwner->GetGame()->GetPlayer()->GetPosition() - bobberPos;
-			Vector3 fishOppBobber = bobberPos - caughtFish->GetPosition();
+			Vector3 bobberPos = bobber->GetPosition(); // grabs the bobbers position
+			Vector3 bobberOppPlayer = mOwner->GetGame()->GetPlayer()->GetPosition() - bobberPos; // subtract the players position from the bobbers position
+			Vector3 fishOppBobber = bobberPos - caughtFish->GetPosition(); // get the direction of the fishes current position to the bobber
 			bobberOppPlayer.Normalize();
 			fishOppBobber.Normalize();
-			bobberOppPlayer.Reverse(); // Adam example of inversing a vector3
-			bobber->RotateToNewForward(bobberOppPlayer);
-			caughtFish->RotateToNewForward(fishOppBobber);
+			bobberOppPlayer.Reverse(); 
+			bobber->RotateToNewForward(bobberOppPlayer); // turn the bobber to face the player
+			caughtFish->RotateToNewForward(fishOppBobber); // turns the fish to face the bobber, this makes it look like its pulling away from where the line would be
 
 			float fishHookedSpeed = caughtFish->getHookedSpeed();
 
-			caughtFish->SetMovementSpeed(fishHookedSpeed);
-			bobber->SetTensionSpeed(-fishHookedSpeed);
-
-			//bobber->SetTensionSpeed(20.0);
-			//caughtFish->SetMovementSpeed(-20.0); //WSB 2024-03-25 make this fish->iAmHookedSpeed
+			caughtFish->SetMovementSpeed(fishHookedSpeed); // this is the speed that the fish moves away from the bobber
+			bobber->SetTensionSpeed(-fishHookedSpeed); // the bobber also moves away from the player slowly, making it seem like the fish is pulling the bobber away.
 		}
 	}
 }
