@@ -106,22 +106,22 @@ bool Game::Initialize()
 
 	LoadData();
 
-	isReelingIn = false;
+	isReelingIn = false; // Is the player reeling in a fish - Rebecca Morris
 
 	mTicksCount = SDL_GetTicks();
 
-	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2");
+	mMusicEvent = mAudioSystem->PlayEvent("event:/Music2"); // The background music in the game - Rebecca Morris
 
-	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn");
+	mReeling = mAudioSystem->PlayEvent("event:/ReelingIn"); // The sound for when the player is reeling in a fish - Rebecca Morris
 	mReeling.SetPaused(true);
 
-	mWin = mAudioSystem->PlayEvent("event:/Win");
+	mWin = mAudioSystem->PlayEvent("event:/Win"); // The sound for when the player catches a fish - Rebecca Morris
 	mWin.SetPaused(true);
 
-	isScreenSaysFishOnOn = false;
-	isScreenSaysFishOffOn = false;
-	didFishGetAway = false;
-	didJustCatchFish = false;
+	isScreenSaysFishOnOn = false; // Is there text telling the user the fish is on the line - Rebecca Morris
+	isScreenSaysFishOffOn = false; // Is there text telling the user the fish got off the line - Rebecca Morris
+	didFishGetAway = false; // Did the fish just get off the line - Rebecca Morris
+	didJustCatchFish = false; // Did the fish just get caught - Rebecca Morris
 	
 	new MainMenu(this);
 
@@ -133,16 +133,16 @@ bool Game::Initialize()
 bool Game::Restart()
 {
 
-	mBasicFishes.clear();
+	mBasicFishes.clear(); // Empty the current fish array - Rebecca Morris
 
-	UnloadData();
+	UnloadData(); // Unload all the game's data - Rebecca Morris
 
-	if (mAudioSystem)
+	if (mAudioSystem) // Shut down the audio system if it exists - Rebecca Morris
 	{
 		mAudioSystem->Shutdown();
 	}
 
-	mAudioSystem = new AudioSystem(this);
+	mAudioSystem = new AudioSystem(this); // Set the audio system back up - Rebecca Morris
 	if (!mAudioSystem->Initialize())
 	{
 		SDL_Log("Failed to initialize audio system");
@@ -152,8 +152,9 @@ bool Game::Restart()
 		return false;
 	}
 
-	LoadData();
-
+	LoadData(); // Reload all the data
+	
+	//Redo the things done in initialize
 	isReelingIn = false;
 
 	mTicksCount = SDL_GetTicks();
@@ -171,6 +172,7 @@ bool Game::Restart()
 	didFishGetAway = false;
 	didJustCatchFish = false;
 
+	// Set all the fish to not being caught - Rebecca Morris
 	for (int i = 0; i < 8; i++)
 	{
 		mAllCaughtFish[i] = false;
@@ -390,7 +392,7 @@ void Game::HandleKeyPress(int key)
 
 			CurrentFishType = hookedFish->GetColor(); // grab the fishes color, which lets us know what kind of fish
 
-			SetCurrentFish(hookedFish); // set teh current hooked fish to the fish we have hooked
+			SetCurrentFish(hookedFish); // set the current hooked fish to the fish we have hooked
 			mCurrentFish = hookedFish;
 
 
@@ -449,11 +451,11 @@ void Game::HandleKeyPress(int key)
 			hookedFish->SetFishDistance(25.0);
 			mSingleBobber->SetPosition(newBobberPos);
 		}
-		else if(didJustCatchFish)
+		else if(didJustCatchFish) // If we just officially caught a fish and the player presses space again, display it - Rebecca Morris
 		{
-			didJustCatchFish = false;
+			didJustCatchFish = false; // We no longer have a fish to display - Rebecca Morris
 
-			mReeling.SetPaused(true);
+			mReeling.SetPaused(true); // Pause the reeling sound if it hasn't already been paused - Rebecca Morris
 
 			Vector3 playerPos = mFPSActor->GetPosition();
 
@@ -537,19 +539,20 @@ void Game::HandleKeyPress(int key)
 				mAllCaughtFish[7] = true;
 			}
 
-			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f);
+			Vector3 newFishPos = Vector3(playerPos.x, playerPos.y + 150.0f, playerPos.z - 25.0f); // These numbers were chosen based on trial
+																									// and error to make it look good - Rebecca Morris
 			caughtFish->SetPosition(newFishPos);
-			Quaternion tPose = Quaternion(newFishPos, 0.0f);
+			Quaternion tPose = Quaternion(newFishPos, 0.0f); // Reset the fish to its default position - Rebecca Morris
 			caughtFish->SetRotation(tPose);
 			caughtFish->UpdateActor(mCurrentTime);
 
-			new ScreenSaysFishCaught(this);
-			mWin.Restart();
+			new ScreenSaysFishCaught(this); // Tell the player what fish they caught - Rebecca Morris
+			mWin.Restart(); // Play the win sound effect (YAY!) - Rebecca Morris
 			mWin.SetPaused(false);
 
-			caughtFish->SetCatchStatus(true);
-			caughtFish->SetState(Actor::EDead);
-			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0);
+			caughtFish->SetCatchStatus(true); // Set the fish's status to caught - Rebecca Morris
+			caughtFish->SetState(Actor::EDead); // Remove the fish from the game - Rebecca Morris
+			Vector3 bobberSpawnPoint(20000.0, 20000.0, 0.0); // Place the bobber very far away - Rebecca Morris
 			mSingleBobber->SetPosition(bobberSpawnPoint);
 
 		}
@@ -711,7 +714,7 @@ void Game::LoadData()
 		{
 			//Replaced UnderPlane
 			a = new PlaneActor(this, "Assets/UnderPlane.gpmesh");
-			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f)); //Should this be changed to -600?
+			a->SetPosition(Vector3(start + i * size, start + j * size, -750.0f));
 		}
 	}
 
@@ -974,7 +977,6 @@ void Game::PushUI(UIScreen* screen)
 void Game::PopUI(UIScreen* screen)
 {
 	mUIStack.pop_back();
-	//mUIStack.emplace_back(screen);
 }
 
 Font* Game::GetFont(const std::string& fileName)

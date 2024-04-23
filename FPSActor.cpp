@@ -31,7 +31,7 @@ FPSActor::FPSActor(Game* game)
 	mMoveComp = new MoveComponent(this);
 	mAudioComp = new AudioComponent(this);
 	mLastFootstep = 0.0f;
-	mFootstep = mAudioComp->PlayEvent("event:/Footstep");
+	mFootstep = mAudioComp->PlayEvent("event:/Footstep"); //The sound effect for when the player takes a step - Rebecca Morris
 	mFootstep.SetPaused(true);
 
 	mCameraComp = new FPSCamera(this);
@@ -170,7 +170,7 @@ void FPSActor::Shoot()
 
 void FPSActor::SetFootstepSurface(float value)
 {
-	// Pause here because the way I setup the parameter in FMOD
+	// Pause here because the way I setup the parameter in FMOD - Rebecca Morris
 	// changing it will play a footstep
 	mFootstep.SetPaused(true);
 	mFootstep.SetParameter("Surface", value);
@@ -181,7 +181,7 @@ void FPSActor::SetVisible(bool visible)
 	//mMeshComp->SetVisible(visible);
 }
 
-void FPSActor::FixFPSCollisions() //Adam this is where we collide with the pond
+void FPSActor::FixFPSCollisions() //Adam this is where we collide with the pond - Rebecca Morris
 {
 	Vector3 pos = GetPosition();
 	if (pos.y >= 150.0f)

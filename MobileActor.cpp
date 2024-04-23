@@ -19,7 +19,7 @@ MobileActor::MobileActor(Game* game):
 	mBoxComp->SetShouldRotate(false);
 }
 
-void MobileActor::FixCollisions()
+void MobileActor::FixCollisions() // This is pretty much entirely written by Madhav - Rebecca Morris
 {
 	// Need to recompute my world transform to update world box
 	ComputeWorldTransform();

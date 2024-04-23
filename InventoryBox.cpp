@@ -24,6 +24,8 @@ InventoryBox::InventoryBox(Game* game, const std::string& text, int fish)
 	mTitlePos = Vector2(0.0f, ((height * 5) / 44));
 	mNextButtonPos = Vector2(0.0f, -((height * 5) / 44));
 
+	//Change the background of the dialogue box to correspond with the selected fish
+	//The dialogue box will have the image of the fish - Rebecca Morris
 	switch (fish)
 	{
 		case 0: //Red Fish

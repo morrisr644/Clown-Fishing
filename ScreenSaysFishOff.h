@@ -17,7 +17,7 @@ public:
 	ScreenSaysFishOff(class Game* game);
 	~ScreenSaysFishOff();
 	//float startTime;
-	float TimePassed;
+	float TimePassed; // How long the text has been on the screen - Rebecca Morris
 
 	void Update(float deltaTime);
 };

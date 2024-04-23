@@ -211,8 +211,7 @@ void HUD::UpdateTensionBar(float deltaTime)
 		//The longer space is not pressed = the larger the value gets
 		float percent = (totalDistance/600.0) * 10;  
 
-
-
+		//After calculating the percent, the lower the percent then the lower the tension level - Rebecca Morris
 		if (percent >= 8.5f)
 		{
 			TensionLevel = 8;

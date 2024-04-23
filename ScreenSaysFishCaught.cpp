@@ -21,8 +21,9 @@ ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 	mGame->SetState(Game::EPaused);
 	SetRelativeMouseMode(false);
 
-	char caughtFishType = mGame->GetCaughtFishType();
+	char caughtFishType = mGame->GetCaughtFishType(); // Find out what fish was just caught - Rebecca Morris
 
+	//Set the text that is displayed based on what kind of fish was caught 
 	switch (caughtFishType)
 	{
 		case 'r':
@@ -52,7 +53,8 @@ ScreenSaysFishCaught::ScreenSaysFishCaught(Game* game)
 		default:
 			SetTitle("CatchTitle");
 	}
-
+	
+	//If all fish have been caught, change the title to say so and add a restart button - Rebecca Morris
 	if (mGame->CheckIfAllFishCaught())
 	{
 		SetTitle("AllFishCaught");

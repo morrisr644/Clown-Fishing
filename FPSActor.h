@@ -28,13 +28,11 @@ public:
 	void SetVisible(bool visible);
 
 	void FixFPSCollisions();
-	//void FixCollisions();
 
 	class FPSCamera* GetCamera() { return mCameraComp; }
 private:
 	class MoveComponent* mMoveComp;
 	class AudioComponent* mAudioComp;
-	//class MeshComponent* mMeshComp;
 	class FPSCamera* mCameraComp;
 	class BoxComponent* mBoxComp;
 	class Actor* mFPSModel;

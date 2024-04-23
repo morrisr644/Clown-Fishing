@@ -21,6 +21,8 @@ InventoryMenu::InventoryMenu(Game* game)
 	SetRelativeMouseMode(false);
 	SetTitle("InventoryTitle");
 
+	//Add the button for the inventory box if the player has caught the fish - Rebecca Morris
+
 	if (game->GetAllCaughtFish(0)) // 0 is Red Fish
 	{
 		AddButton("RedFishItem", [this]() {

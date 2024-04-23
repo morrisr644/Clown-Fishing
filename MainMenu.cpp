@@ -22,16 +22,16 @@ MainMenu::MainMenu(Game* game)
 	:UIScreen(game)
 {
 	mState = EActive();
-	float width = mGame->GetWindowWidth();
-	float height = mGame->GetWindowHeight();
+	float width = mGame->GetWindowWidth(); // Find the width of the player's screen - Rebecca Morris
+	float height = mGame->GetWindowHeight(); // Find the height of the player's screen
 	//Change for screen size
 	width = (width * 3) / 16;
 	height = (height * 15) / 88;
-	this->mNextButtonPos.Set(width, height);
-	mGame->SetState(Game::EPaused);
+	this->mNextButtonPos.Set(width, height); // Change the button positions for this menu
+	mGame->SetState(Game::EPaused); // Pause the game
 	SetRelativeMouseMode(false);
 
-	mGame->PauseMusic();
+	mGame->PauseMusic(); // Pause the music in the game
 	mBackground = game->GetRenderer()->GetTexture("Assets/EvenLargerMainMenu.jpg");
 	mBGPos = Vector2(0.0f, 0.0f);
 	AddButton("StartOrResumeButton", [this]() {

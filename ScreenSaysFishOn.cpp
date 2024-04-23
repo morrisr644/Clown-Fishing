@@ -30,7 +30,7 @@ void ScreenSaysFishOn::Update(float deltaTime)
 {
 	UIScreen::Update(deltaTime);
 
-	TimePassed += deltaTime;
+	TimePassed += deltaTime; // After a certain amount of time, remove the text - Rebecca Morris
 
 	if (TimePassed >= 0.75f)
 		Close();

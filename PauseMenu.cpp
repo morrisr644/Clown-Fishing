@@ -27,8 +27,8 @@ PauseMenu::PauseMenu(Game* game)
 		Close();
 	});
 
-	float width = mGame->GetWindowWidth();
-	float height = mGame->GetWindowHeight();
+	float width = mGame->GetWindowWidth(); // Get the width of the player's screen - Rebecca Morris
+	float height = mGame->GetWindowHeight(); // Get the height of the player's screen
 
 	mBackground = game->GetRenderer()->GetTexture("Assets/PauseDialogBG.png");
 	mBGPos = Vector2(-((width * 9) / 320), ((height * 29) / 176));

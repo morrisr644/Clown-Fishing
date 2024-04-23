@@ -47,8 +47,6 @@ RodActor::RodActor(Game* game)
 	mBoxComp->SetObjectBox(myBox);
 	mBoxComp->SetShouldRotate(false);
 
-	//GetGame()->AddBasicFish(this);
-
 }
 
 void RodActor::UpdateActor(float deltaTime)
@@ -117,12 +115,10 @@ void RodActor::FixCollisions() // pulled from Madhav FPSActor
 
 void RodActor::SetAngularSpeed(float newSpeed)
 {
-	//angularMovement = newSpeed;
 	mMoveComp->SetAngularSpeed(newSpeed);
 }
 
 void RodActor::SetMovementSpeed(float newMovementSpeed)
 {
-	//forwardMovement = newMovementSpeed;
 	mMoveComp->SetForwardSpeed(newMovementSpeed);
 }

@@ -25,9 +25,9 @@ ControlsMenu::ControlsMenu(Game* game)
 	//Adjust for screen size
 	float height = mGame->GetWindowHeight();
 
-	mBGPos = Vector2(0.0f, 0.0f);
-	mTitlePos = Vector2(0.0f, ((height * 2) / 11));
-	mNextButtonPos = Vector2(0.0f, -((height * 165) / 880));
+	mBGPos = Vector2(0.0f, 0.0f); //Change the position of the background image - Rebecca Morris
+	mTitlePos = Vector2(0.0f, ((height * 2) / 11)); //Change the position of the main text - Rebecca Morris
+	mNextButtonPos = Vector2(0.0f, -((height * 165) / 880)); //Change the position of the buttons - Rebecca Morris
 
 	SetTitle("ControlText", Color::Black, 40);
 	AddButton("OKButton", [this]()

@@ -214,13 +214,13 @@ void BobberActor::FishOff(BasicFish* currFish) // This handles when the fish bre
 	GetGame()->isReelingIn = false; // let the game know we are no longer reeling a fish in, which turns off the ability to press space
 
 	mLose.SetPaused(false); // this is the womp womp womp sound effect that plays when a fish gets off the line
-	mLose.Restart(); // rebecca double check this please ^
+	mLose.Restart();
 
 	new ScreenSaysFishOff(this->GetGame());  // let the player know a fish has got off the line.
 	this->GetGame()->TurnScreenSaysFishOffOn();
 
 	isFishOn = false;  // resets the games boolean, which then allows another fish to be attracted to a hook if its within range.
-	mBubbles.SetPaused(true); // rebecca im not sure what this does
+	mBubbles.SetPaused(true); // pauses the bubbles sound for the case in which it is still playing when the fish breaks off - Rebecca Morris
 }
 
 void BobberActor::SetLaunchAngle(float newAngle)
